@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Sidebar from "../navbars/Sidebar";
+import Sidebar from "../extras/Sidebar";
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import axios from "axios";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap'
 
+//
 
 export default function MenuVentas(){
     
@@ -93,7 +94,7 @@ export default function MenuVentas(){
                 <div className="Header">
                     <h1>Módulo de Ventas</h1>
                 </div>
-                <div className="Productos">
+                <div className="Menu">
                     <h2>Seleccionar productos</h2>
                     <h3>Tipo de venta: </h3>
                     <Dropdown isOpen={dropdownP} toggle={abrirCerrarDropdownP}>
@@ -107,40 +108,49 @@ export default function MenuVentas(){
                         </DropdownMenu>
                     </Dropdown>
                     <br/>
-                    <h3>Filtrar por: </h3>
-                    <Dropdown isOpen={dropdownF} toggle={abrirCerrarDropdownF}>
-                        <DropdownToggle caret className="DropdownF">
-                                {Filtro}
-                        </DropdownToggle>
-                        <DropdownMenu>
-                            <DropdownItem divider/>
-                            <DropdownItem onClick={()=>SelectNombre()}>Nombre del producto</DropdownItem>
-                            <DropdownItem onClick={()=>SelectMarca()}>Marca</DropdownItem>
-                            <DropdownItem onClick={()=>SelectModelo()}>Modelo</DropdownItem>
-                            <DropdownItem onClick={()=>SelectPrecio()}>Precio</DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                    {MostrarNombre &&(
-                        <div>
-                            <input type="text" name="NombreProducto" placeholder="Nombre del producto" value={Nombre}></input>
+                    <div className="Productos">
+                        <h3>Filtrar por: </h3>
+                        <Dropdown isOpen={dropdownF} toggle={abrirCerrarDropdownF}>
+                            <DropdownToggle caret className="DropdownF">
+                                    {Filtro}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem divider/>
+                                <DropdownItem onClick={()=>SelectNombre()}>Nombre del producto</DropdownItem>
+                                <DropdownItem onClick={()=>SelectMarca()}>Marca</DropdownItem>
+                                <DropdownItem onClick={()=>SelectModelo()}>Modelo</DropdownItem>
+                                <DropdownItem onClick={()=>SelectPrecio()}>Precio</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        {MostrarNombre &&(
+                            <div>
+                                <input type="text" name="NombreProducto" placeholder="Nombre del producto" value={Nombre}></input>
+                            </div>
+                        )}
+                        {MostrarMarca &&(
+                            <div>
+                                <input type="text" name="Marca" placeholder="Marca del producto" value={Marca}></input>
+                            </div>
+                        )}
+                        {MostrarModelo &&(
+                            <div>
+                                <input type="text" name="Modelo" placeholder="Modelo del producto" value={Modelo}></input>
+                            </div>
+                        )}
+                        {MostrarPrecio &&(
+                            <div>
+                                <input type="text" name="PrecioMin" placeholder="Precio minimo del producto" value={PrecioMin}></input>
+                                <input type="text" name="PrecioMin" placeholder="Precio maximo del producto" value={PrecioMax}></input>
+                            </div>
+                        )}
+                        <button id="FilterProduct" className="Celeste">Filtrar Producto</button>
+                        <div className="TablaProducto">
+                            
                         </div>
-                    )}
-                    {MostrarMarca &&(
-                        <div>
-                            <input type="text" name="Marca" placeholder="Marca del producto" value={Marca}></input>
-                        </div>
-                    )}
-                    {MostrarModelo &&(
-                        <div>
-                            <input type="text" name="Modelo" placeholder="Modelo del producto" value={Modelo}></input>
-                        </div>
-                    )}
-                    {MostrarPrecio &&(
-                        <div>
-                            <input type="text" name="PrecioMin" placeholder="Precio minimo del producto" value={PrecioMin}></input>
-                            <input type="text" name="PrecioMin" placeholder="Precio maximo del producto" value={PrecioMax}></input>
-                        </div>
-                    )}
+                    </div>
+                    <div className="Servicio">
+
+                    </div>
                 </div>
             </main>
         </body>

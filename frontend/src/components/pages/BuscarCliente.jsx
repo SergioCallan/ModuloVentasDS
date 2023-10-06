@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import Sidebar from "../navbars/Sidebar"
+import Sidebar from "../extras/Sidebar"
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import axios from 'axios'
