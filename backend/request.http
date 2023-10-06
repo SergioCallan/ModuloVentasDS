@@ -1,0 +1,2 @@
+
+GET http://localhost:3000/searchproduct/Huawei%20P%20Smart HTTP/1.1
