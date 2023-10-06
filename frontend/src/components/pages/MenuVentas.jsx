@@ -74,6 +74,28 @@ export default function MenuVentas(){
     const [PrecioMin, setPrecioMin]= useState("")
     const [PrecioMax, setPrecioMax]= useState("")
 
+    const changingNombre=(event)=>{
+        setNombre(event.target.value)
+    }
+    //Filtrar
+
+    const Filtrar= async(e)=>{
+        e.preventDefault()
+        try{
+            const productoEspacios= encodeURIComponent(Nombre)
+            const url1= `http://localhost:3000/searchproduct/${productoEspacios}`
+            const response1= await axios.get(url1)
+            if(response1.data.id==null){
+                alert("No se encontro el producto")
+            }
+            else{
+                alert("Se llego aqui")
+            }
+        }catch(error){
+            console.error("Error al enviar la solicitud: ", error)
+        }
+    }
+
     //Sidebar
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const handleSidebarOpen = () => {
@@ -124,7 +146,7 @@ export default function MenuVentas(){
                         </Dropdown>
                         {MostrarNombre &&(
                             <div>
-                                <input type="text" name="NombreProducto" placeholder="Nombre del producto" value={Nombre}></input>
+                                <input type="text" name="NombreProducto" placeholder="Nombre del producto" onChange={changingNombre} value={Nombre}></input>
                             </div>
                         )}
                         {MostrarMarca &&(
@@ -143,7 +165,7 @@ export default function MenuVentas(){
                                 <input type="text" name="PrecioMin" placeholder="Precio maximo del producto" value={PrecioMax}></input>
                             </div>
                         )}
-                        <button id="FilterProduct" className="Celeste">Filtrar Producto</button>
+                        <button id="FilterProduct" className="Celeste" onClick={Filtrar}>Filtrar Producto</button>
                         <div className="TablaProducto">
                             
                         </div>
