@@ -27,7 +27,45 @@ app.get('/searchdni/:dni', async (req, res) => {
   }
 });
 
-//Buscar producto
+//Buscar producto por nombre
+app.get('/searchproduct/:producto', async (req, res) => {
+  try {
+    const producto= decodeURIComponent(req.params.producto)
+    const query = "SELECT * FROM productos WHERE CONCAT(marca, ' ', modelo) = $1";
+    
+    const result= await pool.query(query, [producto])
+    
+    if(result.rows.length===0){
+        res.send({id: null})
+    }
+    else{
+        res.json(result.rows)
+    }
+  } catch (error) {
+    console.error('Error al obtener producto:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+//Buscar producto por marca
+app.get('/searchbrand/:marca', async (req, res) => {
+  try {
+    const marca= req.params.marca
+    const query = "SELECT * FROM productos WHERE marca = $1";
+    const result= await pool.query(query, [marca])
+    if(result.rows.length===0){
+        res.json(null)
+    }
+    else{
+        res.json(result.rows)
+    }
+  } catch (error) {
+    console.error('Error al obtener producto:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+//Buscar producto por modelo
 app.get('/searchproduct/:producto', async (req, res) => {
   try {
     const producto= decodeURIComponent(req.params.producto)
@@ -46,6 +84,27 @@ app.get('/searchproduct/:producto', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
+
+//Buscar producto por precio
+app.get('/searchproduct/:producto', async (req, res) => {
+  try {
+    const producto= decodeURIComponent(req.params.producto)
+    const query = "SELECT * FROM productos WHERE CONCAT(marca, ' ', modelo) = $1";
+    
+    const result= await pool.query(query, [producto])
+    
+    if(result.rows.length===0){
+        res.send({id: null})
+    }
+    else{
+        res.json(result.rows[0])
+    }
+  } catch (error) {
+    console.error('Error al obtener producto:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 
 //Crear producto(temporal)
 app.post('/registerproduct', async(req, res)=>{

@@ -77,19 +77,67 @@ export default function MenuVentas(){
     const changingNombre=(event)=>{
         setNombre(event.target.value)
     }
+    const changingMarca=(event)=>{
+        setMarca(event.target.value)
+    }
+    const changingModelo=(event)=>{
+        setModelo(event.target.value)
+    }
+    const changingPrecioMin=(event)=>{
+        setPrecioMin(event.target.value)
+    }
+    const changingPrecioMax=(event)=>{
+        setPrecioMax(event.target.value)
+    }
     //Filtrar
 
     const Filtrar= async(e)=>{
         e.preventDefault()
         try{
-            const productoEspacios= encodeURIComponent(Nombre)
-            const url1= `http://localhost:3000/searchproduct/${productoEspacios}`
-            const response1= await axios.get(url1)
-            if(response1.data.id==null){
-                alert("No se encontro el producto")
+            if(Filtro=="Nombre"){
+                const productoEspacios= encodeURIComponent(Nombre)
+                const url1= `http://localhost:3000/searchproduct/${productoEspacios}`
+                const response1= await axios.get(url1)
+                if(response1.data.id==null){
+                    alert("No se encontro el producto")
+                }
+                else{
+                    alert("Se llego aqui")
+                }
             }
-            else{
-                alert("Se llego aqui")
+            else if(Filtro=="Marca"){
+                const url2= `http://localhost:3000/searchbrand/${Marca}`
+                const response2= await axios.get(url2)
+                if(response2.data==null){
+                    alert("No se encontro el producto")
+                }
+                else{
+                    alert("Se llego aqui")
+                }
+            }
+            else if(Filtro=="Modelo"){
+                const url3= `http://localhost:3000/searchmodel/${Modelo}`
+                const response3= await axios.get(url1)
+                if(response3.data.id==null){
+                    alert("No se encontro el producto")
+                }
+                else{
+                    alert("Se llego aqui")
+                }
+            }
+            else if(Filtro=="Precio"){
+                const intervaloP={
+                    preciomin: PrecioMin,
+                    preciomax: PrecioMax
+                }
+                const url4= `http://localhost:3000/searchprice/${intervaloP}`
+                const response4= await axios.get(url1)
+                if(response4.data.id==null){
+                    alert("No se encontro el producto")
+                }
+                else{
+                    alert("Se llego aqui")
+                }
             }
         }catch(error){
             console.error("Error al enviar la solicitud: ", error)
@@ -151,18 +199,18 @@ export default function MenuVentas(){
                         )}
                         {MostrarMarca &&(
                             <div>
-                                <input type="text" name="Marca" placeholder="Marca del producto" value={Marca}></input>
+                                <input type="text" name="Marca" placeholder="Marca del producto" onChange={changingMarca} value={Marca}></input>
                             </div>
                         )}
                         {MostrarModelo &&(
                             <div>
-                                <input type="text" name="Modelo" placeholder="Modelo del producto" value={Modelo}></input>
+                                <input type="text" name="Modelo" placeholder="Modelo del producto" onChange={changingModelo} value={Modelo}></input>
                             </div>
                         )}
                         {MostrarPrecio &&(
                             <div>
-                                <input type="text" name="PrecioMin" placeholder="Precio minimo del producto" value={PrecioMin}></input>
-                                <input type="text" name="PrecioMin" placeholder="Precio maximo del producto" value={PrecioMax}></input>
+                                <input type="text" name="PrecioMin" placeholder="Precio minimo del producto" onChange={changingPrecioMin} value={PrecioMin}></input>
+                                <input type="text" name="PrecioMax" placeholder="Precio maximo del producto" onChange={changingPrecioMax} value={PrecioMax}></input>
                             </div>
                         )}
                         <button id="FilterProduct" className="Celeste" onClick={Filtrar}>Filtrar Producto</button>
