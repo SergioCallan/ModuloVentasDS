@@ -10,10 +10,15 @@ import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap'
 
 export default function MenuVentas(){
     
-    //Dropdown
-    const [dropdown, setDropdown]=useState(false)
-    const abrirCerrarDropdown=()=>{
-        setDropdown(!dropdown)
+    //Dropdown Producto
+    const [dropdownP, setDropdownP]=useState(false)
+    const abrirCerrarDropdownP=()=>{
+        setDropdownP(!dropdownP)
+    }
+    //Dropdown Filtro
+    const [dropdownF, setDropdownF]=useState(false)
+    const abrirCerrarDropdownF=()=>{
+        setDropdownF(!dropdownF)
     }
 
 
@@ -25,6 +30,48 @@ export default function MenuVentas(){
     const SelectServicio=()=>{
         setTipo("Servicio")
     }
+
+    //Filtro
+    const [Filtro, setFiltro]= useState("")
+    const SelectNombre=()=>{
+        setFiltro("Nombre")
+        setMostrarNombre(true)
+        setMostrarMarca(false)
+        setMostrarModelo(false)
+        setMostrarPrecio(false)
+    }
+    const SelectMarca=()=>{
+        setFiltro("Marca")
+        setMostrarNombre(false)
+        setMostrarMarca(true)
+        setMostrarModelo(false)
+        setMostrarPrecio(false)
+    }
+    const SelectModelo=()=>{
+        setFiltro("Modelo")
+        setMostrarNombre(false)
+        setMostrarMarca(false)
+        setMostrarModelo(true)
+        setMostrarPrecio(false)
+    }
+    const SelectPrecio=()=>{
+        setFiltro("Precio")
+        setMostrarNombre(false)
+        setMostrarMarca(false)
+        setMostrarModelo(false)
+        setMostrarPrecio(true)
+    }
+    const [MostrarNombre, setMostrarNombre]= useState(false)
+    const [MostrarMarca, setMostrarMarca]= useState(false)
+    const [MostrarModelo, setMostrarModelo]= useState(false)
+    const [MostrarPrecio, setMostrarPrecio]= useState(false)
+
+    //Campos del filtro
+    const [Nombre, setNombre]= useState("")
+    const [Marca, setMarca]= useState("")
+    const [Modelo, setModelo]= useState("")
+    const [PrecioMin, setPrecioMin]= useState("")
+    const [PrecioMax, setPrecioMax]= useState("")
 
     //Sidebar
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -48,18 +95,52 @@ export default function MenuVentas(){
                 </div>
                 <div className="Productos">
                     <h2>Seleccionar productos</h2>
-                    <h3>Tipo de producto: </h3>
-                    <Dropdown isOpen={dropdown} toggle={abrirCerrarDropdown}>
-                        <DropdownToggle caret className="Dropdown">
+                    <h3>Tipo de venta: </h3>
+                    <Dropdown isOpen={dropdownP} toggle={abrirCerrarDropdownP}>
+                        <DropdownToggle caret className="DropdownP">
                                 {Tipo}
                         </DropdownToggle>
                         <DropdownMenu>
-                            <DropdownItem header>Tipo de Venta</DropdownItem>
                             <DropdownItem divider/>
                             <DropdownItem onClick={()=>SelectProducto()}>Producto</DropdownItem>
                             <DropdownItem onClick={()=>SelectServicio()}>Servicio</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
+                    <br/>
+                    <h3>Filtrar por: </h3>
+                    <Dropdown isOpen={dropdownF} toggle={abrirCerrarDropdownF}>
+                        <DropdownToggle caret className="DropdownF">
+                                {Filtro}
+                        </DropdownToggle>
+                        <DropdownMenu>
+                            <DropdownItem divider/>
+                            <DropdownItem onClick={()=>SelectNombre()}>Nombre del producto</DropdownItem>
+                            <DropdownItem onClick={()=>SelectMarca()}>Marca</DropdownItem>
+                            <DropdownItem onClick={()=>SelectModelo()}>Modelo</DropdownItem>
+                            <DropdownItem onClick={()=>SelectPrecio()}>Precio</DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                    {MostrarNombre &&(
+                        <div>
+                            <input type="text" name="NombreProducto" placeholder="Nombre del producto" value={Nombre}></input>
+                        </div>
+                    )}
+                    {MostrarMarca &&(
+                        <div>
+                            <input type="text" name="Marca" placeholder="Marca del producto" value={Marca}></input>
+                        </div>
+                    )}
+                    {MostrarModelo &&(
+                        <div>
+                            <input type="text" name="Modelo" placeholder="Modelo del producto" value={Modelo}></input>
+                        </div>
+                    )}
+                    {MostrarPrecio &&(
+                        <div>
+                            <input type="text" name="PrecioMin" placeholder="Precio minimo del producto" value={PrecioMin}></input>
+                            <input type="text" name="PrecioMin" placeholder="Precio maximo del producto" value={PrecioMax}></input>
+                        </div>
+                    )}
                 </div>
             </main>
         </body>

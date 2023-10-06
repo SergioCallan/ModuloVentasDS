@@ -95,7 +95,7 @@ export default function GenerarVenta(){
                         <input type="text" className="inputDisabled" name="Telefono" placeholder="Teléfono" disabled required value={Apellido}></input>
                         <br></br>
                         <input type="text" className="inputDisabled" name="Apellidos" placeholder="Apellido(s)" disabled required value={Apellido}></input>
-                        <input type="text" className="inputDisabled" name="Correo" placeholder="Correo" disabled required value={Correo}></input>
+                        <input type="email" className="inputDisabled" name="Correo" placeholder="Correo" disabled required value={Correo}></input>
                         <br></br>
                         <button id="Cancel" className="Rojo" onClick={Cancelar}>Cancelar busqueda</button>
                         <button id="Confirm" className="Verde" onClick={Confirmar}>Confirmar Cliente</button>
