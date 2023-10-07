@@ -104,6 +104,24 @@ app.get('/searchprodasduct/:producto', async (req, res) => {
   }
 });
 
+app.get('/searchid/:id', async (req, res) => {
+  try {
+    const idbusqueda= req.params.id
+    const query = "SELECT * FROM celular WHERE id = $1";
+    
+    const result= await pool.query(query, [idbusqueda])
+    
+    if(result.rows.length===0){
+        res.send({id: null})
+    }
+    else{
+        res.json(result.rows[0])
+    }
+  } catch (error) {
+    console.error('Error al obtener producto:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
 
 //Crear producto(temporal)
 app.post('/registerproduct', async(req, res)=>{

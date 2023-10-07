@@ -3,6 +3,7 @@ import Sidebar from "../extras/Sidebar"
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import axios from 'axios'
+import "../styles/BuscarCliente.css"
 import {useNavigate} from 'react-router-dom'
 
 
@@ -81,28 +82,35 @@ export default function GenerarVenta(){
                     <h1>Módulo de Ventas</h1>
                 </div>
                 <div className="Clientes">
+                
                     <div className="Clientes_Busqueda">
                         <h2>Seleccionar Cliente</h2>
-                        <input type="text" className="input" name="DNI" placeholder="DNI" onChange={changingDNI} disabled={inputDisabled} required value={DNI}></input>
-                        
-                        <button id="Verify" className="Celeste" onClick={buscarDNI}>Buscar Cliente</button> <br/>
+                        <div className="Clientes_DNI">
+                            <input type="text" className="input" name="DNI" placeholder="DNI" onChange={changingDNI} disabled={inputDisabled} required value={DNI}></input>
+                            
+                            <button id="Verify" className="Celeste" onClick={buscarDNI}>Buscar Cliente</button> <br/>
+                            
+                        </div>
                         
                     </div>
                     <br></br>
+                    
                     <div className="Clientes_Data">
                         <h2>Datos del cliente</h2>
-                        <input type="text" className="inputDisabled" name="Nombres" placeholder="Nombre(s)" disabled required value={Nombre}></input>
-                        <input type="text" className="inputDisabled" name="Telefono" placeholder="Teléfono" disabled required value={Apellido}></input>
-                        <br></br>
-                        <input type="text" className="inputDisabled" name="Apellidos" placeholder="Apellido(s)" disabled required value={Apellido}></input>
-                        <input type="email" className="inputDisabled" name="Correo" placeholder="Correo" disabled required value={Correo}></input>
-                        <br></br>
-                        <button id="Cancel" className="Rojo" onClick={Cancelar}>Cancelar busqueda</button>
-                        <button id="Confirm" className="Verde" onClick={Confirmar}>Confirmar Cliente</button>
+                        <div className="Clientes_Info">
+                            <input type="text" className="inputDisabled" name="Nombres" placeholder="Nombre(s)" disabled required value={Nombre}></input>
+                            <input type="text" className="inputDisabled" name="Telefono" placeholder="Teléfono" disabled required value={Apellido}></input>
+                            <br></br>
+                            <input type="text" className="inputDisabled" name="Apellidos" placeholder="Apellido(s)" disabled required value={Apellido}></input>
+                            <input type="email" className="inputDisabled" name="Correo" placeholder="Correo" disabled required value={Correo}></input>
+                            <br></br>
+                            <button id="Cancel" className="Rojo" onClick={Cancelar}>Cancelar busqueda</button>
+                            <button id="Confirm" className="Verde" onClick={Confirmar}>Confirmar Cliente</button>
+                        </div>
                     </div>
                     <br/>
                     <button id= "AvanzarSeleccion" className="Verde" onClick={Avanzar}>Seleccionar productos</button>
-                </div>    
+                </div>
             </main>
         </body>
     )

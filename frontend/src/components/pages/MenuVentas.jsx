@@ -7,8 +7,10 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap
 import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/MenuVentas.css"
 
 export default function MenuVentas() {
+    const navigate= useNavigate()
   // Producto o servicio
   const [MostrarProducto, setMostrarProducto] = useState(false);
   const [MostrarServicio, setMostrarServicio] = useState(false);
@@ -128,7 +130,7 @@ export default function MenuVentas() {
         if (response1.data === null) {
           alert("No se encontro el producto");
         } else {
-          alert("Se llegó aquí");
+            setDatosP(response1.data);
         }
       } else if (Filtro === "Marca") {
         const url2 = `http://localhost:3000/searchbrand/${Marca}`;
@@ -136,7 +138,7 @@ export default function MenuVentas() {
         if (response2.data === null) {
           alert("No se encontro el producto");
         } else {
-          alert("Se llegó aquí");
+            setDatosP(response2.data);
         }
       } else if (Filtro === "Modelo") {
         const modeloespacios = encodeURIComponent(Modelo);
@@ -168,6 +170,12 @@ export default function MenuVentas() {
   // Tablas
   const [datosP, setDatosP] = useState([]);
 
+  //Paso a pagina
+  const Agregar= async(e)=>{
+    e.preventDefault
+    navigate("/listaventas")
+  }
+
   // Sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const handleSidebarOpen = () => {
@@ -187,7 +195,7 @@ export default function MenuVentas() {
         <h1>Módulo de Ventas</h1>
       </div>
       <div className="Menu">
-        <h2>Seleccionar productos</h2>
+        <h2 className="h2">Seleccionar productos</h2>
         <h3>Tipo de venta: </h3>
         <Dropdown isOpen={dropdownP} toggle={abrirCerrarDropdownP}>
           <DropdownToggle caret className="DropdownP">
@@ -215,34 +223,36 @@ export default function MenuVentas() {
                 <DropdownItem onClick={() => SelectPrecio()}>Precio</DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            {MostrarNombre && (
-              <div>
-                <input type="text" name="NombreProducto" placeholder="Nombre del producto" onChange={changingNombre} value={Nombre}></input>
-              </div>
-            )}
-            {MostrarMarca && (
-              <div>
-                <input type="text" name="Marca" placeholder="Marca del producto" onChange={changingMarca} value={Marca}></input>
-              </div>
-            )}
-            {MostrarModelo && (
-              <div>
-                <input type="text" name="Modelo" placeholder="Modelo del producto" onChange={changingModelo} value={Modelo}></input>
-              </div>
-            )}
-            {MostrarPrecio && (
-              <div>
-                <input type="text" name="PrecioMin" placeholder="Precio minimo del producto" onChange={changingPrecioMin} value={PrecioMin}></input>
-                <input type="text" name="PrecioMax" placeholder="Precio maximo del producto" onChange={changingPrecioMax} value={PrecioMax}></input>
-              </div>
-            )}
-            <button id="FilterProduct" className="Celeste" onClick={Filtrar}>
-              Filtrar Producto
-            </button>
+                {MostrarNombre && (
+                <div>
+                    <input type="text" className="input" name="NombreProducto" placeholder="Nombre del producto" onChange={changingNombre} value={Nombre}></input>
+                </div>
+                )}
+                {MostrarMarca && (
+                <div>
+                    <input type="text" className="input" name="Marca" placeholder="Marca del producto" onChange={changingMarca} value={Marca}></input>
+                </div>
+                )}
+                {MostrarModelo && (
+                <div>
+                    <input type="text" className="input" name="Modelo" placeholder="Modelo del producto" onChange={changingModelo} value={Modelo}></input>
+                </div>
+                )}
+                {MostrarPrecio && (
+                <div>
+                    <input type="text" className="input" name="PrecioMin" placeholder="Precio minimo del producto" onChange={changingPrecioMin} value={PrecioMin}></input>
+                    <input type="text" className="input" name="PrecioMax" placeholder="Precio maximo del producto" onChange={changingPrecioMax} value={PrecioMax}></input>
+                </div>
+                )}
+                <button id="FilterProduct" className="Celeste" onClick={Filtrar}>
+                Filtrar Producto
+                </button>
+
             <div className="TablaProducto">
               <TablaProductos datos={datosP} />
             </div>
           </div>
+          
         )}
         {MostrarServicio && (
           <div className="Servicio">
@@ -273,7 +283,7 @@ export default function MenuVentas() {
         <button id="Regresar" className="Rojo">
           Regresar
         </button>
-        <button id="Continuar" className="Verde">
+        <button id="Continuar" className="Verde" onClick={Agregar}>
           Añadir Producto
         </button>
       </div>
@@ -282,7 +292,11 @@ export default function MenuVentas() {
 }
 
 function TablaProductos({ datos }) {
-  return (
+    const obtenerID=(id)=>{
+        alert(`ID del producto seleccionado: ${id}`)
+        localStorage.setItem("idProducto", id)
+    }
+    return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
@@ -293,6 +307,7 @@ function TablaProductos({ datos }) {
             <TableCell>Color</TableCell>
             <TableCell>Almacenamiento</TableCell>
             <TableCell>Precio</TableCell>
+            <TableCell>Seleccionar</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -304,6 +319,9 @@ function TablaProductos({ datos }) {
               <TableCell>{productos.color}</TableCell>
               <TableCell>{productos.almacenamiento}</TableCell>
               <TableCell>{productos.precio}</TableCell>
+              <TableCell>
+                <button className="Azul" onClick={()=>obtenerID(productos.id)}>Seleccionar producto</button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
