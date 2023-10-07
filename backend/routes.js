@@ -28,15 +28,15 @@ app.get('/searchdni/:dni', async (req, res) => {
 });
 
 //Buscar producto por nombre
-app.get('/searchproduct/:producto', async (req, res) => {
+app.get('/searchproduct/:nombre', async (req, res) => {
   try {
-    const producto= decodeURIComponent(req.params.producto)
-    const query = "SELECT * FROM productos WHERE CONCAT(marca, ' ', modelo) = $1";
+    const producto= decodeURIComponent(req.params.nombre)
+    const query = "SELECT * FROM celular WHERE CONCAT(marca, ' ', modelo) = $1";
     
     const result= await pool.query(query, [producto])
-    
+    console.log(result.rows)
     if(result.rows.length===0){
-        res.send({id: null})
+        res.json(null)
     }
     else{
         res.json(result.rows)
@@ -51,7 +51,7 @@ app.get('/searchproduct/:producto', async (req, res) => {
 app.get('/searchbrand/:marca', async (req, res) => {
   try {
     const marca= req.params.marca
-    const query = "SELECT * FROM productos WHERE marca = $1";
+    const query = "SELECT * FROM celular WHERE marca = $1";
     const result= await pool.query(query, [marca])
     if(result.rows.length===0){
         res.json(null)
@@ -69,7 +69,7 @@ app.get('/searchbrand/:marca', async (req, res) => {
 app.get('/searchmodel/:modelo', async (req, res) => {
   try {
     const modelo= decodeURIComponent(req.params.modelo)
-    const query = "SELECT * FROM productos WHERE modelo = $1";
+    const query = "SELECT * FROM celular WHERE modelo = $1";
     const result= await pool.query(query, [modelo])
     
     if(result.rows.length===0){
@@ -85,10 +85,10 @@ app.get('/searchmodel/:modelo', async (req, res) => {
 });
 
 //Buscar producto por precio
-app.get('/searchproduct/:producto', async (req, res) => {
+app.get('/searchprodasduct/:producto', async (req, res) => {
   try {
     const producto= decodeURIComponent(req.params.producto)
-    const query = "SELECT * FROM productos WHERE CONCAT(marca, ' ', modelo) = $1";
+    const query = "SELECT * FROM celular WHERE CONCAT(marca, ' ', modelo) = $1";
     
     const result= await pool.query(query, [producto])
     
@@ -109,7 +109,7 @@ app.get('/searchproduct/:producto', async (req, res) => {
 app.post('/registerproduct', async(req, res)=>{
     try {
         const { id, nombre, marca, modelo, precio, color, almacenamiento, idgarantia } = req.body;
-        const query = 'INSERT INTO productos (id, nombre, marca, modelo, precio, color, almacenamiento, idgarantia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
+        const query = 'INSERT INTO celular (id, nombre, marca, modelo, precio, color, almacenamiento, idgarantia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
         const values = [id, nombre, marca, modelo, precio, color, almacenamiento, idgarantia];
     
         const result = await pool.query(query, values);

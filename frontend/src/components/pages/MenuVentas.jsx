@@ -98,7 +98,7 @@ export default function MenuVentas(){
                 const productoEspacios= encodeURIComponent(Nombre)
                 const url1= `http://localhost:3000/searchproduct/${productoEspacios}`
                 const response1= await axios.get(url1)
-                if(response1.data.id==null){
+                if(response1.data==null){
                     alert("No se encontro el producto")
                 }
                 else{
