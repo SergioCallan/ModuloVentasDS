@@ -10,7 +10,11 @@ import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap'
 //
 
 export default function MenuVentas(){
-    
+    //Producto o servicio
+
+    const[MostrarProducto, setMostrarProducto]= useState(false)
+    const[MostrarServicio, setMostrarServicio]= useState(false)
+
     //Dropdown Producto
     const [dropdownP, setDropdownP]=useState(false)
     const abrirCerrarDropdownP=()=>{
@@ -27,9 +31,13 @@ export default function MenuVentas(){
     const [Tipo, setTipo]= useState("")
     const SelectProducto=()=>{
         setTipo("Producto")
+        setMostrarProducto(true)
+        setMostrarServicio(false)
     }
     const SelectServicio=()=>{
         setTipo("Servicio")
+        setMostrarProducto(false)
+        setMostrarServicio(true)
     }
 
     //Filtro
@@ -89,8 +97,9 @@ export default function MenuVentas(){
     const changingPrecioMax=(event)=>{
         setPrecioMax(event.target.value)
     }
-    //Filtrar
-
+    
+    
+    //Filtros
     const Filtrar= async(e)=>{
         e.preventDefault()
         try{
@@ -179,49 +188,52 @@ export default function MenuVentas(){
                         </DropdownMenu>
                     </Dropdown>
                     <br/>
-                    <div className="Productos">
-                        <h3>Filtrar por: </h3>
-                        <Dropdown isOpen={dropdownF} toggle={abrirCerrarDropdownF}>
-                            <DropdownToggle caret className="DropdownF">
-                                    {Filtro}
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem divider/>
-                                <DropdownItem onClick={()=>SelectNombre()}>Nombre del producto</DropdownItem>
-                                <DropdownItem onClick={()=>SelectMarca()}>Marca</DropdownItem>
-                                <DropdownItem onClick={()=>SelectModelo()}>Modelo</DropdownItem>
-                                <DropdownItem onClick={()=>SelectPrecio()}>Precio</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                        {MostrarNombre &&(
-                            <div>
-                                <input type="text" name="NombreProducto" placeholder="Nombre del producto" onChange={changingNombre} value={Nombre}></input>
+                    {MostrarProducto &&(
+                        <div className="Productos">
+                            <h3>Filtrar por: </h3>
+                            <Dropdown isOpen={dropdownF} toggle={abrirCerrarDropdownF}>
+                                <DropdownToggle caret className="DropdownF">
+                                        {Filtro}
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem divider/>
+                                    <DropdownItem onClick={()=>SelectNombre()}>Nombre del producto</DropdownItem>
+                                    <DropdownItem onClick={()=>SelectMarca()}>Marca</DropdownItem>
+                                    <DropdownItem onClick={()=>SelectModelo()}>Modelo</DropdownItem>
+                                    <DropdownItem onClick={()=>SelectPrecio()}>Precio</DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                            {MostrarNombre &&(
+                                <div>
+                                    <input type="text" name="NombreProducto" placeholder="Nombre del producto" onChange={changingNombre} value={Nombre}></input>
+                                </div>
+                            )}
+                            {MostrarMarca &&(
+                                <div>
+                                    <input type="text" name="Marca" placeholder="Marca del producto" onChange={changingMarca} value={Marca}></input>
+                                </div>
+                            )}
+                            {MostrarModelo &&(
+                                <div>
+                                    <input type="text" name="Modelo" placeholder="Modelo del producto" onChange={changingModelo} value={Modelo}></input>
+                                </div>
+                            )}
+                            {MostrarPrecio &&(
+                                <div>
+                                    <input type="text" name="PrecioMin" placeholder="Precio minimo del producto" onChange={changingPrecioMin} value={PrecioMin}></input>
+                                    <input type="text" name="PrecioMax" placeholder="Precio maximo del producto" onChange={changingPrecioMax} value={PrecioMax}></input>
+                                </div>
+                            )}
+                            <button id="FilterProduct" className="Celeste" onClick={Filtrar}>Filtrar Producto</button>
+                            <div className="TablaProducto">
                             </div>
-                        )}
-                        {MostrarMarca &&(
-                            <div>
-                                <input type="text" name="Marca" placeholder="Marca del producto" onChange={changingMarca} value={Marca}></input>
-                            </div>
-                        )}
-                        {MostrarModelo &&(
-                            <div>
-                                <input type="text" name="Modelo" placeholder="Modelo del producto" onChange={changingModelo} value={Modelo}></input>
-                            </div>
-                        )}
-                        {MostrarPrecio &&(
-                            <div>
-                                <input type="text" name="PrecioMin" placeholder="Precio minimo del producto" onChange={changingPrecioMin} value={PrecioMin}></input>
-                                <input type="text" name="PrecioMax" placeholder="Precio maximo del producto" onChange={changingPrecioMax} value={PrecioMax}></input>
-                            </div>
-                        )}
-                        <button id="FilterProduct" className="Celeste" onClick={Filtrar}>Filtrar Producto</button>
-                        <div className="TablaProducto">
-                            
                         </div>
-                    </div>
-                    <div className="Servicio">
+                    )}
+                    {MostrarServicio && (
+                        <div className="Servicio">
 
-                    </div>
+                        </div>
+                    )}
                 </div>
             </main>
         </body>
