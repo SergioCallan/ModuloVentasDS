@@ -66,18 +66,17 @@ app.get('/searchbrand/:marca', async (req, res) => {
 });
 
 //Buscar producto por modelo
-app.get('/searchproduct/:producto', async (req, res) => {
+app.get('/searchmodel/:modelo', async (req, res) => {
   try {
-    const producto= decodeURIComponent(req.params.producto)
-    const query = "SELECT * FROM productos WHERE CONCAT(marca, ' ', modelo) = $1";
-    
-    const result= await pool.query(query, [producto])
+    const modelo= decodeURIComponent(req.params.modelo)
+    const query = "SELECT * FROM productos WHERE modelo = $1";
+    const result= await pool.query(query, [modelo])
     
     if(result.rows.length===0){
-        res.send({id: null})
+        res.json(null)
     }
     else{
-        res.json(result.rows[0])
+        res.json(result.rows)
     }
   } catch (error) {
     console.error('Error al obtener producto:', error);

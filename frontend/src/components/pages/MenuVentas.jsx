@@ -116,9 +116,10 @@ export default function MenuVentas(){
                 }
             }
             else if(Filtro=="Modelo"){
-                const url3= `http://localhost:3000/searchmodel/${Modelo}`
-                const response3= await axios.get(url1)
-                if(response3.data.id==null){
+                const modeloespacios= encodeURIComponent(Modelo)
+                const url3= `http://localhost:3000/searchmodel/${modeloespacios}`
+                const response3= await axios.get(url3)
+                if(response3.data==null){
                     alert("No se encontro el producto")
                 }
                 else{
