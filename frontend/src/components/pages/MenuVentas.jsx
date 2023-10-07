@@ -20,10 +20,15 @@ export default function MenuVentas(){
     const abrirCerrarDropdownP=()=>{
         setDropdownP(!dropdownP)
     }
-    //Dropdown Filtro
+    //Dropdown Filtro Producto
     const [dropdownF, setDropdownF]=useState(false)
     const abrirCerrarDropdownF=()=>{
         setDropdownF(!dropdownF)
+    }
+    //Dropdown Filtro Servicio
+    const [dropdownFS, setDropdownFS]=useState(false)
+    const abrirCerrarDropdownFS=()=>{
+        setDropdownFS(!dropdownFS)
     }
 
 
@@ -40,7 +45,7 @@ export default function MenuVentas(){
         setMostrarServicio(true)
     }
 
-    //Filtro
+    //Filtro Producto
     const [Filtro, setFiltro]= useState("")
     const SelectNombre=()=>{
         setFiltro("Nombre")
@@ -74,6 +79,10 @@ export default function MenuVentas(){
     const [MostrarMarca, setMostrarMarca]= useState(false)
     const [MostrarModelo, setMostrarModelo]= useState(false)
     const [MostrarPrecio, setMostrarPrecio]= useState(false)
+
+    //Filtro Producto
+    const [FiltroS, setFiltroS]= useState("")
+
 
     //Campos del filtro
     const [Nombre, setNombre]= useState("")
@@ -231,9 +240,21 @@ export default function MenuVentas(){
                     )}
                     {MostrarServicio && (
                         <div className="Servicio">
-
+                            <h3>Filtrar por: </h3>
+                            <Dropdown isOpen={dropdownFS} toggle={abrirCerrarDropdownFS}>
+                                <DropdownToggle caret className="DropdownFS">
+                                        {FiltroS}
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem divider/>
+                                    <DropdownItem onClick={()=>SelectNombre()}>Megas</DropdownItem>
+                                    <DropdownItem onClick={()=>SelectNombre()}>Precio</DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
                         </div>
                     )}
+                    <button id="Regresar" className="Rojo">Regresar</button>
+                    <button id="Continuar" className="Verde">Añadir Producto</button>
                 </div>
             </main>
         </body>
