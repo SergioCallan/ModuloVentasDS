@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../extras/Sidebar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -176,6 +176,11 @@ export default function MenuVentas() {
     navigate("/listaventas")
   }
 
+  const Regresar= async(e)=>{
+    e.preventDefault
+    navigate("/buscarcliente")
+  }
+
   // Sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const handleSidebarOpen = () => {
@@ -184,6 +189,14 @@ export default function MenuVentas() {
   const handleSidebarClose = () => {
     setSidebarOpen(false);
   };
+
+  //Función para comprobar que haya un cliente
+  useEffect(()=>{
+    const dni= localStorage.getItem("dnicliente")
+      if(dni==null || dni==""){
+          navigate("/buscarcliente")
+      }
+  })
 
   return (
     <main>
@@ -280,7 +293,7 @@ export default function MenuVentas() {
             )}
           </div>
         )}
-        <button id="Regresar" className="Rojo">
+        <button id="Regresar" className="Rojo" onClick={Regresar}>
           Regresar
         </button>
         <button id="Continuar" className="Verde" onClick={Agregar}>

@@ -4,6 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../styles/ListaVentas.css"
 import {
   TableContainer,
   Table,
@@ -43,6 +44,14 @@ export default function ListaVentas() {
     }
   };
 
+  //Función para comprobar que haya un cliente
+  useEffect(()=>{
+    const dnicliente= localStorage.getItem("dnicliente")
+      if(dnicliente==null || dnicliente==""){
+          navigate('/buscarcliente')
+      }
+  })
+
   return (
     <div>
       <Sidebar />
@@ -51,7 +60,7 @@ export default function ListaVentas() {
           <h1>Módulo de Ventas</h1>
         </div>
         <div className="Lista">
-          <h2>Lista de productos</h2>
+          <h2 className="h2">Lista de productos</h2>
           <TablaVenta datos={datosventa} eliminarID={eliminarID} />
           <button id="Cancelar" className="Rojo">
             Cancelar Venta
@@ -86,7 +95,7 @@ function TablaVenta({ datos, eliminarID }) {
               <TableCell>Huawei P Smart 2019</TableCell>
               <TableCell>990.00</TableCell>
               <TableCell>
-                <button onClick={() => eliminarID(productos.id)}>
+                <button className="Rojo" onClick={() => eliminarID(productos.id)}>
                   Retirar producto
                 </button>
               </TableCell>

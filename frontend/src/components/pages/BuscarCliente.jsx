@@ -47,6 +47,7 @@ export default function GenerarVenta(){
 
     const Confirmar=()=>{
         setInputDisabled(true)
+        localStorage.setItem("dnicliente", DNI)
     }
 
     const Cancelar=()=>{
@@ -55,6 +56,8 @@ export default function GenerarVenta(){
         setNombre("")
         setApellido("")
         setCorreo("")
+        
+        localStorage.removeItem("dnicliente")
     }
 
     const Avanzar=()=>{
