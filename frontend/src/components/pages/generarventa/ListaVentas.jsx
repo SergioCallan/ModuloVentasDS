@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../extras/Sidebar";
+import Sidebar from "../../extras/Sidebar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../styles/ListaVentas.css"
+import "../../styles/ListaVentas.css"
 import {
   TableContainer,
   Table,

@@ -1,9 +1,9 @@
 import React, {useState} from "react"
-import Sidebar from "../extras/Sidebar"
+import Sidebar from "../../extras/Sidebar"
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import axios from 'axios'
-import "../styles/BuscarCliente.css"
+import "../../styles/Buscarcliente.css"
 import {useNavigate} from 'react-router-dom'
 
 
