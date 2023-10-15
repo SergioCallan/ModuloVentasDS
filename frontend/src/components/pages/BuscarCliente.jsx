@@ -39,6 +39,7 @@ export default function GenerarVenta(){
                 setNombre(response0.data.nombres)
                 setApellido(response0.data.apellidos)
                 setCorreo(response0.data.email)
+                localStorage.setItem("dnicliente", DNI)
             }
         }catch(error){
             console.error("Error al enviar la solicitud: ", error)
@@ -47,7 +48,6 @@ export default function GenerarVenta(){
 
     const Confirmar=()=>{
         setInputDisabled(true)
-        localStorage.setItem("dnicliente", DNI)
     }
 
     const Cancelar=()=>{
@@ -56,7 +56,6 @@ export default function GenerarVenta(){
         setNombre("")
         setApellido("")
         setCorreo("")
-        
         localStorage.removeItem("dnicliente")
     }
 
