@@ -35,7 +35,7 @@ export default function ListaVentas() {
   // Función para eliminar un producto
   const eliminarID = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/delete/${id}`);
+      await axios.delete(`http://localhost:4000/delete/${id}`);
       // Actualizar la lista de datos después de eliminar
       cargarDatosVenta();
       console.log("Producto eliminado con ID:", id);

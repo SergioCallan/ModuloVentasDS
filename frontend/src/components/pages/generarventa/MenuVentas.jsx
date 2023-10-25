@@ -125,7 +125,7 @@ export default function MenuVentas() {
     try {
       if (Filtro === "Nombre") {
         const productoEspacios = encodeURIComponent(Nombre);
-        const url1 = `http://localhost:3000/searchproduct/${productoEspacios}`;
+        const url1 = `http://localhost:4000/searchproduct/${productoEspacios}`;
         const response1 = await axios.get(url1);
         if (response1.data === null) {
           alert("No se encontro el producto");
@@ -133,7 +133,7 @@ export default function MenuVentas() {
             setDatosP(response1.data);
         }
       } else if (Filtro === "Marca") {
-        const url2 = `http://localhost:3000/searchbrand/${Marca}`;
+        const url2 = `http://localhost:4000/searchbrand/${Marca}`;
         const response2 = await axios.get(url2);
         if (response2.data === null) {
           alert("No se encontro el producto");
@@ -142,7 +142,7 @@ export default function MenuVentas() {
         }
       } else if (Filtro === "Modelo") {
         const modeloespacios = encodeURIComponent(Modelo);
-        const url3 = `http://localhost:3000/searchmodel/${modeloespacios}`;
+        const url3 = `http://localhost:4000/searchmodel/${modeloespacios}`;
         const response3 = await axios.get(url3);
         if (response3.data === null) {
           alert("No se encontro el producto");
@@ -154,7 +154,7 @@ export default function MenuVentas() {
           preciomin: PrecioMin,
           preciomax: PrecioMax,
         };
-        const url4 = `http://localhost:3000/searchprice/${intervaloP}`;
+        const url4 = `http://localhost:4000/searchprice/${intervaloP}`;
         const response4 = await axios.get(url4);
         if (response4.data.id === null) {
           alert("No se encontro el producto");

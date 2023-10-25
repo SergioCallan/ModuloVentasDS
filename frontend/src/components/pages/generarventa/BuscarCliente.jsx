@@ -25,7 +25,7 @@ export default function GenerarVenta(){
         e.preventDefault();
         try{
             const dni= DNI
-            const url0= `http://localhost:3000/searchdni/${dni}`
+            const url0= `http://localhost:4000/searchdni/${dni}`
             const response0= await axios.get(url0)
             
             if(response0.data.nombres==null){

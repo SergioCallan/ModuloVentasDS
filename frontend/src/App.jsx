@@ -1,4 +1,10 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom"
+import Principal from './components/pages/agregaractualizar/Principal'
+import Phone from './components/pages/agregaractualizar/Phone'
+import Internet from './components/pages/agregaractualizar/Internet'
+import ListPhone from './components/pages/agregaractualizar/ListPhone'
+import ListInternet from './components/pages/agregaractualizar/ListInternet'
+
 import BuscarCliente from "./components/pages/generarventa/BuscarCliente"
 import MenuVentas from "./components/pages/generarventa/MenuVentas"
 import ListaVentas from "./components/pages/generarventa/ListaVentas"
@@ -7,6 +13,13 @@ function App(){
   return(
     <BrowserRouter>
           <Routes>
+              <Route path ='/' element={<Principal/>} />
+              <Route path='/phone' element={<Phone/>}/>
+              <Route path='/internet' element={<Internet/>}/>
+              <Route path='/listPhone' element={<ListPhone/>}/>
+              <Route path='/phone/:id/edit' element={<Phone/>}/>
+              <Route path='/listInternet' element={<ListInternet/>}/>
+              <Route path='/internet/:id/edit' element={<Internet/>}/>
               <Route path="/buscarcliente" element={<BuscarCliente/>}/>
               <Route path="/menuventas" element={<MenuVentas/>}/>
               <Route path="/listaventas" element={<ListaVentas/>}/>
