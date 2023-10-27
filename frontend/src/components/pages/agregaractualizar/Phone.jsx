@@ -2,6 +2,7 @@ import {Button, Card, CardContent, DialogActions, DialogContent, DialogContentTe
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import ListPhone from './ListPhone';
 export default function Phone(){
 
@@ -9,6 +10,7 @@ export default function Phone(){
   const params = useParams();
 
   const [phone, setPhone] = useState({
+    id: "",
     marca: "",
     modelo: "",
     color: "",
@@ -38,6 +40,7 @@ const handleRegresar = () => {
         headers: { "Content-Type": "application/json" }
       });
     }else{
+      setPhone(phone.id= uuidv4())
       await axios.post("http://localhost:4000/phone", phone, {
         headers: { "Content-Type": "application/json" },
       });
@@ -57,6 +60,7 @@ const handleRegresar = () => {
         const res = await axios.get(`http://localhost:4000/phone/${id}`);
         const data = await res.data;
         setPhone({
+          id: data.id_celular,
           marca: data.marca,
           modelo: data.modelo,
           color: data.color,
@@ -90,7 +94,9 @@ const handleRegresar = () => {
                         disabled
                         id="outlined-required"
                         label="Celular" 
+                        name= "ID"
                         variant="outlined"
+                        value={phone.id}
                         style={{
                           margin: '10px'
                         }}

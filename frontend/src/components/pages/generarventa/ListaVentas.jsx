@@ -16,41 +16,40 @@ import {
 } from "@mui/material";
 
 export default function ListaVentas() {
-  const [datosventa, setDatosVenta] = useState([]);
-  const navigate = useNavigate();
+  const [data, setData]= useState([])
+  const navigate= useNavigate()
 
-  // Función para cargar los datos de venta
-  const cargarDatosVenta = async () => {
-    
-  };
-
-  const Ventaregistro= async(e)=>{
-    alert("Venta registrada")
+  const getdetails= async()=>{
+    const idventa= localStorage.getItem("venta")
+    const url0=`http://localhost:4000/getselldetails/${idventa}`
+    const response0= await axios.get(url0)
+    if(response0.data==null){
+      alert("No se encontraron productos en la lista")
+      navigate("/menuventas")
+    }
+    setData(response0.data)
   }
 
-  useEffect(() => {
-    cargarDatosVenta();
-  }, []);
-
-  // Función para eliminar un producto
-  const eliminarID = async (id) => {
-    try {
-      await axios.delete(`http://localhost:4000/delete/${id}`);
-      // Actualizar la lista de datos después de eliminar
-      cargarDatosVenta();
-      console.log("Producto eliminado con ID:", id);
-    } catch (error) {
-      console.error("Error al eliminar producto:", error);
-    }
-  };
-
-  //Función para comprobar que haya un cliente
   useEffect(()=>{
-    const dnicliente= localStorage.getItem("dnicliente")
-      if(dnicliente==null || dnicliente==""){
-          navigate('/buscarcliente')
-      }
-  })
+    getdetails().catch((error)=>{
+      console.log(error)
+    })
+  }, [])
+
+  const CancelarTodo= async (e)=>{
+    e.preventDefault();
+    alert("Funciona")
+  }
+
+  const AgregarProducto= async (e)=>{
+    e.preventDefault();
+    alert("Funciona")
+  }
+
+  const Registrar= async (e)=>{
+    e.preventDefault();
+    alert("Funciona")
+  }
 
   return (
     <div>
@@ -61,47 +60,54 @@ export default function ListaVentas() {
         </div>
         <div className="Lista">
           <h2 className="h2">Lista de productos</h2>
-          <TablaVenta datos={datosventa} eliminarID={eliminarID} />
-          <button id="Cancelar" className="Rojo">
-            Cancelar Venta
-          </button>
-          <button id="AgregarP" className="Celeste">
-            Añadir otro producto
-          </button>
-          <button id="Registrar" className="Verde" onClick={Ventaregistro}>
-            Registrar Venta
-          </button>
+          <TablaDetalles datos={data}/>
+        </div>
+        <div className="Buttons">
+          <button className="Rojo" onClick={CancelarTodo}>Cancelar Venta</button>
+          <button className="Celeste" onClick={AgregarProducto}>Agregar otro producto</button>
+          <button className="Verde" onClick={Registrar}>Confirmar venta</button>
         </div>
       </main>
     </div>
   );
 }
 
-function TablaVenta({ datos, eliminarID }) {
-  return (
+function TablaDetalles({datos}){
+  const obtenerID=(id_producto, tipo)=>{
+    localStorage.setItem("idcompra", id_producto)
+  }
+
+
+  return(
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Precio</TableCell>
+            <TableCell>ID de la venta</TableCell>
+            <TableCell>ID de los detalles</TableCell>
+            <TableCell>ID del producto</TableCell>
+            <TableCell>Cantidad</TableCell>
+            <TableCell></TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-            <TableRow >
-              <TableCell>12345678</TableCell>
-              <TableCell>Huawei P Smart 2019</TableCell>
-              <TableCell>990.00</TableCell>
+          {datos.map((detalles, index)=>(
+            <TableRow key={index}>
+              <TableCell>{detalles.id_venta}</TableCell>
+              <TableCell>{detalles.id_detalle}</TableCell>
+              <TableCell>{detalles.id_producto}</TableCell>
+              <TableCell>{detalles.cantidad}</TableCell>
               <TableCell>
-                <button className="Rojo" onClick={() => eliminarID(productos.id)}>
-                  Retirar producto
-                </button>
+                <button className="Azul" onClick={()=>obtenerID(detalles.id_producto)}>Más información</button>
+              </TableCell>
+              <TableCell>
+                <button className="Rojo">Eliminar de la lista</button>
               </TableCell>
             </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
-  );
+  )
 }

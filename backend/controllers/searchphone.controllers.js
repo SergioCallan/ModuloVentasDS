@@ -19,6 +19,7 @@ const searchproduct= async(req, res)=>{
     }
 }
 
+//Buscar producto por marca
 const searchbrand= async(req, res)=>{
     try {
         const marca= req.params.marca
@@ -36,12 +37,13 @@ const searchbrand= async(req, res)=>{
     }
 }
 
+//Buscar producto por modelo
 const searchmodel= async(req, res)=>{
     try {
         const modelo= decodeURIComponent(req.params.modelo)
         const query = "SELECT * FROM celular WHERE modelo = $1";
         const result= await pool.query(query, [modelo])
-        
+        console.log(modelo)
         if(result.rows.length===0){
             res.json(null)
         }
@@ -54,10 +56,11 @@ const searchmodel= async(req, res)=>{
     }
 }
 
+//Buscar producto por id
 const searchid= async(req, res)=>{
     try {
         const idbusqueda= req.params.id
-        const query = "SELECT * FROM celular WHERE id = $1";
+        const query = "SELECT * FROM celular WHERE id_celular = $1";
         
         const result= await pool.query(query, [idbusqueda])
         

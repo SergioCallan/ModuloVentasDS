@@ -1,8 +1,9 @@
 const { Router } = require('express');
 const { getAllPhone, getPhone, createPhone, deletePhone, updatePhone } = require('../controllers/phone.controllers');
 const { getAllInternet, getInternet, createInternet, deleteInternet, updateInternet } = require('../controllers/internet.controllers');
-const {searchproduct, searchbrand, searchmodel, searchid}= require('../controllers/search.controllers')
+const {searchproduct, searchbrand, searchmodel, searchid}= require('../controllers/searchphone.controllers')
 const {searchdni}= require('../controllers/client.controllers')
+const {addDetails, getSellDetails}= require('../controllers/sell.controllers')
 
 const router = Router();
 
@@ -40,12 +41,14 @@ router.get('/searchproduct/:nombre', searchproduct)
 
 router.get('/searchbrand/:marca', searchbrand)
 
-router.get('/searchmodel/:model', searchmodel)
+router.get('/searchmodel/:modelo', searchmodel)
 
-router.get('searchid/:id', searchid)
+router.get('/searchid/:id', searchid)
 
 //Rutas para ventas
 
+router.post('/adddetail', addDetails)
 
+router.get('/getselldetails/:idventa', getSellDetails)
 
 module.exports = router;

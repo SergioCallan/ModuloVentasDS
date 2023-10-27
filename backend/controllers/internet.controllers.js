@@ -25,10 +25,9 @@ const getInternet = async (req, res, next) => {
 
 const createInternet = async (req, res, next) => {
     try {        
-        const {megas, precio} = req.body;
-
-        const result = await pool.query('INSERT INTO internet (megas, precio) VALUES ($1,$2)',[
-            megas, precio
+        const {id, megas, precio, estado} = req.body;
+        const result = await pool.query('INSERT INTO internet (id_internet, megas, precio, estado) VALUES ($1,$2, $3, $4)',[
+            id, megas, precio, estado
         ]);
 
         return res.json(result.rows[0]);

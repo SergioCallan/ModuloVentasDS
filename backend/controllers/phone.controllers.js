@@ -25,10 +25,10 @@ const getPhone =  async (req, res) => {
 
 const createPhone = async (req, res, next) => {
     try {        
-        const {marca, modelo, precio, color, almacenamiento} = req.body;
-
-        const result = await pool.query('INSERT INTO celular (marca, modelo, precio, color, almacenamiento) VALUES ($1,$2,$3,$4,$5) RETURNING *',[
-            marca, modelo, precio, color, almacenamiento
+        const {id, marca, modelo, precio, color, almacenamiento} = req.body;
+        console.log(id)
+        const result = await pool.query('INSERT INTO celular (id_celular, marca, modelo, precio, color, almacenamiento) VALUES ($1,$2,$3,$4,$5, $6) RETURNING *',[
+            id, marca, modelo, precio, color, almacenamiento
         ]);
 
         return res.json(result.rows[0]);

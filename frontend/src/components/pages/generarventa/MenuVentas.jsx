@@ -6,44 +6,17 @@ import axios from "axios";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/MenuVentas.css"
 
 export default function MenuVentas() {
-    const navigate= useNavigate()
-  // Producto o servicio
-  const [MostrarProducto, setMostrarProducto] = useState(false);
-  const [MostrarServicio, setMostrarServicio] = useState(false);
-
-  // Dropdown Producto
-  const [dropdownP, setDropdownP] = useState(false);
-  const abrirCerrarDropdownP = () => {
-    setDropdownP(!dropdownP);
-  };
+  const navigate= useNavigate()
 
   // Dropdown Filtro Producto
   const [dropdownF, setDropdownF] = useState(false);
   const abrirCerrarDropdownF = () => {
     setDropdownF(!dropdownF);
-  };
-
-  // Dropdown Filtro Servicio
-  const [dropdownFS, setDropdownFS] = useState(false);
-  const abrirCerrarDropdownFS = () => {
-    setDropdownFS(!dropdownFS);
-  };
-
-  // Tipo
-  const [Tipo, setTipo] = useState("");
-  const SelectProducto = () => {
-    setTipo("Producto");
-    setMostrarProducto(true);
-    setMostrarServicio(false);
-  };
-  const SelectServicio = () => {
-    setTipo("Servicio");
-    setMostrarProducto(false);
-    setMostrarServicio(true);
   };
 
   // Filtro Producto
@@ -80,21 +53,6 @@ export default function MenuVentas() {
   const [MostrarMarca, setMostrarMarca] = useState(false);
   const [MostrarModelo, setMostrarModelo] = useState(false);
   const [MostrarPrecio, setMostrarPrecio] = useState(false);
-
-  // Filtro Servicio
-  const [FiltroS, setFiltroS] = useState("");
-  const SelectMegas = () => {
-    setFiltroS("Megas");
-    setMostrarMegas(true);
-    setMostrarPrecioS(false);
-  };
-  const SelectPrecioS = () => {
-    setFiltroS("Precio");
-    setMostrarMegas(false);
-    setMostrarPrecioS(true);
-  };
-  const [MostrarMegas, setMostrarMegas] = useState(false);
-  const [MostrarPrecioS, setMostrarPrecioS] = useState(false);
 
   // Campos del filtro Producto
   const [Nombre, setNombre] = useState("");
@@ -172,8 +130,23 @@ export default function MenuVentas() {
 
   //Paso a pagina
   const Agregar= async(e)=>{
-    e.preventDefault
-    navigate("/listaventas")
+    e.preventDefault()
+    const id= localStorage.getItem("venta") 
+    if(id==""){
+      const nuevaventa= uuidv4()
+      localStorage.setItem("venta", nuevaventa)
+    }
+    const detalleventa={
+      id_venta: localStorage.getItem("venta"),
+      id_detalle: uuidv4(),
+      id_producto: localStorage.getItem('idProducto'),
+      cantidad: 1,
+      id_garantia: "0"  
+    }
+    const url5= `http://localhost:4000/adddetail`
+    const response5= await axios.post(url5, detalleventa)
+    alert("Venta realizada")
+    navigate('/listaventas')
   }
 
   const Regresar= async(e)=>{
@@ -209,19 +182,8 @@ export default function MenuVentas() {
       </div>
       <div className="Menu">
         <h2 className="h2">Seleccionar productos</h2>
-        <h3>Tipo de venta: </h3>
-        <Dropdown isOpen={dropdownP} toggle={abrirCerrarDropdownP}>
-          <DropdownToggle caret className="DropdownP">
-            {Tipo}
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem divider />
-            <DropdownItem onClick={() => SelectProducto()}>Producto</DropdownItem>
-            <DropdownItem onClick={() => SelectServicio()}>Servicio</DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+        <h3>Tipo de venta: Producto</h3>
         <br />
-        {MostrarProducto && (
           <div className="Productos">
             <h3>Filtrar por: </h3>
             <Dropdown isOpen={dropdownF} toggle={abrirCerrarDropdownF}>
@@ -265,34 +227,6 @@ export default function MenuVentas() {
               <TablaProductos datos={datosP} />
             </div>
           </div>
-          
-        )}
-        {MostrarServicio && (
-          <div className="Servicio">
-            <h3>Filtrar por: </h3>
-            <Dropdown isOpen={dropdownFS} toggle={abrirCerrarDropdownFS}>
-              <DropdownToggle caret className="DropdownFS">
-                {FiltroS}
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem divider />
-                <DropdownItem onClick={() => SelectMegas()}>Megas</DropdownItem>
-                <DropdownItem onClick={() => SelectPrecioS()}>Precio</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            {MostrarMegas && (
-              <div>
-                <input type="text" name="Megas" placeholder="Megas"></input>
-              </div>
-            )}
-            {MostrarPrecioS && (
-              <div>
-                <input type="number" name="PrecioSMin" placeholder="Precio minimo"></input>
-                <input type="number" name="PrecioSMax" placeholder="Precio maximo"></input>
-              </div>
-            )}
-          </div>
-        )}
         <button id="Regresar" className="Rojo" onClick={Regresar}>
           Regresar
         </button>
@@ -306,8 +240,8 @@ export default function MenuVentas() {
 
 function TablaProductos({ datos }) {
     const obtenerID=(id)=>{
-        alert(`ID del producto seleccionado: ${id}`)
-        localStorage.setItem("idProducto", id)
+      alert(`ID del producto seleccionado: ${id}`)
+      localStorage.setItem("idProducto", id)
     }
     return (
     <TableContainer component={Paper}>
@@ -326,14 +260,14 @@ function TablaProductos({ datos }) {
         <TableBody>
           {datos.map((productos, index) => (
             <TableRow key={index}>
-              <TableCell>{productos.id}</TableCell>
+              <TableCell>{productos.id_celular}</TableCell>
               <TableCell>{productos.marca}</TableCell>
               <TableCell>{productos.modelo}</TableCell>
               <TableCell>{productos.color}</TableCell>
               <TableCell>{productos.almacenamiento}</TableCell>
               <TableCell>{productos.precio}</TableCell>
               <TableCell>
-                <button className="Azul" onClick={()=>obtenerID(productos.id)}>Seleccionar producto</button>
+                <button className="Azul" onClick={()=>obtenerID(productos.id_celular)}>Seleccionar producto</button>
               </TableCell>
             </TableRow>
           ))}

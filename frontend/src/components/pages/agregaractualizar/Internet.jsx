@@ -2,6 +2,7 @@ import {Button, Card, CardContent, DialogActions, DialogContent, DialogContentTe
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import ListInternet from './ListInternet'
 
 export default function Internet(){
@@ -9,8 +10,10 @@ export default function Internet(){
   const params = useParams();
 
     const [internet, setInternet] = useState({
+        id: "",
         megas: "",
         precio: "",
+        estado: "Disponible"
       })
 
     const handleRegresar = () => {
@@ -35,6 +38,7 @@ export default function Internet(){
             headers: { "Content-Type": "application/json" }
           });
         }else{
+          setInternet(internet.id= uuidv4())
           await axios.post("http://localhost:4000/internet", internet, {
             headers: { "Content-Type": "application/json" },
           });
@@ -143,6 +147,8 @@ export default function Internet(){
                     <strong>Megas:</strong> {internet.megas}
                     <br />
                     <strong>Precio:</strong> {internet.precio}
+                    <br />
+                    <strong>Estado: </strong> {internet.estado}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>

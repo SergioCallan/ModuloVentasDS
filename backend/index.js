@@ -19,4 +19,4 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(4000)
-console.log('Server 4000')
+console.log('Servidor iniciado en el puerto 4000')
