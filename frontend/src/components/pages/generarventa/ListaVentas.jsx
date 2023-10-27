@@ -38,17 +38,36 @@ export default function ListaVentas() {
 
   const CancelarTodo= async (e)=>{
     e.preventDefault();
-    alert("Funciona")
+    try{
+      const idventa= localStorage.getItem("venta")
+      const url1= `http://localhost:4000/deletesell/${idventa}`
+      const response1= await axios.delete(url1)
+      alert("Se ha cancelado la venta")
+      localStorage.clear()
+      navigate("/buscarcliente")
+    }catch(error){
+      console.error("Error en la cancelacion de venta: ", error)
+    }
   }
 
   const AgregarProducto= async (e)=>{
     e.preventDefault();
-    alert("Funciona")
+    navigate("/menuventas")
   }
+
 
   const Registrar= async (e)=>{
     e.preventDefault();
-    alert("Funciona")
+    const venta={
+      id_venta: localStorage.getItem("venta"),
+      dni_cliente: localStorage.getItem("dnicliente"),
+      fecha: new Date(),
+    }
+    const url2= `http://localhost:4000/registersell`
+    const response2= await axios.post(url2, venta)
+    alert("Venta realizada")
+    localStorage.clear()
+    navigate("/buscarcliente")
   }
 
   return (

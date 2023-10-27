@@ -31,7 +31,32 @@ const getSellDetails= async(req, res)=>{
     }
 }
 
+const deleteSell= async(req, res)=>{
+    try{
+        const idventa= req.params.idventa
+        const query= "DELETE FROM detalleventa WHERE id_venta=$1"
+        const result= await pool.query(query, [idventa])
+        res.send("Vuelo eliminado")
+    }catch(error){
+        console.log('Error al eliminar los datos: ', error)
+    }
+}
+
+const registerSell= async(req, res)=>{
+    try{
+        const {id_venta, dni_cliente, fecha}= req.body
+        const query= "INSERT INTO venta (id_venta, dni_cliente, fecha) VALUES($1, $2, $3) RETURNING *"
+        const values= [id_venta, dni_cliente, fecha]
+        const result= await pool.query(query, values)
+        return res.json(result.rows[0])
+    }catch(error){
+        console.error('Error al guardar la venta: ', error)
+    }
+}
+
 module.exports={
     addDetails,
-    getSellDetails
+    getSellDetails,
+    deleteSell,
+    registerSell
 }

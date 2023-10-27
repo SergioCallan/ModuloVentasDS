@@ -3,7 +3,7 @@ const { getAllPhone, getPhone, createPhone, deletePhone, updatePhone } = require
 const { getAllInternet, getInternet, createInternet, deleteInternet, updateInternet } = require('../controllers/internet.controllers');
 const {searchproduct, searchbrand, searchmodel, searchid}= require('../controllers/searchphone.controllers')
 const {searchdni}= require('../controllers/client.controllers')
-const {addDetails, getSellDetails}= require('../controllers/sell.controllers')
+const {addDetails, getSellDetails, deleteSell, registerSell}= require('../controllers/sell.controllers')
 
 const router = Router();
 
@@ -51,4 +51,7 @@ router.post('/adddetail', addDetails)
 
 router.get('/getselldetails/:idventa', getSellDetails)
 
+router.delete('/deletesell/:idventa', deleteSell)
+
+router.post('/registersell', registerSell)
 module.exports = router;

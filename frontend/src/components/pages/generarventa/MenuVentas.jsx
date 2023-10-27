@@ -132,7 +132,7 @@ export default function MenuVentas() {
   const Agregar= async(e)=>{
     e.preventDefault()
     const id= localStorage.getItem("venta") 
-    if(id==""){
+    if(id=="" || id==null){
       const nuevaventa= uuidv4()
       localStorage.setItem("venta", nuevaventa)
     }
@@ -145,7 +145,7 @@ export default function MenuVentas() {
     }
     const url5= `http://localhost:4000/adddetail`
     const response5= await axios.post(url5, detalleventa)
-    alert("Venta realizada")
+    console.log(response5.data)
     navigate('/listaventas')
   }
 
