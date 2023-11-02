@@ -4,10 +4,12 @@ import Phone from './components/pages/agregaractualizar/Phone'
 import Internet from './components/pages/agregaractualizar/Internet'
 import ListPhone from './components/pages/agregaractualizar/ListPhone'
 import ListInternet from './components/pages/agregaractualizar/ListInternet'
-
-import BuscarCliente from "./components/pages/generarventa/BuscarCliente"
 import MenuVentas from "./components/pages/generarventa/MenuVentas"
+import BuscarCliente from "./components/pages/generarventa/BuscarCliente"
+import BuscarProducto from "./components/pages/generarventa/BuscarProducto"
+import BuscarPlan from "./components/pages/controlarfacturacion/BuscarPlan"
 import ListaVentas from "./components/pages/generarventa/ListaVentas"
+import AsociarPlan from "./components/pages/controlarfacturacion/AsociarPlan"
 
 function App(){
   return(
@@ -22,7 +24,10 @@ function App(){
               <Route path='/internet/:id/edit' element={<Internet/>}/>
               <Route path="/buscarcliente" element={<BuscarCliente/>}/>
               <Route path="/menuventas" element={<MenuVentas/>}/>
+              <Route path="/buscarproducto" element={<BuscarProducto/>}/>
+              <Route path="/buscarplan" element={<BuscarPlan/>}/>
               <Route path="/listaventas" element={<ListaVentas/>}/>
+              <Route path="/asociarplan" element={<AsociarPlan/>}/>
           </Routes>
     </BrowserRouter>
   )

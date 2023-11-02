@@ -7,7 +7,7 @@ import "../../styles/Buscarcliente.css"
 import {useNavigate} from 'react-router-dom'
 
 
-export default function GenerarVenta(){
+export default function BuscarCliente(){
     const navigate= useNavigate()
     //Clientes
     const [DNI, setDNI]= useState("")

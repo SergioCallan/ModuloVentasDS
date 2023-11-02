@@ -4,9 +4,9 @@ const pool= require ('../db')
 
 const addDetails= async(req, res)=>{
     try{
-        const {id_venta, id_detalle, id_producto, cantidad, id_garantia}= req.body
-        const query= "INSERT INTO detalleventa (id_venta, id_detalle, id_producto, cantidad, id_garantia) VALUES ($1, $2, $3, $4, $5) RETURNING *"
-        const values= [id_venta, id_detalle, id_producto, cantidad, id_garantia]
+        const {id_venta, id_detalle, id_producto, cantidad, id_garantia, tipo}= req.body
+        const query= "INSERT INTO detalleventa (id_venta, id_detalle, id_producto, cantidad, id_garantia, tipo) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *"
+        const values= [id_venta, id_detalle, id_producto, cantidad, id_garantia, tipo]
         const result= await pool.query(query, values)
         return res.json(result.rows[0])
 
@@ -36,7 +36,7 @@ const deleteSell= async(req, res)=>{
         const idventa= req.params.idventa
         const query= "DELETE FROM detalleventa WHERE id_venta=$1"
         const result= await pool.query(query, [idventa])
-        res.send("Vuelo eliminado")
+        res.send("Venta eliminada")
     }catch(error){
         console.log('Error al eliminar los datos: ', error)
     }
@@ -54,9 +54,22 @@ const registerSell= async(req, res)=>{
     }
 }
 
+const deleteDetail= async(req, res)=>{
+    try{
+        const iddetalle= req.params.id_detalle
+        console.log(iddetalle)
+        const query= "DELETE FROM detalleventa WHERE id_detalle=$1"
+        const result= await pool.query(query, [iddetalle])
+        res.send("Detalle de venta eliminado")
+    }catch(error){
+        console.error("Error al eliminar el detalle de venta: ", error)
+    }
+}
+
 module.exports={
     addDetails,
     getSellDetails,
     deleteSell,
-    registerSell
+    registerSell,
+    deleteDetail
 }

@@ -13,7 +13,8 @@ export default function Internet(){
         id: "",
         megas: "",
         precio: "",
-        estado: "Disponible"
+        estado: "Disponible",
+        tipo: ""
       })
 
     const handleRegresar = () => {
@@ -60,7 +61,8 @@ export default function Internet(){
         const data = await res.data;
         setInternet({
           megas: data.megas,
-          precio: data.precio
+          precio: data.precio,
+          tipo: data.tipo
         });
         setEditing(true)
     };
@@ -120,6 +122,18 @@ export default function Internet(){
                         margin: '10px'
                       }}
                     />
+                    <TextField
+                      required
+                      id="outlined-required"
+                      label="Tipo"
+                      variant="outlined"
+                      name="tipo"
+                      value={internet.tipo}
+                      onChange={handleChange}
+                      style={{
+                        margin: '10px'
+                      }}
+                    />
                     <div style={{
                         display:'flex',
                         alignItems:'center',
@@ -149,6 +163,8 @@ export default function Internet(){
                     <strong>Precio:</strong> {internet.precio}
                     <br />
                     <strong>Estado: </strong> {internet.estado}
+                    <br />
+                    <strong>Tipo: </strong> {internet.tipo}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>

@@ -52,7 +52,10 @@ export default function ListaVentas() {
 
   const AgregarProducto= async (e)=>{
     e.preventDefault();
-    navigate("/menuventas")
+    if(localStorage.getItem("tipo")==="Celular"){
+      navigate("/BuscarProducto")
+    }
+    else{ navigate("/BuscarPlan")}
   }
 
 
@@ -66,8 +69,13 @@ export default function ListaVentas() {
     const url2= `http://localhost:4000/registersell`
     const response2= await axios.post(url2, venta)
     alert("Venta realizada")
-    localStorage.clear()
-    navigate("/buscarcliente")
+    if(localStorage.getItem("tipo")==="Plan"){
+      navigate("/asociarplan")
+    }
+    else{
+      localStorage.clear()
+      navigate("/buscarcliente")
+    }
   }
 
   return (
@@ -92,10 +100,17 @@ export default function ListaVentas() {
 }
 
 function TablaDetalles({datos}){
-  const obtenerID=(id_producto, tipo)=>{
+  const navigate= useNavigate()
+  const obtenerID=(id_producto)=>{
     localStorage.setItem("idcompra", id_producto)
   }
 
+  const eliminarDetalle=async (id_detalle)=>{
+    const url3= `http://localhost:4000/deletedetail/${id_detalle}`
+    const response= await axios.delete(url3)
+    alert("Producto eliminado")
+    window.location.reload()
+  }
 
   return(
     <TableContainer component={Paper}>
@@ -106,6 +121,7 @@ function TablaDetalles({datos}){
             <TableCell>ID de los detalles</TableCell>
             <TableCell>ID del producto</TableCell>
             <TableCell>Cantidad</TableCell>
+            <TableCell>Tipo de Compra</TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
           </TableRow>
@@ -117,11 +133,12 @@ function TablaDetalles({datos}){
               <TableCell>{detalles.id_detalle}</TableCell>
               <TableCell>{detalles.id_producto}</TableCell>
               <TableCell>{detalles.cantidad}</TableCell>
+              <TableCell>{detalles.tipo}</TableCell>
               <TableCell>
                 <button className="Azul" onClick={()=>obtenerID(detalles.id_producto)}>Más información</button>
               </TableCell>
               <TableCell>
-                <button className="Rojo">Eliminar de la lista</button>
+                <button className="Rojo" onClick={()=>eliminarDetalle(detalles.id_detalle)}>Eliminar de la lista</button>
               </TableCell>
             </TableRow>
           ))}

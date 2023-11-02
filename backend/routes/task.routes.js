@@ -3,7 +3,9 @@ const { getAllPhone, getPhone, createPhone, deletePhone, updatePhone } = require
 const { getAllInternet, getInternet, createInternet, deleteInternet, updateInternet } = require('../controllers/internet.controllers');
 const {searchproduct, searchbrand, searchmodel, searchid}= require('../controllers/searchphone.controllers')
 const {searchdni}= require('../controllers/client.controllers')
-const {addDetails, getSellDetails, deleteSell, registerSell}= require('../controllers/sell.controllers')
+const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail}= require('../controllers/sell.controllers')
+const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan.controllers')
+const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea}= require('../controllers/factura.controllers')
 
 const router = Router();
 
@@ -45,6 +47,12 @@ router.get('/searchmodel/:modelo', searchmodel)
 
 router.get('/searchid/:id', searchid)
 
+router.get('/searchplan/:tipo', searchplan)
+
+router.get('searchmegas/:megas', searchmegas)
+
+router.get('/searchplanid/:id', searchplanid)
+
 //Rutas para ventas
 
 router.post('/adddetail', addDetails)
@@ -54,4 +62,19 @@ router.get('/getselldetails/:idventa', getSellDetails)
 router.delete('/deletesell/:idventa', deleteSell)
 
 router.post('/registersell', registerSell)
+
+router.delete('/deletedetail/:id_detalle', deleteDetail)
+
+//Rutas para las facturas
+
+router.post('/associate', associate)
+
+router.get('/getlineas/:dni_cliente', getLineas)
+
+router.put('/pagolinea/:numero', pagoLinea)
+
+router.put('/atrasolinea/:numero', atrasoLinea)
+
+router.put('/cancelarlinea/:numero', cancelarLinea)
+
 module.exports = router;

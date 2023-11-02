@@ -10,7 +10,7 @@ export default function Principal() {
   const handleSelectionChange = (event, value) => {
     if (value && value.label === 'Celular') {
       navigate('/phone');
-    } else if (value && value.label === 'Internet') {
+    } else if (value && value.label === 'Plan') {
       navigate('/internet');
     }
   };
@@ -42,5 +42,5 @@ export default function Principal() {
 
 const Elementos = [
   { label: 'Celular' },
-  { label: 'Internet' },
+  { label: 'Plan' },
 ];

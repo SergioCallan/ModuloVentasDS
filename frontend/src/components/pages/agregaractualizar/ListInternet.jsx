@@ -51,6 +51,8 @@ export default function ListInternet(){
                             <div style={{color: "white"}}>
                                 <Typography>Megas: {task.megas}</Typography>
                                 <Typography>Precio: {task.precio}</Typography>
+                                <Typography>Tipo: {task.tipo}</Typography>
+                                <Typography>Estado: {task.estado}</Typography>
                             </div>
                             <div style={{
                                 display: 'flex',
@@ -60,11 +62,11 @@ export default function ListInternet(){
                                 <Button
                                     variant="contained"
                                     color="inherit"
-                                    onClick={()=> handleEdit(task.id_internet)}
+                                    onClick={()=> handleEdit(task.id_plan)}
                                 >Editar</Button>
                                 <Button
                                     variant="contained"
-                                    onClick={()=> handleDelete(task.id_internet)}
+                                    onClick={()=> handleDelete(task.id_plan)}
                                     style={{marginLeft: ".5rem",
                                     backgroundColor: 'red',
                                     color: 'white'}}
