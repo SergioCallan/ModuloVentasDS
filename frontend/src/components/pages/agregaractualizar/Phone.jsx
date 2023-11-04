@@ -1,34 +1,70 @@
-import {Button, Card, CardContent, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField, Dialog } from '@mui/material';
+import {Button, Card, CardContent, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField, Dialog, Typography} from '@mui/material';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import ListPhone from './ListPhone';
+
+const createProxyHandler = (setStateFunction) => {
+  return {
+    set: function (target, key, value) {
+      if (key in target) {
+        // Realizar validaciones aquí, por ejemplo, verificar si "precio" es un número válido
+        if (key === 'precio' && isNaN(parseFloat(value)) && value!="") {
+          // Mostrar un mensaje de error amigable cerca del campo de entrada
+          const errorMessage = 'El precio debe ser un número válido.';
+          // Muestra el mensaje de error cerca del campo de entrada
+          document.getElementById('precio-error').textContent = errorMessage;
+          return true; // Indica que la operación fue exitosa
+        }
+        // Si pasa la validación, actualiza el estado
+        setStateFunction({ ...target, [key]: value });
+        // Borra el mensaje de error si se ha corregido
+        if (key === 'precio') {
+          document.getElementById('precio-error').textContent = '';
+        }
+        return true; // Indica que la operación fue exitosa
+      } else {
+        throw new Error(`La propiedad "${key}" no es válida.`);
+      }
+    },
+  };
+};
+
 export default function Phone(){
 
   const navigate =  useNavigate();
   const params = useParams();
 
   const [phone, setPhone] = useState({
-    id: "",
-    marca: "",
-    modelo: "",
-    color: "",
-    almacenamiento: "",
-    precio: "",
-  })
+      id: '',
+      marca: '',
+      modelo: '',
+      color: '',
+      almacenamiento: '',
+      precio: '',
+    });
+  
+    const proxyPhone = new Proxy(phone, createProxyHandler(setPhone));
+    const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+    const [editing, setEditing] = useState(false);
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setMostrarConfirmacion(true);
+    };
+  
+    const handleChange = (e) => {
+      proxyPhone[e.target.name] = e.target.value;
+    };
 
-const handleRegresar = () => {
-    // Navegar de nuevo a la página principal
-    navigate('/');
-  };
+    const handleRegresar = () => {
+      // Navegar de nuevo a la página principal
+      navigate('/');
+    };
 
   const handleConfirmar = () => {
-    setMostrarConfirmacion(true);
-  };
-
-  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
-  const [editing, setEditing] = useState(false);
+      setMostrarConfirmacion(true);
+    };
 
   const handleConfirmacionFinal = async(e) => {
     e.preventDefault();
@@ -36,31 +72,21 @@ const handleRegresar = () => {
     window.location.reload();
     setMostrarConfirmacion(false);
     if(editing){
-      await axios.put(`http://localhost:4000/phone/${params.id}`, phone, {
+      await axios.put(`http://localhost:4000/phone/${params.id}`, proxyPhone, {
         headers: { "Content-Type": "application/json" }
       });
     }else{
-      setPhone(phone.id= uuidv4())
-      await axios.post("http://localhost:4000/phone", phone, {
+      await axios.post("http://localhost:4000/phone", proxyPhone, {
         headers: { "Content-Type": "application/json" },
       });
     }
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setMostrarConfirmacion(true);
-  }
-  const handleChange = (e) =>
-    setPhone({...phone, [e.target.name]: e.target.value});
 
     const loadTask = async (id) => {
 
         const res = await axios.get(`http://localhost:4000/phone/${id}`);
         const data = await res.data;
         setPhone({
-          id: data.id_celular,
           marca: data.marca,
           modelo: data.modelo,
           color: data.color,
@@ -94,9 +120,7 @@ const handleRegresar = () => {
                         disabled
                         id="outlined-required"
                         label="Celular" 
-                        name= "ID"
                         variant="outlined"
-                        value={phone.id}
                         style={{
                           margin: '10px'
                         }}
@@ -107,7 +131,7 @@ const handleRegresar = () => {
                         label="Marca"
                         variant="outlined"
                         name="marca"
-                        value={phone.marca}
+                        value={proxyPhone.marca}
                         onChange={handleChange}
                         style={{
                           margin: '10px'
@@ -119,7 +143,7 @@ const handleRegresar = () => {
                         label="Modelo"
                         variant="outlined"
                         name="modelo"
-                        value={phone.modelo}
+                        value={proxyPhone.modelo}
                         onChange={handleChange}
                         style={{
                           margin: '10px'
@@ -131,7 +155,7 @@ const handleRegresar = () => {
                         label="Color"
                         variant="outlined"
                         name="color"
-                        value={phone.color}
+                        value={proxyPhone.color}
                         onChange={handleChange}
                         style={{
                           margin: '10px'
@@ -143,7 +167,7 @@ const handleRegresar = () => {
                         label="Almacenamiento"
                         variant="outlined"
                         name="almacenamiento"
-                        value={phone.almacenamiento}
+                        value={proxyPhone.almacenamiento}
                         onChange={handleChange}
                         style={{
                           margin: '10px'
@@ -155,18 +179,19 @@ const handleRegresar = () => {
                         label="Precio"
                         variant="outlined"
                         name="precio"
-                        value={phone.precio}
+                        value={proxyPhone.precio}
                         onChange={handleChange}
                         style={{
                           margin: '10px'
                         }}
                       />
+                      <Typography id="precio-error" style={{ color: 'red' }}></Typography>
                       <div style={{
                         display:'flex',
                         alignItems:'center',
                         justifyContent:'end'
                       }}>
-                      <Button variant="contained" color="success" disabled={!phone.modelo || !phone.marca || !phone.color || !phone.almacenamiento || !phone.precio} onClick={handleConfirmar} type="submit">Confirmar</Button>
+                      <Button variant="contained" color="success" disabled={!proxyPhone.modelo || !proxyPhone.marca || !proxyPhone.color || !proxyPhone.almacenamiento || !proxyPhone.precio} onClick={handleConfirmar} type="submit">Confirmar</Button>
 
                       <Button variant="contained" color="success" onClick={handleRegresar} style={{marginLeft: '20px'}}>
                       Regresar
@@ -183,15 +208,15 @@ const handleRegresar = () => {
         <DialogTitle id="alert-dialog-title">Confirmación</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <strong>Marca:</strong> {phone.marca}
+            <strong>Marca:</strong> {proxyPhone.marca}
             <br />
-            <strong>Modelo:</strong> {phone.modelo}
+            <strong>Modelo:</strong> {proxyPhone.modelo}
             <br />
-            <strong>Color:</strong> {phone.color}
+            <strong>Color:</strong> {proxyPhone.color}
             <br />
-            <strong>Almacenamiento:</strong> {phone.almacenamiento}
+            <strong>Almacenamiento:</strong> {proxyPhone.almacenamiento}
             <br />
-            <strong>Precio:</strong> {phone.precio}
+            <strong>Precio:</strong> {proxyPhone.precio}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

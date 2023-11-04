@@ -1,4 +1,4 @@
-POST http://localhost:4000/registersell HTTP/1.1
+POST https://modulo-ventas.onrender.com/registersell HTTP/1.1
 Content-Type: application/json
 
 {
@@ -17,6 +17,20 @@ GET http://localhost:4000/getlineas/70911900 HTTP/1.1
 GET https://modulo-ventas.onrender.com/getlineas/70911900 HTTP/1.1
 
 ###
+POST https://modulo-ventas.onrender.com/phone HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_celular": "94c8b396-7389-4e95-8843-b4b5bd319f27",
+    "marca": "Samsung",
+    "modelo": "S23 Ultra",
+    "precio": 5099.00,
+    "color": "Negro",
+    "almacenamiento": 512,
+    "idgarantia": 0
+}
+
+###
 PUT http://localhost:4000/pagolinea/912117920 HTTP/1.1
 
 ###
@@ -24,3 +38,6 @@ PUT http://localhost:4000/atrasolinea/912117920 HTTP/1.1
 
 ###
 PUT http://localhost:4000/cancelarlinea/912117920 HTTP/1.1
+
+###
+GET http://localhost:4000/searchbilldni/70911900 HTTP/1.1

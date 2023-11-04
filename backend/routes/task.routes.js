@@ -6,6 +6,7 @@ const {searchdni}= require('../controllers/client.controllers')
 const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail}= require('../controllers/sell.controllers')
 const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan.controllers')
 const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea}= require('../controllers/factura.controllers')
+const {searchbilldni, searchbillnumber, searchbillid}= require('../controllers/bills.controllers')
 
 const router = Router();
 
@@ -65,7 +66,7 @@ router.post('/registersell', registerSell)
 
 router.delete('/deletedetail/:id_detalle', deleteDetail)
 
-//Rutas para las facturas
+//Rutas para las facturas(actuales)
 
 router.post('/associate', associate)
 
@@ -76,5 +77,13 @@ router.put('/pagolinea/:numero', pagoLinea)
 router.put('/atrasolinea/:numero', atrasoLinea)
 
 router.put('/cancelarlinea/:numero', cancelarLinea)
+
+//Rutas para las facturas(registros)
+
+router.get('/searchbilldni/:dni_cliente', searchbilldni)
+
+router.get('/searchbillid/:factura_id', searchbillid)
+
+router.get('/searchbillnumber/:numero_linea', searchbillnumber)
 
 module.exports = router;

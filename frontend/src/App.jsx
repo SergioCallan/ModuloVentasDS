@@ -10,6 +10,7 @@ import BuscarProducto from "./components/pages/generarventa/BuscarProducto"
 import BuscarPlan from "./components/pages/controlarfacturacion/BuscarPlan"
 import ListaVentas from "./components/pages/generarventa/ListaVentas"
 import AsociarPlan from "./components/pages/controlarfacturacion/AsociarPlan"
+import ObservarFacturas from "./components/pages/controlarfacturacion/observarFacturas"
 
 function App(){
   return(
@@ -28,6 +29,7 @@ function App(){
               <Route path="/buscarplan" element={<BuscarPlan/>}/>
               <Route path="/listaventas" element={<ListaVentas/>}/>
               <Route path="/asociarplan" element={<AsociarPlan/>}/>
+              <Route path="/observarfacturas" element={<ObservarFacturas/>}/>
           </Routes>
     </BrowserRouter>
   )
