@@ -31,6 +31,38 @@ const getSellDetails= async(req, res)=>{
     }
 }
 
+const getSelldni= async(req, res)=>{
+    try{
+        const dni_cliente= req.params.dni_cliente
+        const query= "SELECT * FROM venta WHERE dni_cliente= $1"
+        const results= await pool.query(query, [dni_cliente])
+        if(results.rows.length===0){
+            res.json(null)
+        }
+        else{
+            res.json(results.rows)
+        }
+    }catch(error){
+        console.log('Error al recuperar las ventas: ', error)
+    }
+}
+
+const getSellid= async(req, res)=>{
+    try{
+        const id_venta= req.params.id_venta
+        const query= "SELECT * FROM venta WHERE id_venta= $1"
+        const results= await pool.query(query, [id_venta])
+        if(results.rows.length===0){
+            res.json(null)
+        }
+        else{
+            res.json(results.rows)
+        }
+    }catch(error){
+        console.log('Error al recuperar las ventas: ', error)
+    }
+}
+
 const deleteSell= async(req, res)=>{
     try{
         const idventa= req.params.idventa
@@ -71,5 +103,7 @@ module.exports={
     getSellDetails,
     deleteSell,
     registerSell,
-    deleteDetail
+    deleteDetail,
+    getSelldni,
+    getSellid
 }

@@ -8,21 +8,16 @@ const createProxyHandler = (setStateFunction) => {
   return {
     set: function (target, key, value) {
       if (key in target) {
-        // Realizar validaciones aquí, por ejemplo, verificar si "precio" es un número válido
         if (key === 'precio' && isNaN(parseFloat(value)) && value!="") {
-          // Mostrar un mensaje de error amigable cerca del campo de entrada
           const errorMessage = 'El precio debe ser un número válido.';
-          // Muestra el mensaje de error cerca del campo de entrada
           document.getElementById('precio-error').textContent = errorMessage;
-          return true; // Indica que la operación fue exitosa
+          return true;
         }
-        // Si pasa la validación, actualiza el estado
         setStateFunction({ ...target, [key]: value });
-        // Borra el mensaje de error si se ha corregido
         if (key === 'precio') {
           document.getElementById('precio-error').textContent = '';
         }
-        return true; // Indica que la operación fue exitosa
+        return true;
       } else {
         throw new Error(`La propiedad "${key}" no es válida.`);
       }

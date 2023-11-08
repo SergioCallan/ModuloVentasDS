@@ -11,7 +11,7 @@ Content-Type: application/json
 DELETE http://localhost:4000/deletedetail/94c8b396-7389-4e95-8843-b4b5bd319f27 HTTP/1.1
 
 ###
-GET http://localhost:4000/getlineas/70911900 HTTP/1.1
+GET http://localhost:4000/getsellid/5620f1d9-d635-4de3-960a-75e7ef1b9e2a HTTP/1.1
 
 ###
 GET https://modulo-ventas.onrender.com/getlineas/70911900 HTTP/1.1
