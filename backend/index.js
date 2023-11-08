@@ -6,7 +6,15 @@ const taskRouter = require('./routes/task.routes.js');
 
 const app = express();
 
-app.use(cors());
+app.disable("x-powered-by")
+const corsOptions={
+    origin: '*',
+    methods: ['GET', 'POST', 'DELETE'],
+    allowedHeaders: ['Content-Type'],
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.json());
 

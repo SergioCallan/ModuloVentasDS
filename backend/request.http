@@ -8,10 +8,24 @@ Content-Type: application/json
 }
 
 ###
+POST https://modulo-ventas.onrender.com/adddetail HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_detalle":"05509e04-a7fe-4e18-a72f-25b9b61df45a",
+    "id_venta":"5620f1d9-d635-4de3-960a-75e7ef1b9e2a",
+    "id_producto":"d7d93988-0514-4302-ae81-64607b0be012",
+    "cantidad":1,
+    "id_garantia":"0",
+    "tipo":"Celular"
+
+}
+
+###
 DELETE http://localhost:4000/deletedetail/94c8b396-7389-4e95-8843-b4b5bd319f27 HTTP/1.1
 
 ###
-GET http://localhost:4000/getsellid/5620f1d9-d635-4de3-960a-75e7ef1b9e2a HTTP/1.1
+GET https://modulo-ventas.onrender.com/getselldni/123456789 HTTP/1.1
 
 ###
 GET https://modulo-ventas.onrender.com/getlineas/70911900 HTTP/1.1
