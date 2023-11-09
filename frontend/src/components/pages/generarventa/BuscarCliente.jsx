@@ -14,6 +14,7 @@ export default function BuscarCliente(){
     const [Nombre, setNombre]= useState("")
     const [Apellido, setApellido]= useState("")
     const [Correo, setCorreo]= useState("")
+    const [sexo, setSexo]= useState("")
     //Para boton
     const [inputDisabled, setInputDisabled]= useState(false)
 
@@ -25,20 +26,21 @@ export default function BuscarCliente(){
         e.preventDefault();
         try{
             const dni= DNI
-            const url0= `http://localhost:4000/searchdni/${dni}`
+            const url0= `https://clientemodulocrm.onrender.com/clientes/buscarPorDNI/${dni}`
             const response0= await axios.get(url0)
-            
-            if(response0.data.nombres==null){
+            if(response0.data===null){
                 alert("No se encontro el cliente")
                 setDNI("")
                 setNombre("")
                 setApellido("")
                 setCorreo("")
+                setSexo("")
             }
             else{
-                setNombre(response0.data.nombres)
-                setApellido(response0.data.apellidos)
-                setCorreo(response0.data.email)
+                setNombre(response0.data.nombre)
+                setApellido(response0.data.apellido)
+                setCorreo(response0.data.correo)
+                setSexo(response0.data.sexo)
                 localStorage.setItem("dnicliente", DNI)
             }
         }catch(error){
@@ -101,7 +103,7 @@ export default function BuscarCliente(){
                         <h2>Datos del cliente</h2>
                         <div className="Clientes_Info">
                             <input type="text" className="inputDisabled" name="Nombres" placeholder="Nombre(s)" disabled required value={Nombre}></input>
-                            <input type="text" className="inputDisabled" name="Telefono" placeholder="Teléfono" disabled required value={Apellido}></input>
+                            <input type="text" className="inputDisabled" name="Sexo" placeholder="Sexo" disabled required value={sexo}></input>
                             <br></br>
                             <input type="text" className="inputDisabled" name="Apellidos" placeholder="Apellido(s)" disabled required value={Apellido}></input>
                             <input type="email" className="inputDisabled" name="Correo" placeholder="Correo" disabled required value={Correo}></input>

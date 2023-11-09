@@ -35,12 +35,12 @@ export default function Internet(){
         navigate('/internet')
         window.location.reload();
         if(editing){
-          await axios.put(`http://localhost:4000/internet/${params.id}`, internet, {
+          await axios.put(`https://modulo-ventas.onrender.com/internet/${params.id}`, internet, {
             headers: { "Content-Type": "application/json" }
           });
         }else{
           setInternet(internet.id= uuidv4())
-          await axios.post("http://localhost:4000/internet", internet, {
+          await axios.post("https://modulo-ventas.onrender.com/internet", internet, {
             headers: { "Content-Type": "application/json" },
           });
         }
@@ -57,7 +57,7 @@ export default function Internet(){
 
       const loadTask = async (id) => {
 
-        const res = await axios.get(`http://localhost:4000/internet/${id}`);
+        const res = await axios.get(`https://modulo-ventas.onrender.com/internet/${id}`);
         const data = await res.data;
         setInternet({
           megas: data.megas,

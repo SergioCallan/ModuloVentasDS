@@ -12,7 +12,11 @@ import "../../styles/MenuVentas.css"
 
 export default function AsociarPlan(){
     const [Numero, setNumero]=useState("")
+    const [TipoPlan, setTipoPlan]= useState("")
 
+    const changingNumero=(event)=>{
+        setNumero(event.target.value)
+    }
 
     const GenerarNumero= async(e)=>{
         e.preventDefault()
@@ -24,14 +28,17 @@ export default function AsociarPlan(){
         e.preventDefault()
         const linea={
             numero: Numero,
-            plan: "Pro",
-            fecha_compra: "2023-11-02",
-            fecha_pago: "2023-12-02",
+            plan: TipoPlan,
+            fecha_compra: new Date(),
+            fecha_pago: new Date(),
             monto_pago: 70,
-            dni_cliente: "70911900",
+            dni_cliente: localStorage.getItem("dnicliente"),
             estado: 0
         }
-        const url= `http://localhost:4000/associate`
+        fechaPago.setMonth(fechaPago.getMonth() + 1);
+        linea.fecha_pago = fechaPago.toISOString().split('T')[0];
+        console.log(linea)
+        const url= `https://modulo-ventas.onrender.com/associate`
         const response= await axios.post(url, linea)
         console.log(response.data)
     }
@@ -48,6 +55,10 @@ export default function AsociarPlan(){
                 <button onClick={GenerarNumero}>Click aqui</button>
                 <input type="text" className="input" name="numeronuevo" placeholder="Nuevo numero" disabled value={Numero}></input>
                 <button onClick={AsociarNumero}>Asociar Numero</button>
+                <div className="Busqueda Plan">
+                    <h3>Para buscar plan dentro de los pagados por el cliente: </h3>
+                    <button>Buscar plan</button>
+                </div>
             </div>
         </main>
     )

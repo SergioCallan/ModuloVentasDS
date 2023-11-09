@@ -9,7 +9,7 @@ export default function ListInternet(){
     const navigate = useNavigate()
     const loadList = async () => {
         try {
-          const response = await axios.get('http://localhost:4000/internet');
+          const response = await axios.get('https://modulo-ventas.onrender.com/internet');
           setTasks(response.data);
         } catch (error) {
           console.error('Error al cargar la lista:', error);
@@ -18,7 +18,7 @@ export default function ListInternet(){
     
       const handleDelete = async (id) => {
         try {
-          await axios.delete(`http://localhost:4000/internet/${id}`);
+          await axios.delete(`https://modulo-ventas.onrender.com/internet/${id}`);
           setTasks(tasks.filter((task) => task.id_internet !== id));
         } catch (error) {
           console.error('Error al eliminar el elemento:', error);
