@@ -27,6 +27,10 @@ DELETE http://localhost:4000/deletedetail/94c8b396-7389-4e95-8843-b4b5bd319f27 H
 ###
 GET https://modulo-ventas.onrender.com/getselldni/123456789 HTTP/1.1
 
+
+###
+GET https://modulo-ventas.onrender.com/searchwarranty/1 HTTP/1.1
+
 ###
 GET https://clientemodulocrm.onrender.com/buscarPorDNI/123456789 HTTP/1.1
 

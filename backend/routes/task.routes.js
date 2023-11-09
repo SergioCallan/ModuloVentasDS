@@ -93,6 +93,6 @@ router.get('/searchbillnumber/:numero_linea', searchbillnumber)
 
 //Rutas para las garantias
 
-router.get('searchwarranty/:id_garantia', searchWarranty)
+router.get('/searchwarranty/:id_garantia', searchWarranty)
 
 module.exports = router;
