@@ -7,6 +7,7 @@ const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail, getSe
 const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan.controllers')
 const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea}= require('../controllers/factura.controllers')
 const {searchbilldni, searchbillnumber, searchbillid}= require('../controllers/bills.controllers')
+const {searchWarranty}= require('../controllers/warranty.controllers')
 
 const router = Router();
 
@@ -89,5 +90,9 @@ router.get('/searchbilldni/:dni_cliente', searchbilldni)
 router.get('/searchbillid/:factura_id', searchbillid)
 
 router.get('/searchbillnumber/:numero_linea', searchbillnumber)
+
+//Rutas para las garantias
+
+router.get('searchwarranty/:id_garantia', searchWarranty)
 
 module.exports = router;

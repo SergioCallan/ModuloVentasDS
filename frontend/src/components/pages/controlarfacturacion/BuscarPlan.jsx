@@ -76,7 +76,7 @@ export default function BuscarPlan(){
     }
 
     const BuscarTipo= async()=>{
-        const url= `http://localhost:4000/searchplan/${Tipo}`
+        const url= `https://modulo-ventas.onrender.com/searchplan/${Tipo}`
         const response= await axios.get(url)
         if(response===null){
             alert("No se encontró el producto")
@@ -87,7 +87,7 @@ export default function BuscarPlan(){
     }
 
     const BuscarMegas= async()=>{
-        const url= `http://localhost:4000/searchmegas/${Megas}`
+        const url= `https://modulo-ventas.onrender.com/searchmegas/${Megas}`
         const response= await axios.get(url)
         if(response===null){
             alert("No se encontró el producto")
@@ -116,7 +116,7 @@ export default function BuscarPlan(){
         id_garantia: "0",
         tipo: "Plan"
       }
-      const url5= `http://localhost:4000/adddetail`
+      const url5= `https://modulo-ventas.onrender.com/adddetail`
       const response5= await axios.post(url5, detalleventa)
       console.log(response5.data)
       localStorage.setItem("tipo", detalleventa.tipo)

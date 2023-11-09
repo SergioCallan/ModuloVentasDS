@@ -21,7 +21,7 @@ export default function ListaVentas() {
 
   const getdetails= async()=>{
     const idventa= localStorage.getItem("venta")
-    const url0=`http://localhost:4000/getselldetails/${idventa}`
+    const url0=`https://modulo-ventas.onrender.com/getselldetails/${idventa}`
     const response0= await axios.get(url0)
     if(response0.data==null){
       alert("No se encontraron productos en la lista")
@@ -40,7 +40,7 @@ export default function ListaVentas() {
     e.preventDefault();
     try{
       const idventa= localStorage.getItem("venta")
-      const url1= `http://localhost:4000/deletesell/${idventa}`
+      const url1= `https://modulo-ventas.onrender.com/deletesell/${idventa}`
       const response1= await axios.delete(url1)
       alert("Se ha cancelado la venta")
       localStorage.clear()
@@ -66,10 +66,10 @@ export default function ListaVentas() {
       dni_cliente: localStorage.getItem("dnicliente"),
       fecha: new Date(),
     }
-    const url2= `http://localhost:4000/registersell`
+    const url2= `https://modulo-ventas.onrender.com/registersell`
     const response2= await axios.post(url2, venta)
     alert("Venta realizada")
-    if(localStorage.getItem("tipo")==="Plan"){
+    if(localStorage.getItem("tipo")==="Plan" && localStorage.getItem("tipo")!=null){
       navigate("/asociarplan")
     }
     else{
@@ -106,7 +106,7 @@ function TablaDetalles({datos}){
   }
 
   const eliminarDetalle=async (id_detalle)=>{
-    const url3= `http://localhost:4000/deletedetail/${id_detalle}`
+    const url3= `https://modulo-ventas.onrender.com/deletedetail/${id_detalle}`
     const response= await axios.delete(url3)
     alert("Producto eliminado")
     window.location.reload()

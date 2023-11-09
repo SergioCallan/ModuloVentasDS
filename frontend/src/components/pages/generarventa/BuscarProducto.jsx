@@ -83,7 +83,7 @@ export default function BuscarProducto() {
     try {
       if (Filtro === "Nombre") {
         const productoEspacios = encodeURIComponent(Nombre);
-        const url1 = `http://localhost:4000/searchproduct/${productoEspacios}`;
+        const url1 = `https://modulo-ventas.onrender.com/searchproduct/${productoEspacios}`;
         const response1 = await axios.get(url1);
         if (response1.data === null) {
           alert("No se encontro el producto");
@@ -91,7 +91,7 @@ export default function BuscarProducto() {
             setDatosP(response1.data);
         }
       } else if (Filtro === "Marca") {
-        const url2 = `http://localhost:4000/searchbrand/${Marca}`;
+        const url2 = `https://modulo-ventas.onrender.com/searchbrand/${Marca}`;
         const response2 = await axios.get(url2);
         if (response2.data === null) {
           alert("No se encontro el producto");
@@ -100,7 +100,7 @@ export default function BuscarProducto() {
         }
       } else if (Filtro === "Modelo") {
         const modeloespacios = encodeURIComponent(Modelo);
-        const url3 = `http://localhost:4000/searchmodel/${modeloespacios}`;
+        const url3 = `https://modulo-ventas.onrender.com/searchmodel/${modeloespacios}`;
         const response3 = await axios.get(url3);
         if (response3.data === null) {
           alert("No se encontro el producto");
@@ -112,7 +112,7 @@ export default function BuscarProducto() {
           preciomin: PrecioMin,
           preciomax: PrecioMax,
         };
-        const url4 = `http://localhost:4000/searchprice/${intervaloP}`;
+        const url4 = `https://modulo-ventas.onrender.com/searchprice/${intervaloP}`;
         const response4 = await axios.get(url4);
         if (response4.data.id === null) {
           alert("No se encontro el producto");
@@ -144,7 +144,7 @@ export default function BuscarProducto() {
       id_garantia: "0",
       tipo: "Celular"
     }
-    const url5= `http://localhost:4000/adddetail`
+    const url5= `https://modulo-ventas.onrender.com/adddetail`
     const response5= await axios.post(url5, detalleventa)
     console.log(response5.data)
     localStorage.setItem("tipo", detalleventa.tipo)

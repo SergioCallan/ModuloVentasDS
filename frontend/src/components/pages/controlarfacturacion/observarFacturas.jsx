@@ -15,7 +15,7 @@ export default function ObservarFacturas() {
     e.preventDefault();
     try {
         const dni_cliente = dni;
-        const url = `http://localhost:4000/searchbilldni/${dni_cliente}`;
+        const url = `https://modulo-ventas.onrender.com/searchbilldni/${dni_cliente}`;
         const response = await axios.get(url);
         if (response.data === null) {
             alert("No se encontró al cliente");

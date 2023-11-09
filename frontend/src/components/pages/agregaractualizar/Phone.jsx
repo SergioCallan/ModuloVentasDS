@@ -1,6 +1,7 @@
 import {Button, Card, CardContent, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField, Dialog, Typography} from '@mui/material';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import { useNavigate, useParams } from 'react-router-dom';
 import ListPhone from './ListPhone';
 
@@ -8,16 +9,21 @@ const createProxyHandler = (setStateFunction) => {
   return {
     set: function (target, key, value) {
       if (key in target) {
+        // Realizar validaciones aquí, por ejemplo, verificar si "precio" es un número válido
         if (key === 'precio' && isNaN(parseFloat(value)) && value!="") {
+          // Mostrar un mensaje de error amigable cerca del campo de entrada
           const errorMessage = 'El precio debe ser un número válido.';
+          // Muestra el mensaje de error cerca del campo de entrada
           document.getElementById('precio-error').textContent = errorMessage;
-          return true;
+          return true; // Indica que la operación fue exitosa
         }
+        // Si pasa la validación, actualiza el estado
         setStateFunction({ ...target, [key]: value });
+        // Borra el mensaje de error si se ha corregido
         if (key === 'precio') {
           document.getElementById('precio-error').textContent = '';
         }
-        return true;
+        return true; // Indica que la operación fue exitosa
       } else {
         throw new Error(`La propiedad "${key}" no es válida.`);
       }
@@ -63,15 +69,23 @@ export default function Phone(){
 
   const handleConfirmacionFinal = async(e) => {
     e.preventDefault();
-    navigate('/phone')
-    window.location.reload();
+
+    // Genera un nuevo UUID para el ID
+    const newId = uuidv4();
+
+    // Asigna el nuevo UUID al objeto proxyPhone
+    proxyPhone.id = newId;
+    console.log(proxyPhone)
+    console.log(newId)
+    
     setMostrarConfirmacion(false);
     if(editing){
-      await axios.put(`http://localhost:4000/phone/${params.id}`, proxyPhone, {
+      await axios.put(`https://modulo-ventas.onrender.com/phone/${params.id}`, proxyPhone, {
         headers: { "Content-Type": "application/json" }
       });
     }else{
-      await axios.post("http://localhost:4000/phone", proxyPhone, {
+      
+      await axios.post("https://modulo-ventas.onrender.com/phone", proxyPhone, {
         headers: { "Content-Type": "application/json" },
       });
     }
@@ -79,7 +93,7 @@ export default function Phone(){
 
     const loadTask = async (id) => {
 
-        const res = await axios.get(`http://localhost:4000/phone/${id}`);
+        const res = await axios.get(`https://modulo-ventas.onrender.com/phone/${id}`);
         const data = await res.data;
         setPhone({
           marca: data.marca,

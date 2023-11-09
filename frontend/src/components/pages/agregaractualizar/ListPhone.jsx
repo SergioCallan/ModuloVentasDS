@@ -9,7 +9,7 @@ export default function ListPhone(){
     const navigate = useNavigate()
     const loadList = async () => {
         try {
-          const response = await axios.get('http://localhost:4000/phone');
+          const response = await axios.get('https://modulo-ventas.onrender.com/phone');
           setTasks(response.data);
         } catch (error) {
           console.error('Error al cargar la lista:', error);
@@ -18,7 +18,7 @@ export default function ListPhone(){
     
       const handleDelete = async (id) => {
         try {
-          await axios.delete(`http://localhost:4000/phone/${id}`);
+          await axios.delete(`https://modulo-ventas.onrender.com/phone/${id}`);
           setTasks(tasks.filter((task) => task.id_celular !== id));
         } catch (error) {
           console.error('Error al eliminar el elemento:', error);
@@ -52,7 +52,7 @@ export default function ListPhone(){
                                 <Typography>Marca: {task.marca}</Typography>
                                 <Typography>Modelo: {task.modelo}</Typography>
                                 <Typography>Color: {task.color}</Typography>
-                                <Typography>Almacenamiento: {task.almacenamiento}</Typography>
+                                <Typography>Almacenamiento: {task.almacenamiento} GB</Typography>
                                 <Typography>Precio: {task.precio}</Typography>
                             </div>
                             <div
