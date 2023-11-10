@@ -11,14 +11,31 @@ body{
 }
 
 .Header{
+    display: grid;
+    grid-template-areas: 
+    "element2 element1 element1 element1 element1 element1 element1 element1 element1 element1 element1 element1 element1";
     background-color: #1741AD;
     text-align: center;
     color: white; 
+    width: 100vw;
+    height: 15vh;
+}
+
+.Contenedor-Nombre-Modulo{
+    grid-area: element1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 6vw;
 }
 
 .Clientes{
+    padding-top: 20px;
     text-align: center;
     color: white;
+    width: 100vw;
+    height: 85vh;
 }
 
 .Clientes_Busqueda{
@@ -29,11 +46,17 @@ body{
     border-width: 1px;
     border-style: solid;
     border-radius: 25px;
+    margin-bottom: 4vh;
 }
 
 .Clientes_DNI{
+    display: grid;
+    grid-template-columns: [linea1] 1fr [linea2] 1fr [linea3] 1fr [linea4];
+    grid-template-rows: 1fr;
     background-color: white;
     border-radius: 0px 0px 25px 25px;
+    height: 10vh;
+    align-items:center
 }
 
 .Clientes_Data{
@@ -44,11 +67,19 @@ body{
     border-width: 1px;
     border-style: solid;
     border-radius: 25px;
+    align-content: center;
+    margin-bottom: 4vh;
 }
 
 .Clientes_Info{
+    display: grid;
+    grid-template-columns: [linea1] 1fr [linea2] 1fr [linea3] 1fr [linea4] 1fr [linea5];
+    grid-template-rows:[linea6] 1fr [linea7] 1fr [linea8] 1fr [linea9];
     background-color: white;
     border-radius: 0px 0px 25px 25px;
+    height: 32vh;
+    align-items: center;
+    justify-items: center;
 }
 
 .input{
@@ -56,13 +87,28 @@ body{
     width: 300px;
     background-color: white;
     border-color: gray;
-    border-width: 2px;
+    border-width: 1px;
     border-radius: 6px;
 }
 
+.caja-dni{
+    display: flex;
+    grid-column-start: linea2;
+    grid-column-end: linea3;
+    width: 90%;
+    height: 60%;
+}
+
+.btn-buscar-cliente{
+    grid-column-start: linea3;
+    grid-column-end: linea4;
+    width: 90%;
+    height: 60%;
+}
+
 .inputDisabled{
-    height: 40px;
-    width: 300px;
+    /* height: 40px;
+    width: 300px; */
     background-color: rgb(212, 212, 212);
     border-color: gray;
     border-width: 2px;
@@ -73,8 +119,8 @@ body{
     background-color: greenyellow;
     color: white;
     font-size: 16px;
-    height: 40px;
-    width: 300px;
+    /* height: 40px;
+    width: 300px; */
     border-color: greenyellow;
     border-width: 2px;
     border-radius: 25px;
@@ -84,8 +130,8 @@ body{
     background-color: cyan;
     color: white;
     font-size: 16px;
-    height: 40px;
-    width: 300px;
+    /* height: 40px;
+    width: 300px; */
     border-color: cyan;
     border-width: 2px;
     border-radius: 25px;
@@ -95,9 +141,74 @@ body{
     background-color: red;
     color: white;
     font-size: 16px;
-    height: 40px;
-    width: 300px;
+    /* height: 40px;
+    width: 300px; */
     border-color: red;
     border-width: 2px;
     border-radius: 25px;
 }
+
+.icono-acordeon{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.caja-nombre{
+    width: 70%;
+    height: 60%;
+    display: grid;
+    grid-column-start: linea1;
+    grid-column-end: linea3;
+}
+
+.caja-sexo{
+    width: 70%;
+    height: 60%;
+    grid-column-start: linea3;
+    grid-column-end: linea5;
+    grid-row-start: linea6;
+    grid-row-end: linea7;
+}
+
+.caja-email{
+    width: 70%;
+    height: 60%;
+    grid-row-start: linea7;
+    grid-row-end: linea8;
+    grid-column-start: linea3;
+    grid-column-end: linea5;
+}
+
+.caja-apellidos{
+    width: 70%;
+    height: 60%;
+    grid-row-start: linea7;
+    grid-row-end: linea8;
+    grid-column-start: linea1;
+    grid-column-end: linea3;
+}
+
+.btn-cancelar{
+    width: 60%;
+    height: 60%;
+    grid-row-start: linea8;
+    grid-row-end: linea9;
+    grid-column-start: linea1;
+    grid-column-end: linea3;
+}
+
+.btn-confirmar{
+    width: 60%;
+    height: 60%;
+    grid-row-start: linea8;
+    grid-row-end: linea9;
+    grid-column-start: linea3;
+    grid-column-end: linea5;
+}
+
+.btn-seleccionar{
+    width: 28%;
+    height: 8%;
+}
+

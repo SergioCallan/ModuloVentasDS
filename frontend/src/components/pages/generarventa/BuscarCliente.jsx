@@ -78,42 +78,42 @@ export default function BuscarCliente(){
     return(
         <body>
             <main>
-                <IconButton onClick={handleSidebarOpen} edge="start" color="inherit" aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
-                <Sidebar open={sidebarOpen} onClose={handleSidebarClose} />
+                
                 <div className="Header">
-                    <h1>Módulo de Ventas</h1>
+                    <IconButton className="contenedor-acordeon" onClick={handleSidebarOpen} edge="start" color="inherit" aria-label="menu">
+                        <MenuIcon className="icono-acordeon"/>
+                    </IconButton>
+                    <Sidebar className="Menu-lateral-desplegable" open={sidebarOpen} onClose={handleSidebarClose}/>
+                    <div className="Contenedor-Nombre-Modulo">
+                    <h1 className="Nombre-Modulo">Módulo de Ventas</h1>
+                    </div> 
                 </div>
                 <div className="Clientes">
                 
                     <div className="Clientes_Busqueda">
                         <h2>Seleccionar Cliente</h2>
                         <div className="Clientes_DNI">
-                            <input type="text" className="input" name="DNI" placeholder="DNI" onChange={changingDNI} disabled={inputDisabled} required value={DNI}></input>
+                            <input type="text" className="input caja-dni" name="DNI" placeholder="DNI" onChange={changingDNI} disabled={inputDisabled} required value={DNI}></input>
                             
-                            <button id="Verify" className="Celeste" onClick={buscarDNI}>Buscar Cliente</button> <br/>
-                            
+                            <button id="Verify" className="Celeste btn-buscar-cliente" onClick={buscarDNI}>Buscar Cliente</button> 
                         </div>
                         
                     </div>
-                    <br></br>
                     
                     <div className="Clientes_Data">
                         <h2>Datos del cliente</h2>
                         <div className="Clientes_Info">
-                            <input type="text" className="inputDisabled" name="Nombres" placeholder="Nombre(s)" disabled required value={Nombre}></input>
-                            <input type="text" className="inputDisabled" name="Sexo" placeholder="Sexo" disabled required value={sexo}></input>
-                            <br></br>
-                            <input type="text" className="inputDisabled" name="Apellidos" placeholder="Apellido(s)" disabled required value={Apellido}></input>
-                            <input type="email" className="inputDisabled" name="Correo" placeholder="Correo" disabled required value={Correo}></input>
-                            <br></br>
-                            <button id="Cancel" className="Rojo" onClick={Cancelar}>Cancelar busqueda</button>
-                            <button id="Confirm" className="Verde" onClick={Confirmar}>Confirmar Cliente</button>
+                            <input type="text" className="inputDisabled caja-nombre" name="Nombres" placeholder="Nombre(s)" disabled required value={Nombre}></input>
+                            <input type="text" className="inputDisabled caja-sexo" name="Sexo" placeholder="Sexo" disabled required value={sexo}></input>
+                            
+                            <input type="text" className="inputDisabled caja-apellidos" name="Apellidos" placeholder="Apellido(s)" disabled required value={Apellido}></input>
+                            <input type="email" className="inputDisabled caja-email" name="Correo" placeholder="Correo" disabled required value={Correo}></input>
+                            
+                            <button id="Cancel" className="Rojo btn-cancelar" onClick={Cancelar}>Cancelar busqueda</button>
+                            <button id="Confirm" className="Verde btn-confirmar" onClick={Confirmar}>Confirmar Cliente</button>
                         </div>
                     </div>
-                    <br/>
-                    <button id= "AvanzarSeleccion" className="Verde" onClick={Avanzar}>Seleccionar productos</button>
+                    <button id= "AvanzarSeleccion" className="Verde btn-seleccionar" onClick={Avanzar}>Seleccionar productos</button>
                 </div>
             </main>
         </body>
