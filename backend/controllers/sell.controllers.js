@@ -56,7 +56,7 @@ const getSellid= async(req, res)=>{
             res.json(null)
         }
         else{
-            res.json(results.rows)
+            res.json(results.rows[0])
         }
     }catch(error){
         console.log('Error al recuperar las ventas: ', error)

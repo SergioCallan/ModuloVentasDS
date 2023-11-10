@@ -100,6 +100,7 @@ export default function ListaVentas() {
 }
 
 function TablaDetalles({datos}){
+  const [nombresProductos, setNombresProductos] = useState([]);
   const navigate= useNavigate()
   const obtenerID=(id_producto)=>{
     localStorage.setItem("idcompra", id_producto)
@@ -112,6 +113,26 @@ function TablaDetalles({datos}){
     window.location.reload()
   }
 
+  useEffect(() => {
+    const fetchNombresProductos = async () => {
+      const nombres = await Promise.all(
+        datos.map(async (detalles) => {
+          const nombre = await buscarNombre(detalles.id_producto);
+          return nombre;
+        })
+      );
+      setNombresProductos(nombres);
+    };
+
+    fetchNombresProductos();
+  }, [datos]);
+
+  const buscarNombre= async(id_producto)=>{
+    const url=`https://modulo-ventas.onrender.com/searchid/${id_producto}`
+    const response= await axios.get(url)
+    return response.data.marca+" "+response.data.modelo
+  }
+
   return(
     <TableContainer component={Paper}>
       <Table>
@@ -120,6 +141,7 @@ function TablaDetalles({datos}){
             <TableCell>ID de la venta</TableCell>
             <TableCell>ID de los detalles</TableCell>
             <TableCell>ID del producto</TableCell>
+            <TableCell>Nombre del producto</TableCell>
             <TableCell>Cantidad</TableCell>
             <TableCell>Tipo de Compra</TableCell>
             <TableCell></TableCell>
@@ -132,6 +154,7 @@ function TablaDetalles({datos}){
               <TableCell>{detalles.id_venta}</TableCell>
               <TableCell>{detalles.id_detalle}</TableCell>
               <TableCell>{detalles.id_producto}</TableCell>
+              <TableCell>{nombresProductos[index]}</TableCell>
               <TableCell>{detalles.cantidad}</TableCell>
               <TableCell>{detalles.tipo}</TableCell>
               <TableCell>
