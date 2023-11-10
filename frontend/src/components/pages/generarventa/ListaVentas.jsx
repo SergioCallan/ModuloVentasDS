@@ -117,7 +117,7 @@ function TablaDetalles({datos}){
     const fetchNombresProductos = async () => {
       const nombres = await Promise.all(
         datos.map(async (detalles) => {
-          const nombre = await buscarNombre(detalles.id_producto);
+          const nombre = await buscarNombre(detalles.id_producto, detalles.tipo);
           return nombre;
         })
       );
@@ -127,10 +127,19 @@ function TablaDetalles({datos}){
     fetchNombresProductos();
   }, [datos]);
 
-  const buscarNombre= async(id_producto)=>{
-    const url=`https://modulo-ventas.onrender.com/searchid/${id_producto}`
-    const response= await axios.get(url)
-    return response.data.marca+" "+response.data.modelo
+  const buscarNombre= async(id_producto, tipo)=>{
+    console.log(tipo)
+    if(tipo=="Plan"){
+      const url=`https://modulo-ventas.onrender.com/searchplanid/${id_producto}`
+      const response= await axios.get(url)
+      console.log(response.data)
+      return response.data.tipo+"- "+response.data.megas+ " megas"
+    }
+    else if(tipo=="Celular"){
+      const url=`https://modulo-ventas.onrender.com/searchid/${id_producto}`
+      const response= await axios.get(url)
+      return response.data.marca+" "+response.data.modelo
+    }
   }
 
   return(

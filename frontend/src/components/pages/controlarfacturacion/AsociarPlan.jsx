@@ -12,7 +12,7 @@ import "../../styles/MenuVentas.css"
 
 export default function AsociarPlan(){
     const [Numero, setNumero]=useState("")
-    const [TipoPlan, setTipoPlan]= useState("")
+    const [IDPlan, setIDPlan]= useState("")
 
     const changingNumero=(event)=>{
         setNumero(event.target.value)
@@ -26,20 +26,26 @@ export default function AsociarPlan(){
 
     const AsociarNumero= async(e)=>{
         e.preventDefault()
+        if(localStorage.getItem("idplan")!=null || localStorage.getItem("idplan")!=""){
+            setIDPlan(localStorage.getItem("idplan"))
+            console.log(IDPlan)
+        }
         const linea={
             numero: Numero,
-            plan: TipoPlan,
+            plan: IDPlan,
             fecha_compra: new Date(),
             fecha_pago: new Date(),
-            monto_pago: 70,
+            monto_pago: localStorage.getItem("montoplan"),
             dni_cliente: localStorage.getItem("dnicliente"),
             estado: 0
         }
-        fechaPago.setMonth(fechaPago.getMonth() + 1);
-        linea.fecha_pago = fechaPago.toISOString().split('T')[0];
+        linea.fecha_pago.setMonth(linea.fecha_pago.getMonth() + 1);
+        linea.fecha_pago = linea.fecha_pago.toISOString().split('T')[0];
+        linea.fecha_compra = linea.fecha_compra.toISOString().split('T')[0];
         console.log(linea)
         const url= `https://modulo-ventas.onrender.com/associate`
         const response= await axios.post(url, linea)
+        alert("Numero asociado exitosamente")
         console.log(response.data)
     }
 
@@ -50,7 +56,7 @@ export default function AsociarPlan(){
             </div>
             <div className="Registro Plan">
                 <h3>Si ya se cuenta con un número al cual asociar: </h3>
-                <input type="text" className="input" name="numeroexistente" placeholder="Numero existente"></input>
+                <input type="text" className="input" name="numeroexistente" placeholder="Numero existente" onChange={changingNumero} value={Numero}></input>
                 <h3>Si se desea generar un nuevo número para el cliente: </h3>
                 <button onClick={GenerarNumero}>Click aqui</button>
                 <input type="text" className="input" name="numeronuevo" placeholder="Nuevo numero" disabled value={Numero}></input>

@@ -9,7 +9,7 @@ const app = express();
 app.disable("x-powered-by")
 const corsOptions={
     origin: '*',
-    methods: ['GET', 'POST', 'DELETE'],
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
     allowedHeaders: ['Content-Type'],
     credentials: true,
 };
