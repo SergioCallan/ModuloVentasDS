@@ -31,6 +31,8 @@ export default function Internet(){
 
     const handleConfirmacionFinal = async(e) => {
        e.preventDefault();
+       const newId= uuidv4();
+       internet.id=newId
         setMostrarConfirmacion(false);
         navigate('/internet')
         window.location.reload();
