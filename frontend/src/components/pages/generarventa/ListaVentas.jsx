@@ -100,6 +100,7 @@ export default function ListaVentas() {
 }
 
 function TablaDetalles({datos}){
+  const [nombresProductos, setNombresProductos] = useState([]);
   const navigate= useNavigate()
   const obtenerID=(id_producto)=>{
     localStorage.setItem("idcompra", id_producto)
@@ -112,6 +113,35 @@ function TablaDetalles({datos}){
     window.location.reload()
   }
 
+  useEffect(() => {
+    const fetchNombresProductos = async () => {
+      const nombres = await Promise.all(
+        datos.map(async (detalles) => {
+          const nombre = await buscarNombre(detalles.id_producto, detalles.tipo);
+          return nombre;
+        })
+      );
+      setNombresProductos(nombres);
+    };
+
+    fetchNombresProductos();
+  }, [datos]);
+
+  const buscarNombre= async(id_producto, tipo)=>{
+    console.log(tipo)
+    if(tipo=="Plan"){
+      const url=`https://modulo-ventas.onrender.com/searchplanid/${id_producto}`
+      const response= await axios.get(url)
+      console.log(response.data)
+      return response.data.tipo+"- "+response.data.megas+ " megas"
+    }
+    else if(tipo=="Celular"){
+      const url=`https://modulo-ventas.onrender.com/searchid/${id_producto}`
+      const response= await axios.get(url)
+      return response.data.marca+" "+response.data.modelo
+    }
+  }
+
   return(
     <TableContainer component={Paper}>
       <Table>
@@ -120,9 +150,11 @@ function TablaDetalles({datos}){
             <TableCell>ID de la venta</TableCell>
             <TableCell>ID de los detalles</TableCell>
             <TableCell>ID del producto</TableCell>
+            <TableCell>Nombre del producto</TableCell>
             <TableCell>Cantidad</TableCell>
             <TableCell>Tipo de Compra</TableCell>
-            <TableCell></TableCell>
+            <TableCell>ID de la garantia</TableCell>
+            <TableCell>Tiempo de la garantia (Meses)</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -132,11 +164,11 @@ function TablaDetalles({datos}){
               <TableCell>{detalles.id_venta}</TableCell>
               <TableCell>{detalles.id_detalle}</TableCell>
               <TableCell>{detalles.id_producto}</TableCell>
+              <TableCell>{nombresProductos[index]}</TableCell>
               <TableCell>{detalles.cantidad}</TableCell>
               <TableCell>{detalles.tipo}</TableCell>
-              <TableCell>
-                <button className="Azul" onClick={()=>obtenerID(detalles.id_producto)}>Más información</button>
-              </TableCell>
+              <TableCell>{detalles.id_garantia}</TableCell>
+              <TableCell>{detalles.tiempo_garantia}</TableCell>
               <TableCell>
                 <button className="Rojo" onClick={()=>eliminarDetalle(detalles.id_detalle)}>Eliminar de la lista</button>
               </TableCell>

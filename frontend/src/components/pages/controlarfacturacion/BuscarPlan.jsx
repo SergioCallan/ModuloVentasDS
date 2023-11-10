@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function BuscarPlan(){
     const navigate= useNavigate()
-    
+    const [ID, setID]=useState("")
     const [dropdownF, setDropdownF] = useState(false);
     const abrirCerrarDropdownF = () => {
         setDropdownF(!dropdownF);
@@ -111,16 +111,15 @@ export default function BuscarPlan(){
       const detalleventa={
         id_venta: localStorage.getItem("venta"),
         id_detalle: uuidv4(),
-        id_producto: localStorage.getItem('idProducto'),
+        id_producto: ID,
         cantidad: 1,
-        id_garantia: "0",
+        id_garantia: 0,
+        tiempo_garantia: 0,
         tipo: "Plan"
       }
       const url5= `https://modulo-ventas.onrender.com/adddetail`
       const response5= await axios.post(url5, detalleventa)
-      console.log(response5.data)
       localStorage.setItem("tipo", detalleventa.tipo)
-      alert(localStorage.getItem("tipo"))
       navigate('/listaventas')
     }
 
@@ -166,7 +165,7 @@ export default function BuscarPlan(){
                     Filtrar Plan
                     </button>
                     <div className="TablaP">
-                        <TablaP datos={datosP}/>
+                        <TablaP datos={datosP} setID={setID}/>
                     </div>
                 </div>
                 <button id="Regresar" className="Rojo">Regresar</button>
@@ -176,10 +175,12 @@ export default function BuscarPlan(){
     )
 }
 
-function TablaP({datos}){
-    const obtenerID=(id)=>{
-        alert(`ID del plan seleccionado: ${id}`)
-        localStorage.setItem("idProducto", id)
+function TablaP({datos, setID}){
+    const obtenerDatosPlan=(tipo, megas, id, precio)=>{
+        alert(`Plan seleccionado: ${tipo} de ${megas} megas`)
+        localStorage.setItem("montoplan", precio)
+        localStorage.setItem("idplan", id)
+        setID(id)
     }
     return(
         <TableContainer component={Paper}>
@@ -202,7 +203,7 @@ function TablaP({datos}){
               <TableCell>{planes.precio}</TableCell>
               <TableCell>{planes.estado}</TableCell>
               <TableCell>
-                <button className="Azul" onClick={()=>obtenerID(planes.id_plan)}>Seleccionar producto</button>
+                <button className="Azul" onClick={()=>obtenerDatosPlan(planes.tipo, planes.megas, planes.id_plan, planes.precio)}>Seleccionar producto</button>
               </TableCell>
             </TableRow>
           ))}

@@ -62,7 +62,6 @@ export default function BuscarCliente(){
     }
 
     const Avanzar=()=>{
-        //Agregar el local Storage para el DNI
         navigate("/menuventas")
     }
 

@@ -9,7 +9,7 @@ const searchWarranty= async (req, res)=>{
             res.json(null)
         }
         else{
-            res.json(results.rows)
+            res.json(results.rows[0])
         }
     }catch(error){
         console.error("Error al conseguir los datos de la garantia: ", error)

@@ -4,9 +4,9 @@ const pool= require ('../db')
 
 const addDetails= async(req, res)=>{
     try{
-        const {id_venta, id_detalle, id_producto, cantidad, id_garantia, tipo}= req.body
-        const query= "INSERT INTO detalleventa (id_venta, id_detalle, id_producto, cantidad, id_garantia, tipo) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *"
-        const values= [id_venta, id_detalle, id_producto, cantidad, id_garantia, tipo]
+        const {id_venta, id_detalle, id_producto, cantidad, id_garantia, tiempo_garantia, tipo}= req.body
+        const query= "INSERT INTO detalleventa (id_venta, id_detalle, id_producto, cantidad, id_garantia, tiempo_garantia, tipo) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *"
+        const values= [id_venta, id_detalle, id_producto, cantidad, id_garantia, tiempo_garantia, tipo]
         const result= await pool.query(query, values)
         return res.json(result.rows[0])
 
@@ -56,7 +56,7 @@ const getSellid= async(req, res)=>{
             res.json(null)
         }
         else{
-            res.json(results.rows)
+            res.json(results.rows[0])
         }
     }catch(error){
         console.log('Error al recuperar las ventas: ', error)

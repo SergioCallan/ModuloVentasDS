@@ -12,7 +12,7 @@ import "../../styles/MenuVentas.css"
 
 export default function BuscarProducto() {
   const navigate= useNavigate()
-
+  const [ID, setID]=useState("")
   // Dropdown Filtro Producto
   const [dropdownF, setDropdownF] = useState(false);
   const abrirCerrarDropdownF = () => {
@@ -60,6 +60,9 @@ export default function BuscarProducto() {
   const [Modelo, setModelo] = useState("");
   const [PrecioMin, setPrecioMin] = useState("");
   const [PrecioMax, setPrecioMax] = useState("");
+  const [Cantidad, setCantidad] = useState("");
+  const [Garantia, setGarantia] = useState("");
+  const [TiempoG, setTiempoG] = useState("");
 
   const changingNombre = (event) => {
     setNombre(event.target.value);
@@ -75,6 +78,16 @@ export default function BuscarProducto() {
   };
   const changingPrecioMax = (event) => {
     setPrecioMax(event.target.value);
+  };
+  const changingCantidad = (event) => {
+    setCantidad(event.target.value);
+  };
+  const changingGarantia = (event) => {
+    setGarantia(event.target.value);
+  };
+
+  const changingTiempoG = (event) => {
+    setTiempoG(event.target.value);
   };
 
   // Filtros
@@ -139,11 +152,13 @@ export default function BuscarProducto() {
     const detalleventa={
       id_venta: localStorage.getItem("venta"),
       id_detalle: uuidv4(),
-      id_producto: localStorage.getItem('idProducto'),
-      cantidad: 1,
-      id_garantia: "0",
+      id_producto: ID,
+      cantidad: Cantidad,
+      id_garantia: Garantia,
+      tiempo_garantia: TiempoG,
       tipo: "Celular"
     }
+    console.log(detalleventa)
     const url5= `https://modulo-ventas.onrender.com/adddetail`
     const response5= await axios.post(url5, detalleventa)
     console.log(response5.data)
@@ -152,7 +167,7 @@ export default function BuscarProducto() {
   }
 
   const Regresar= async(e)=>{
-    e.preventDefault
+    e.preventDefault()
     navigate("/buscarcliente")
   }
 
@@ -164,6 +179,14 @@ export default function BuscarProducto() {
   const handleSidebarClose = () => {
     setSidebarOpen(false);
   };
+
+  const BuscarGarantia= async(e)=>{
+    e.preventDefault()
+    const url= `https://modulo-ventas.onrender.com/searchwarranty/${Garantia}`
+    const response= await axios.get(url)
+    alert("La garantia cubre: "+response.data.porcentaje+"%")
+    alert("Coste de la garantia: "+response.data.precio)
+  }
 
   //Función para comprobar que haya un cliente
   useEffect(()=>{
@@ -226,9 +249,16 @@ export default function BuscarProducto() {
                 </button>
 
             <div className="TablaP">
-              <TablaProductos datos={datosP} />
+              <TablaProductos datos={datosP} setID={setID} />
             </div>
           </div>
+        <input type="number" className="input" name= "Cantidad" placeholder="Cantidad" onChange={changingCantidad} required value={Cantidad}></input>
+        <br></br>
+        <input type="text" className="input" name="Garantia" placeholder="ID de la garantia" onChange={changingGarantia} required value={Garantia}></input>
+        <button id="BuscarGarantia" className="Celeste" onClick={BuscarGarantia}>Buscar Garantia</button>
+        <br></br>
+        <input type="number" className="input" name="TiempoG" placeholder="Tiempo de la garantia(meses)" onChange={changingTiempoG} required value={TiempoG}></input>
+        <br></br>
         <button id="Regresar" className="Rojo" onClick={Regresar}>
           Regresar
         </button>
@@ -240,10 +270,10 @@ export default function BuscarProducto() {
   );
 }
 
-function TablaProductos({ datos }) {
-    const obtenerID=(id)=>{
-      alert(`ID del producto seleccionado: ${id}`)
-      localStorage.setItem("idProducto", id)
+function TablaProductos({ datos, setID }) {
+    const obtenerDatosProducto=(marca, modelo, idproducto)=>{
+      alert(`Producto seleccionado: ${marca} ${modelo}`)
+      setID(idproducto)
     }
     return (
     <TableContainer component={Paper}>
@@ -269,7 +299,7 @@ function TablaProductos({ datos }) {
               <TableCell>{productos.almacenamiento}</TableCell>
               <TableCell>{productos.precio}</TableCell>
               <TableCell>
-                <button className="Azul" onClick={()=>obtenerID(productos.id_celular)}>Seleccionar producto</button>
+                <button className="Azul" onClick={()=>obtenerDatosProducto(productos.marca, productos.modelo, productos.id_celular)}>Seleccionar producto</button>
               </TableCell>
             </TableRow>
           ))}
