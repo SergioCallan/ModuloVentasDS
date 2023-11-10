@@ -144,7 +144,8 @@ function TablaDetalles({datos}){
             <TableCell>Nombre del producto</TableCell>
             <TableCell>Cantidad</TableCell>
             <TableCell>Tipo de Compra</TableCell>
-            <TableCell></TableCell>
+            <TableCell>ID de la garantia</TableCell>
+            <TableCell>Tiempo de la garantia (Meses)</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -157,9 +158,8 @@ function TablaDetalles({datos}){
               <TableCell>{nombresProductos[index]}</TableCell>
               <TableCell>{detalles.cantidad}</TableCell>
               <TableCell>{detalles.tipo}</TableCell>
-              <TableCell>
-                <button className="Azul" onClick={()=>obtenerID(detalles.id_producto)}>Más información</button>
-              </TableCell>
+              <TableCell>{detalles.id_garantia}</TableCell>
+              <TableCell>{detalles.tiempo_garantia}</TableCell>
               <TableCell>
                 <button className="Rojo" onClick={()=>eliminarDetalle(detalles.id_detalle)}>Eliminar de la lista</button>
               </TableCell>
