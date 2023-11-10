@@ -62,6 +62,7 @@ export default function BuscarProducto() {
   const [PrecioMax, setPrecioMax] = useState("");
   const [Cantidad, setCantidad] = useState("");
   const [Garantia, setGarantia] = useState("");
+  const [TiempoG, setTiempoG] = useState("");
 
   const changingNombre = (event) => {
     setNombre(event.target.value);
@@ -83,6 +84,10 @@ export default function BuscarProducto() {
   };
   const changingGarantia = (event) => {
     setGarantia(event.target.value);
+  };
+
+  const changingTiempoG = (event) => {
+    setTiempoG(event.target.value);
   };
 
   // Filtros
@@ -149,9 +154,11 @@ export default function BuscarProducto() {
       id_detalle: uuidv4(),
       id_producto: ID,
       cantidad: Cantidad,
-      id_garantia: "0",
+      id_garantia: Garantia,
+      tiempo_garantia: TiempoG,
       tipo: "Celular"
     }
+    console.log(detalleventa)
     const url5= `https://modulo-ventas.onrender.com/adddetail`
     const response5= await axios.post(url5, detalleventa)
     console.log(response5.data)
@@ -176,9 +183,7 @@ export default function BuscarProducto() {
   const BuscarGarantia= async(e)=>{
     e.preventDefault()
     const url= `https://modulo-ventas.onrender.com/searchwarranty/${Garantia}`
-    alert(url)
     const response= await axios.get(url)
-    console.log(response.data)
     alert("La garantia cubre: "+response.data.porcentaje+"%")
     alert("Coste de la garantia: "+response.data.precio)
   }
@@ -251,6 +256,8 @@ export default function BuscarProducto() {
         <br></br>
         <input type="text" className="input" name="Garantia" placeholder="ID de la garantia" onChange={changingGarantia} required value={Garantia}></input>
         <button id="BuscarGarantia" className="Celeste" onClick={BuscarGarantia}>Buscar Garantia</button>
+        <br></br>
+        <input type="number" className="input" name="TiempoG" placeholder="Tiempo de la garantia(meses)" onChange={changingTiempoG} required value={TiempoG}></input>
         <br></br>
         <button id="Regresar" className="Rojo" onClick={Regresar}>
           Regresar
