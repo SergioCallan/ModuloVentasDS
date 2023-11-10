@@ -39,10 +39,11 @@ export default function ObservarFacturas() {
       </div>
       <div className="facturacion">
             <h1>Facturación</h1>
-            <h2>Facturas Pagadas</h2>
-            <GrupoFacturas facturas={factura.filter((factura) => factura.estado === "Pagado")} />
             <h2>Facturas Pendientes</h2>
             <GrupoFacturas facturas={facturasPendientes} />
+            <h2>Facturas Pagadas</h2>
+            <GrupoFacturas facturas={factura.filter((factura) => factura.estado === "Pagado")} />
+            
       </div>
     </main>
   );

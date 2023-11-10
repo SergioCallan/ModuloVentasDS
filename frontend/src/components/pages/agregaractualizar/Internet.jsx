@@ -1,11 +1,33 @@
-import {Button, Card, CardContent, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField, Dialog } from '@mui/material';
+import {Button, Card, CardContent, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField, Dialog, Typography} from '@mui/material';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import ListInternet from './ListInternet'
+import { useNavigate, useParams } from 'react-router-dom';
+import ListInternet from './ListInternet';
+
+const createProxyHandler = (setStateFunction) => {
+  return {
+    set: function (target, key, value) {
+        // Realizar validaciones aquí, por ejemplo, verificar si "precio" es un número válido
+        if (key === 'precio' && isNaN(parseFloat(value)) && value!="") {
+
+          const errorMessage = 'El precio debe ser un número válido.';
+
+          document.getElementById('precio-error').textContent = errorMessage;
+          return true;
+        }
+
+        setStateFunction({ ...target, [key]: value });
+        if (key === 'precio') {
+          document.getElementById('precio-error').textContent = '';
+        }
+        return true;
+    }
+  }
+};
 
 export default function Internet(){
+
   const navigate =  useNavigate();
   const params = useParams();
 
@@ -17,57 +39,62 @@ export default function Internet(){
         tipo: ""
       })
 
-    const handleRegresar = () => {
-        // Navegar de nuevo a la página principal
-        navigate('/');
-      };
-
-    const handleConfirmar = () => {
-        setMostrarConfirmacion(true);
-      };
-
+    const proxyInternet = new Proxy(internet, createProxyHandler(setInternet));
     const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
     const [editing, setEditing] = useState(false);
 
-    const handleConfirmacionFinal = async(e) => {
-       e.preventDefault();
-       const newId= uuidv4();
-       internet.id=newId
-        setMostrarConfirmacion(false);
-        navigate('/internet')
-        window.location.reload();
-        if(editing){
-          await axios.put(`https://modulo-ventas.onrender.com/internet/${params.id}`, internet, {
-            headers: { "Content-Type": "application/json" }
-          });
-        }else{
-          setInternet(internet.id= uuidv4())
-          await axios.post("https://modulo-ventas.onrender.com/internet", internet, {
-            headers: { "Content-Type": "application/json" },
-          });
-        }
-        
-      };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setMostrarConfirmacion(true);
-  }
-    const handleChange = (e) =>
-      setInternet({...internet, [e.target.name]: e.target.value});
-
-      const loadTask = async (id) => {
-
-        const res = await axios.get(`https://modulo-ventas.onrender.com/internet/${id}`);
-        const data = await res.data;
-        setInternet({
-          megas: data.megas,
-          precio: data.precio,
-          tipo: data.tipo
-        });
-        setEditing(true)
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setMostrarConfirmacion(true);
     };
+  
+    const handleChange = (e) => {
+      proxyInternet[e.target.name] = e.target.value;
+    };
+
+    const handleConfirmar = () => {
+      setMostrarConfirmacion(true);
+    };
+
+    const handleRegresar = () => {
+      // Navegar de nuevo a la página principal
+      navigate('/');
+    };
+
+    const handleConfirmacionFinal = async(e) => {
+      e.preventDefault();
+  
+      // Genera un nuevo UUID para el ID
+      const newId = uuidv4();
+  
+      // Asigna el nuevo UUID al objeto proxyPhone
+      navigate("/internet")
+      window.location.reload();
+      
+      setMostrarConfirmacion(false);
+      if(editing){
+        await axios.put(`https://modulo-ventas.onrender.com/internet/${params.id}`, proxyInternet, {
+          headers: { "Content-Type": "application/json" }
+        });
+      }else{
+        
+        await axios.post("https://modulo-ventas.onrender.com/internet", proxyInternet, {
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+    };
+    
+    const loadTask = async (id) => {
+
+      const res = await axios.get(`https://modulo-ventas.onrender.com/internet/${id}`);
+      const data = await res.data;
+      setInternet({
+        megas: data.megas,
+        precio: data.precio,
+        tipo: data.tipo
+      });
+      setEditing(true)
+  };
 
     useEffect(() => {
       if(params.id){
@@ -106,7 +133,7 @@ export default function Internet(){
                       label="Megas"
                       variant="outlined"
                       name="megas"
-                      value={internet.megas}
+                      value={proxyInternet.megas}
                       onChange={handleChange}
                       style={{
                         margin: '10px'
@@ -118,7 +145,7 @@ export default function Internet(){
                       label="Precio"
                       variant="outlined"
                       name="precio"
-                      value={internet.precio}
+                      value={proxyInternet.precio}
                       onChange={handleChange}
                       style={{
                         margin: '10px'
@@ -130,7 +157,7 @@ export default function Internet(){
                       label="Tipo"
                       variant="outlined"
                       name="tipo"
-                      value={internet.tipo}
+                      value={proxyInternet.tipo}
                       onChange={handleChange}
                       style={{
                         margin: '10px'
@@ -142,7 +169,7 @@ export default function Internet(){
                         justifyContent:'end'
                       }}
                     >
-                    <Button variant="contained" color="success"   disabled={!internet.megas  || !internet.precio} onClick={handleConfirmar} type="submit">Confirmar</Button>
+                    <Button variant="contained" color="success"   disabled={!proxyInternet.megas  || !proxyInternet.precio} onClick={handleConfirmar} type="submit">Confirmar</Button>
                     <Button variant="contained" color="success" onClick={handleRegresar} style={{marginLeft: '20px'}}>
                       Regresar
                     </Button>
@@ -160,13 +187,13 @@ export default function Internet(){
                 <DialogTitle id="alert-dialog-title">Confirmación</DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    <strong>Megas:</strong> {internet.megas}
+                    <strong>Megas:</strong> {proxyInternet.megas}
                     <br />
-                    <strong>Precio:</strong> {internet.precio}
+                    <strong>Precio:</strong> {proxyInternet.precio}
                     <br />
-                    <strong>Estado: </strong> {internet.estado}
+                    <strong>Estado: </strong> {proxyInternet.estado}
                     <br />
-                    <strong>Tipo: </strong> {internet.tipo}
+                    <strong>Tipo: </strong> {proxyInternet.tipo}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
