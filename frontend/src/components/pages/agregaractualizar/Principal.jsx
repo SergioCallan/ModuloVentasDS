@@ -4,18 +4,17 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Grid, Card, Button } from '@mui/material';
+import {Cambio} from './patronObservador.ts'
 
 export default function Principal() {
-  const navigate = useNavigate();
+  const navigate= useNavigate()
+  const tipoProducto = new Cambio()
 
-  const handleSelectionChange = (event, value) => {
-    if (value && value.label === 'Celular') {
-      navigate('/phone');
-    } else if (value && value.label === 'Plan') {
-      navigate('/internet');
-    }
-  };
-
+  const handleSelectionChange = (event,value) => {
+ 
+   tipoProducto.cambiarTipoProducto(value.label)
+ 
+  }
   const [mostrarLista, setMostrarLista] = useState(false);
 
   const handleLista = () => {
