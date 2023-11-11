@@ -42,7 +42,7 @@ const searchbillid= async(req, res)=>{
             res.json(null)
         }
         else{
-            res.json(result.rows)
+            res.json(result.rows[0])
         }
     }catch(error){
         console.error("Error al obtener las facturas: ", error)
