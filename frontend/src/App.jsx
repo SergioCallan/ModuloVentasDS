@@ -11,6 +11,7 @@ import BuscarPlan from "./components/pages/controlarfacturacion/BuscarPlan"
 import ListaVentas from "./components/pages/generarventa/ListaVentas"
 import AsociarPlan from "./components/pages/controlarfacturacion/AsociarPlan"
 import ObservarFacturas from "./components/pages/controlarfacturacion/observarFacturas"
+import Listado from "./components/pages/agregaractualizar/listado"
 
 function App(){
   return(
@@ -30,6 +31,7 @@ function App(){
               <Route path="/listaventas" element={<ListaVentas/>}/>
               <Route path="/asociarplan" element={<AsociarPlan/>}/>
               <Route path="/observarfacturas" element={<ObservarFacturas/>}/>
+              <Route path="/listado" element={<Listado/>}/>
           </Routes>
     </BrowserRouter>
   )
