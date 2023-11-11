@@ -87,7 +87,7 @@ router.put('/cancelarlinea/:numero', cancelarLinea)
 
 router.get('/searchbilldni/:dni_cliente', searchbilldni)
 
-router.get('/searchbillid/:factura_id', searchbillid)
+router.get('/searchbillid/:id_factura', searchbillid)
 
 router.get('/searchbillnumber/:numero_linea', searchbillnumber)
 
