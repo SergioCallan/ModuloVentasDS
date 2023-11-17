@@ -1,19 +1,30 @@
-import * as React from 'react';
+// import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { Grid, Card } from '@mui/material';
+import {Cambio} from './patronObservador.ts'
+
 
 export default function Principal() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleSelectionChange = (event, value) => {
-    if (value && value.label === 'Celular') {
-      navigate('/phone');
-    } else if (value && value.label === 'Plan') {
-      navigate('/internet');
-    }
-  };
+
+ const tipoProducto = new Cambio()
+
+ const handleSelectionChange = (event,value) => {
+
+  tipoProducto.cambiarTipoProducto(value.label)
+
+ }
+  
+  // const handleSelectionChange = (event, value) => {
+  //   if (value && value.label === 'Celular') {
+  //     navigate('/phone');
+  //   } else if (value && value.label === 'Plan') {
+  //     navigate('/internet');
+  //   }
+  // };
   
   return (
     <Grid container alignItems='center' justifyContent='center' columns={16}>
