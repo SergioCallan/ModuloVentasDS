@@ -75,8 +75,6 @@ export default function Phone(){
 
     // Asigna el nuevo UUID al objeto proxyPhone
     proxyPhone.id = newId;
-    console.log(proxyPhone)
-    console.log(newId)
     
     setMostrarConfirmacion(false);
     if(editing){

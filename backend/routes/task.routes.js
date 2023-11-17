@@ -6,7 +6,7 @@ const {searchdni}= require('../controllers/client.controllers')
 const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail, getSelldni, getSellid}= require('../controllers/sell.controllers')
 const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan.controllers')
 const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea}= require('../controllers/factura.controllers')
-const {searchbilldni, searchbillnumber, searchbillid}= require('../controllers/bills.controllers')
+const {searchbilldni, searchbillnumber, searchbillid, createbill}= require('../controllers/bills.controllers')
 const {searchWarranty}= require('../controllers/warranty.controllers')
 
 const router = Router();
@@ -87,9 +87,11 @@ router.put('/cancelarlinea/:numero', cancelarLinea)
 
 router.get('/searchbilldni/:dni_cliente', searchbilldni)
 
-router.get('/searchbillid/:factura_id', searchbillid)
+router.get('/searchbillid/:id_factura', searchbillid)
 
 router.get('/searchbillnumber/:numero_linea', searchbillnumber)
+
+router.post('/createbill', createbill)
 
 //Rutas para las garantias
 

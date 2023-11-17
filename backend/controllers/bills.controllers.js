@@ -42,10 +42,22 @@ const searchbillid= async(req, res)=>{
             res.json(null)
         }
         else{
-            res.json(result.rows)
+            res.json(result.rows[0])
         }
     }catch(error){
         console.error("Error al obtener las facturas: ", error)
+    }
+}
+
+const createbill= async(req, res)=>{
+    try{
+        const {id_factura, dni_cliente, numero_linea, precio, fecha_pago, estado}= req.body
+        const query= "INSERT INTO facturas(id_factura, dni_cliente, numero_linea, precio, fecha_pago, estado) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *"
+        const values= [id_factura, dni_cliente, numero_linea, precio, fecha_pago, estado]
+        const result= await pool.query(query, values)
+        return res.json(result.rows[0])
+    } catch(error){
+        console.error("Error al guardar la factura: ", error)
     }
 }
 
@@ -54,4 +66,5 @@ module.exports={
     searchbilldni,
     searchbillnumber,
     searchbillid,
+    createbill,
 }

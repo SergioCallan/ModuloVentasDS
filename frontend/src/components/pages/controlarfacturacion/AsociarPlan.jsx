@@ -24,6 +24,20 @@ export default function AsociarPlan(){
         setNumero(numAleatorio)
     }
 
+    const CrearFactura= async (e)=>{
+        const factura={
+            id_factura: uuidv4(),
+            dni_cliente: localStorage.getItem("dnicliente"),
+            numero_linea: Numero,
+            precio: localStorage.getItem("montoplan"),
+            fecha_pago: new Date(),
+            estado: "Pendiente"
+        }
+        factura.fecha_pago.setMonth(factura.fecha_pago.getMonth() + 1);
+        factura.fecha_pago = factura.fecha_pago.toISOString().split('T')[0];
+        const url= "https://modulo-ventas.onrender.com/"
+    }
+
     const AsociarNumero= async(e)=>{
         e.preventDefault()
         if(localStorage.getItem("idplan")!=null || localStorage.getItem("idplan")!=""){
@@ -42,9 +56,9 @@ export default function AsociarPlan(){
         linea.fecha_pago.setMonth(linea.fecha_pago.getMonth() + 1);
         linea.fecha_pago = linea.fecha_pago.toISOString().split('T')[0];
         linea.fecha_compra = linea.fecha_compra.toISOString().split('T')[0];
-        console.log(linea)
         const url= `https://modulo-ventas.onrender.com/associate`
         const response= await axios.post(url, linea)
+        CrearFactura()
         alert("Numero asociado exitosamente")
         console.log(response.data)
     }

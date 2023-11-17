@@ -4,12 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function ObservarFacturas() {
   const [factura, setFactura] = useState([]);
-  const [dni, setDNI] = useState("");
+  const [dni, setDNI] = useState(localStorage.getItem("dnicliente"));
   const [facturasPendientes, setFacturasPendientes] = useState([]);
-
-  const changingDNI = (event) => {
-    setDNI(event.target.value);
-  };
 
   const ActualizarFactura = async (e) => {
     e.preventDefault();
@@ -38,16 +34,16 @@ export default function ObservarFacturas() {
   return (
     <main>
       <div className="Buscador">
-        <h3>Ingrese el DNI del cliente: </h3>
-        <input type="text" className="input" name="dni" placeholder="DNI" onChange={changingDNI} value={dni}/>
-        <button onClick={ActualizarFactura}>Buscar Cliente</button>
+        <h3>DNI del cliente: {dni}</h3>
+        <button onClick={ActualizarFactura}>Actualizar lista de facturas</button>
       </div>
       <div className="facturacion">
             <h1>Facturación</h1>
-            <h2>Facturas Pagadas</h2>
-            <GrupoFacturas facturas={factura.filter((factura) => factura.estado === "Pagado")} />
             <h2>Facturas Pendientes</h2>
             <GrupoFacturas facturas={facturasPendientes} />
+            <h2>Facturas Pagadas</h2>
+            <GrupoFacturas facturas={factura.filter((factura) => factura.estado === "Pagado")} />
+            
       </div>
     </main>
   );

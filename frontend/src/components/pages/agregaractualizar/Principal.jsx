@@ -1,31 +1,29 @@
 // import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-// import { useNavigate } from 'react-router-dom';
-import { Grid, Card } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Grid, Card, Button } from '@mui/material';
 import {Cambio} from './patronObservador.ts'
 
-
 export default function Principal() {
-  // const navigate = useNavigate();
+  const navigate= useNavigate()
+  const tipoProducto = new Cambio()
 
+  const handleSelectionChange = (event,value) => {
+ 
+   tipoProducto.cambiarTipoProducto(value.label)
+ 
+  }
+  const [mostrarLista, setMostrarLista] = useState(false);
 
- const tipoProducto = new Cambio()
+  const handleLista = () => {
+    setMostrarLista(true);
+    if(setMostrarLista){
+      navigate('/listado');
+    }
 
- const handleSelectionChange = (event,value) => {
-
-  tipoProducto.cambiarTipoProducto(value.label)
-
- }
-  
-  // const handleSelectionChange = (event, value) => {
-  //   if (value && value.label === 'Celular') {
-  //     navigate('/phone');
-  //   } else if (value && value.label === 'Plan') {
-  //     navigate('/internet');
-  //   }
-  // };
-  
+  };
   return (
     <Grid container alignItems='center' justifyContent='center' columns={16}>
       <Grid item xs={8}>
@@ -47,6 +45,9 @@ export default function Principal() {
         />
         </Card>
       </Grid>
+      <Card>
+      <Button variant="contained" color="success" onClick={handleLista} style={{marginLeft: '20px'}}>Listado</Button>
+      </Card>
     </Grid>
   );
 }
