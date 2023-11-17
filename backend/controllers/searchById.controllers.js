@@ -7,6 +7,7 @@ const getLastSell = async (req, res) => {
       if (result.rows.length === 0) {
         res.json(null);
       } else {
+        console.log(result.rows[0])
         res.json(result.rows[0]);
       }
     } catch (error) {
