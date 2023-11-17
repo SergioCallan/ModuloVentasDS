@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../../extras/Sidebar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -14,6 +14,7 @@ import {
   TableCell,
   Paper,
 } from "@mui/material";
+import { TCelda, TCelda2 } from "../../styles/CeldaTablaPersonalizada";
 
 export default function ListaVentas() {
   const [data, setData]= useState([])
@@ -77,22 +78,40 @@ export default function ListaVentas() {
       navigate("/buscarcliente")
     }
   }
+// Sidebar 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const handleSidebarOpen = () => {
+    setSidebarOpen(true)
+};
+  const handleSidebarClose = () => {
+    setSidebarOpen(false)}
+// termina sidebar
   return (
     <div>
-      <Sidebar />
+      {/* empieza la cabecera */}
       <main>
-        <div className="Header">
-          <h1>Módulo de Ventas</h1>
+      <div className="Header">
+                    <IconButton className="contenedor-acordeon" onClick={handleSidebarOpen} edge="start" color="inherit" aria-label="menu">
+                        <MenuIcon className="icono-acordeon"/>
+                    </IconButton>
+                    <Sidebar className="Menu-lateral-desplegable" open={sidebarOpen} onClose={handleSidebarClose}/>
+                    <div className="Contenedor-Nombre-Modulo">
+                    <h1 className="Nombre-Modulo">Módulo de Ventas</h1>
+                    </div> 
+                </div>
+        {/* termina la cabecera */}
+        <div className="contenedor-cuerpo">
+        <div className="contenedor-nombre-seccion">
+          <h2>Lista de productos</h2>
         </div>
-        <div className="Lista">
-          <h2 className="h2">Lista de productos</h2>
           <TablaDetalles datos={data}/>
+       
+        <div className="seccion-btns">
+          <button className="Rojo btn-estructura" onClick={CancelarTodo}>Cancelar Venta</button>
+          <button className="Celeste btn-estructura" onClick={AgregarProducto}>Agregar otro producto</button>
+          <button className="Verde btn-estructura" onClick={Registrar}>Confirmar venta</button>
         </div>
-        <div className="Buttons">
-          <button className="Rojo" onClick={CancelarTodo}>Cancelar Venta</button>
-          <button className="Celeste" onClick={AgregarProducto}>Agregar otro producto</button>
-          <button className="Verde" onClick={Registrar}>Confirmar venta</button>
         </div>
       </main>
     </div>
@@ -143,35 +162,35 @@ function TablaDetalles({datos}){
   }
 
   return(
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{maxHeight:'300px', maxWidth: '95vw',marginBottom: '3vh'}}>
       <Table>
-        <TableHead>
+        <TableHead component={Paper} sx={{position:'sticky', top:'0px', height: '40px'}}>
           <TableRow>
-            <TableCell>ID de la venta</TableCell>
-            <TableCell>ID de los detalles</TableCell>
-            <TableCell>ID del producto</TableCell>
-            <TableCell>Nombre del producto</TableCell>
-            <TableCell>Cantidad</TableCell>
-            <TableCell>Tipo de Compra</TableCell>
-            <TableCell>ID de la garantia</TableCell>
-            <TableCell>Tiempo de la garantia (Meses)</TableCell>
-            <TableCell></TableCell>
+            <TCelda2>ID de la venta</TCelda2>
+            <TCelda2>ID de los detalles</TCelda2>
+            <TCelda2>ID del producto</TCelda2>
+            <TCelda2>Nombre del producto</TCelda2>
+            <TCelda2>Cantidad</TCelda2>
+            <TCelda2>Tipo de Compra</TCelda2>
+            <TCelda2>ID de la garantia</TCelda2>
+            <TCelda2>Tiempo de la garantia (Meses)</TCelda2>
+            <TCelda2>Opción</TCelda2>
           </TableRow>
         </TableHead>
         <TableBody>
           {datos.map((detalles, index)=>(
             <TableRow key={index}>
-              <TableCell>{detalles.id_venta}</TableCell>
-              <TableCell>{detalles.id_detalle}</TableCell>
-              <TableCell>{detalles.id_producto}</TableCell>
-              <TableCell>{nombresProductos[index]}</TableCell>
-              <TableCell>{detalles.cantidad}</TableCell>
-              <TableCell>{detalles.tipo}</TableCell>
-              <TableCell>{detalles.id_garantia}</TableCell>
-              <TableCell>{detalles.tiempo_garantia}</TableCell>
-              <TableCell>
-                <button className="Rojo" onClick={()=>eliminarDetalle(detalles.id_detalle)}>Eliminar de la lista</button>
-              </TableCell>
+              <TCelda>{detalles.id_venta}</TCelda>
+              <TCelda>{detalles.id_detalle}</TCelda>
+              <TCelda>{detalles.id_producto}</TCelda>
+              <TCelda>{nombresProductos[index]}</TCelda>
+              <TCelda>{detalles.cantidad}</TCelda>
+              <TCelda>{detalles.tipo}</TCelda>
+              <TCelda>{detalles.id_garantia}</TCelda>
+              <TCelda>{detalles.tiempo_garantia}</TCelda>
+              <TCelda>
+                <button className="Rojo btn-eliminar" onClick={()=>eliminarDetalle(detalles.id_detalle)}>Eliminar de la lista</button>
+              </TCelda>
             </TableRow>
           ))}
         </TableBody>

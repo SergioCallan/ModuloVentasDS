@@ -7,7 +7,7 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap
 import { TableContainer, Paper, Table, TableHead, TableBody, TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
-import { TCelda} from "../../styles/ModificacionEstilosBuscarProducto";
+import { TCelda} from "../../styles/CeldaTablaPersonalizada";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "../../styles/MenuVentas.css"
 import '../../styles/BuscarProducto.css'
