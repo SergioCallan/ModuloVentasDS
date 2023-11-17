@@ -12,6 +12,8 @@ import ListaVentas from "./components/pages/generarventa/ListaVentas"
 import AsociarPlan from "./components/pages/controlarfacturacion/AsociarPlan"
 import ObservarFacturas from "./components/pages/controlarfacturacion/observarFacturas"
 import Listado from "./components/pages/agregaractualizar/listado"
+import SearchById from './components/pages/imprimirventa/buscarventa';
+import SellDetails from './components/pages/imprimirventa/verdetalles';
 
 function App(){
   return(
@@ -32,6 +34,8 @@ function App(){
               <Route path="/asociarplan" element={<AsociarPlan/>}/>
               <Route path="/observarfacturas" element={<ObservarFacturas/>}/>
               <Route path="/listado" element={<Listado/>}/>
+              <Route path="/sell/:idVenta" element={<SearchById />} />
+              <Route path="/selldetails/:id_detalle" element={<SellDetails />} />
           </Routes>
     </BrowserRouter>
   )

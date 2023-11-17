@@ -8,6 +8,7 @@ const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan
 const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea}= require('../controllers/factura.controllers')
 const {searchbilldni, searchbillnumber, searchbillid, createbill}= require('../controllers/bills.controllers')
 const {searchWarranty}= require('../controllers/warranty.controllers')
+const {getSellDetailsById, getLastSell, getSaleAndClientDetails}= require('../controllers/searchById.controllers')
 
 const router = Router();
 
@@ -77,9 +78,17 @@ router.post('/associate', associate)
 
 router.get('/getlineas/:dni_cliente', getLineas)
 
+//GET para el numero en si
+
+//PUT para actualizar el dni (busqueda por numero)
+
 router.put('/pagolinea/:numero', pagoLinea)
 
 router.put('/atrasolinea/:numero', atrasoLinea)
+
+//PUT para suspender el servicio por cliente
+
+//PUT para reactivar la linea
 
 router.put('/cancelarlinea/:numero', cancelarLinea)
 
@@ -91,6 +100,8 @@ router.get('/searchbillid/:id_factura', searchbillid)
 
 router.get('/searchbillnumber/:numero_linea', searchbillnumber)
 
+//GET para mostrar solo los pagados (DNI y por numero)
+
 router.post('/createbill', createbill)
 
 //Rutas para las garantias
@@ -98,3 +109,13 @@ router.post('/createbill', createbill)
 router.get('/searchwarranty/:id_garantia', searchWarranty)
 
 module.exports = router;
+
+//Intentar aplicar mostrar equipos comprados
+
+//Sebas
+
+router.get('/sell/last', getLastSell);
+
+router.get('/selldetails/:id_detalle', getSellDetailsById);
+
+router.get('/selldetails/:id_detalle', getSaleAndClientDetails);
