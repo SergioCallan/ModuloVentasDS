@@ -5,8 +5,8 @@ const {searchproduct, searchbrand, searchmodel, searchid}= require('../controlle
 const {searchdni}= require('../controllers/client.controllers')
 const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail, getSelldni, getSellid}= require('../controllers/sell.controllers')
 const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan.controllers')
-const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea}= require('../controllers/factura.controllers')
-const {searchbilldni, searchbillnumber, searchbillid, createbill}= require('../controllers/bills.controllers')
+const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea, searchLinea, cambioLinea, suspenderLinea, reactivarLinea}= require('../controllers/factura.controllers')
+const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilldni, searchpaybillnumero}= require('../controllers/bills.controllers')
 const {searchWarranty}= require('../controllers/warranty.controllers')
 const {getSellDetailsById, getLastSell, getSaleAndClientDetails}= require('../controllers/searchById.controllers')
 
@@ -78,17 +78,17 @@ router.post('/associate', associate)
 
 router.get('/getlineas/:dni_cliente', getLineas)
 
-//GET para el numero en si
+router.get('/searchlinea/:numero', searchLinea)
 
-//PUT para actualizar el dni (busqueda por numero)
+router.put('/cambiolinea', cambioLinea)
 
 router.put('/pagolinea/:numero', pagoLinea)
 
 router.put('/atrasolinea/:numero', atrasoLinea)
 
-//PUT para suspender el servicio por cliente
+router.put('/suspenderlinea/:numero', suspenderLinea)
 
-//PUT para reactivar la linea
+router.put('/reactivarlinea', reactivarLinea)
 
 router.put('/cancelarlinea/:numero', cancelarLinea)
 
@@ -100,7 +100,9 @@ router.get('/searchbillid/:id_factura', searchbillid)
 
 router.get('/searchbillnumber/:numero_linea', searchbillnumber)
 
-//GET para mostrar solo los pagados (DNI y por numero)
+router.get('/searchpaidbilldni/:dni_cliente', searchpaybilldni)
+
+router.get('/searchpaidbillnumero/:numero_linea', searchpaybillnumero)
 
 router.post('/createbill', createbill)
 

@@ -31,61 +31,63 @@ const createProxyHandler = (setStateFunction) => {
   };
 };
 
-export default function Phone(){
-
-  const navigate =  useNavigate();
+export default function Phone() {
+  const navigate = useNavigate();
   const params = useParams();
 
   const [phone, setPhone] = useState({
-      id: '',
-      marca: '',
-      modelo: '',
-      color: '',
-      almacenamiento: '',
-      precio: '',
-    });
-  
-    const proxyPhone = new Proxy(phone, createProxyHandler(setPhone));
-    const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
-    const [editing, setEditing] = useState(false);
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setMostrarConfirmacion(true);
-    };
-  
-    const handleChange = (e) => {
-      proxyPhone[e.target.name] = e.target.value;
-    };
+    id: '',
+    marca: '',
+    modelo: '',
+    color: '',
+    almacenamiento: '',
+    precio: '',
+  });
 
-    const handleRegresar = () => {
-      // Navegar de nuevo a la página principal
-      navigate('/');
-    };
+  // Genera un nuevo UUID para el ID
+  const newId = uuidv4();
+
+  // Asigna el nuevo UUID al objeto phone
+  const updatedPhone = { ...phone, id: newId };
+
+  // Crea el Proxy con el objeto actualizado
+  const proxyPhone = new Proxy(updatedPhone, createProxyHandler(setPhone));
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+  const [editing, setEditing] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMostrarConfirmacion(true);
+  };
+
+  const handleChange = (e) => {
+    proxyPhone[e.target.name] = e.target.value;
+  };
+
+  const handleRegresar = () => {
+    // Navegar de nuevo a la página principal
+    navigate('/');
+  };
 
   const handleConfirmar = () => {
-      setMostrarConfirmacion(true);
-    };
+    setMostrarConfirmacion(true);
+  };
 
-  const handleConfirmacionFinal = async(e) => {
+  const handleConfirmacionFinal = async (e) => {
     e.preventDefault();
 
-    // Genera un nuevo UUID para el ID
-    const newId = uuidv4();
-
-    // Asigna el nuevo UUID al objeto proxyPhone
-    proxyPhone.id = newId;
-    
     setMostrarConfirmacion(false);
-    if(editing){
+    if (editing) {
       await axios.put(`https://modulo-ventas.onrender.com/phone/${params.id}`, proxyPhone, {
-        headers: { "Content-Type": "application/json" }
-      });
-    }else{
-      
-      await axios.post("https://modulo-ventas.onrender.com/phone", proxyPhone, {
         headers: { "Content-Type": "application/json" },
       });
+    } else {
+      const response = await axios.post("https://modulo-ventas.onrender.com/phone", proxyPhone, {
+        headers: { "Content-Type": "application/json" },
+      });
+      const newPhoneId = response.data.id;
+      console.log("Nuevo ID asignado:", newPhoneId);
+      window.location.reload();
     }
   };
 
