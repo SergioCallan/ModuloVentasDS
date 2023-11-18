@@ -14,6 +14,7 @@ import ObservarFacturas from "./components/pages/controlarfacturacion/observarFa
 import Listado from "./components/pages/agregaractualizar/listado"
 import SearchById from './components/pages/imprimirventa/buscarventa';
 import SellDetails from './components/pages/imprimirventa/verdetalles';
+import Operaciones from './components/pages/controlarfacturacion/Operaciones'
 
 function App(){
   return(
@@ -36,6 +37,7 @@ function App(){
               <Route path="/listado" element={<Listado/>}/>
               <Route path="/sell/:idVenta" element={<SearchById />} />
               <Route path="/selldetails/:id_detalle" element={<SellDetails />} />
+              <Route path="/operaciones" element={<Operaciones/>}/>
           </Routes>
     </BrowserRouter>
   )
