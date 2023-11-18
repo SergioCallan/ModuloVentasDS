@@ -61,10 +61,43 @@ const createbill= async(req, res)=>{
     }
 }
 
+const searchpaybillnumero= async(req, res)=>{
+    try{
+        const numero_linea= req.params.numero_linea
+        const query= "SELECT * FROM facturas WHERE numero_linea= $1, estado='Pagado'";
+        const result= await pool.query(query, [numero_linea])
+        if(result.rows.length===0){
+            res.json(null)
+        }
+        else{
+            res.json(result.rows)
+        }
+    }catch(error){
+        console.error("Error al obtener las facturas: ", error)
+    }
+}
+
+const searchpaybilldni= async(req, res)=>{
+    try{
+        const dni_cliente= req.params.dni_cliente
+        const query= "SELECT * FROM facturas WHERE dni_cliente= $1, estado='Pagado'";
+        const result= await pool.query(query, [dni_cliente])
+        if(result.rows.length===0){
+            res.json(null)
+        }
+        else{
+            res.json(result.rows)
+        }
+    }catch(error){
+        console.error("Error al obtener las facturas: ", error)
+    }
+}
 
 module.exports={
     searchbilldni,
     searchbillnumber,
     searchbillid,
     createbill,
+    searchpaybilldni,
+    searchpaybillnumero
 }
