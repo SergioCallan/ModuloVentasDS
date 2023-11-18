@@ -80,7 +80,7 @@ const searchpaybillnumero= async(req, res)=>{
 const searchpaybilldni= async(req, res)=>{
     try{
         const dni_cliente= req.params.dni_cliente
-        const query= "SELECT * FROM facturas WHERE dni_cliente= $1, estado='Pagado'";
+        const query= "SELECT * FROM facturas WHERE dni_cliente= $1 AND estado='Pagado'";
         const result= await pool.query(query, [dni_cliente])
         if(result.rows.length===0){
             res.json(null)
