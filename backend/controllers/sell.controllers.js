@@ -102,18 +102,23 @@ const calculateCost = async (req, res) => {
     try {
         const id_venta = req.params.id_venta;
 
-        // Consulta para obtener los id_producto de la tabla detalleventa
-        const detalleventaQuery = 'SELECT id_producto FROM detalleventa WHERE id_venta = $1';
+        // Consulta para obtener los id_producto y cantidad de la tabla detalleventa
+        const detalleventaQuery = 'SELECT id_producto, cantidad FROM detalleventa WHERE id_venta = $1';
         const detalleventaResult = await pool.query(detalleventaQuery, [id_venta]);
 
-        // Utilizar IN para obtener la suma de precios de múltiples productos
-        const idProductos = detalleventaResult.rows.map(row => row.id_producto);
-        // Crear una cadena de marcadores de posición ($1, $2, $3, ...) según la cantidad de IDs
-        const placeholders = idProductos.map((id, index) => `$${index + 1}`).join(',');
-        const idProductoQuery = `SELECT SUM(precio) as total FROM celular WHERE id_celular IN (${placeholders})`;
-        const costeResult = await pool.query(idProductoQuery, idProductos);
+        // Crear una cadena de marcadores de posición ($1, $2, $3, ...) según la cantidad de registros
+        const placeholders = detalleventaResult.rows.map((row, index) => `$${index * 2 + 1}, $${index * 2 + 2}`).join(',');
+        const idProductoQuery = `SELECT SUM(precio * cantidad) as total FROM celular WHERE id_celular IN (${placeholders})`;
+        
+        // Crear un array con los valores de id_producto y cantidad alternados
+        const values = detalleventaResult.rows.reduce((acc, row) => {
+            acc.push(row.id_producto, row.cantidad);
+            return acc;
+        }, []);
 
-        // Obtener el resultado total de la suma de precios
+        const costeResult = await pool.query(idProductoQuery, values);
+
+        // Obtener el resultado total de la suma de precios multiplicados por cantidad
         const totalCost = costeResult.rows[0].total;
 
         return res.json({ totalCost });
@@ -122,6 +127,7 @@ const calculateCost = async (req, res) => {
         return res.status(500).json({ error: 'Error al calcular los costes' });
     }
 };
+
 
 
 module.exports={
