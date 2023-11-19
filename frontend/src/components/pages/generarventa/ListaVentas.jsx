@@ -79,13 +79,6 @@ export default function ListaVentas() {
     }
   }
 
-  const CalcularCoste= async (id_venta)=>{
-    e.preventDefault()
-    const url= `https://modulo-ventas.onrender.com/calcularcoste/${id_venta}`
-    const response= await axios.get(url)
-    return response.data
-  }
-
   return (
     <div>
       <Sidebar />
