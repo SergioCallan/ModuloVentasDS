@@ -1,82 +1,94 @@
+import axios from "axios";
 // EstadoBase.js
 class EstadoBase {
-    pagar() {
+    pagar(numero_linea) {
       throw new Error("Método pagar no implementado.");
     }
   
-    suspender() {
+    suspender(numero_linea) {
       throw new Error("Método suspender no implementado.");
     }
   
-    cancelar() {
+    cancelar(numero_linea) {
       throw new Error("Método cancelar no implementado.");
     }
   }
   
   // EstadoPendiente.js
   class EstadoPendiente extends EstadoBase {
-    pagar() {
+    async pagar(numero_linea, facturaState) {
       alert("Realizando pago.");
+      const url= `https://modulo-ventas.onrender.com/pagolinea/${numero_linea}`
+      try{
+        const response= await axios.put(url)
+        alert("Pago realizado")
+      } catch(error){
+        console.log(error)
+      }
       // Lógica específica para el estado Pendiente
+      facturaState.estado= new EstadoPagado();
     }
   
-    suspender() {
+    suspender(numero_linea, facturaState) {
       alert("Suspender temporalmente el servicio?");
       // Lógica específica para el estado Pendiente
+      facturaState.estado= new EstadoSuspendido();
     }
   
-    cancelar() {
+    cancelar(numero_linea, facturaState) {
       alert("Cancelar definitivamente la facturación?");
       // Lógica específica para el estado Pendiente
+      facturaState.estado= new EstadoCancelado();
     }
   }
 
   class EstadoSuspendido extends EstadoBase {
-    pagar() {
+    pagar(numero_linea, facturaState) {
       alert("Reactivar facturación?");
       // Lógica específica para el estado Pendiente
     }
   
-    suspender() {
+    suspender(numero_linea, facturaState) {
       alert("El servicio ya está suspendido");
       // Lógica específica para el estado Pendiente
     }
   
-    cancelar() {
+    cancelar(numero_linea, facturaState) {
       alert("Cancelar definitivamente la facturación?");
       // Lógica específica para el estado Pendiente
     }
   }
 
   class EstadoPagado extends EstadoBase {
-    pagar() {
+    pagar(numero_linea, facturaState) {
       alert("Factura ya pagada.");
       // Lógica específica para el estado Pendiente
+      facturaState.estado= new EstadoPendiente();
     }
   
-    suspender() {
+    suspender(numero_linea, facturaState) {
       alert("Factura ya pagada");
       // Lógica específica para el estado Pendiente
     }
   
-    cancelar() {
+    cancelar(numero_linea, facturaState) {
       alert("Factura ya pagada");
       // Lógica específica para el estado Pendiente
     }
   }
 
   class EstadoCancelado extends EstadoBase {
-    pagar() {
+    pagar(numero_linea, facturaState) {
       alert("Factura cancelada");
       // Lógica específica para el estado Pendiente
     }
   
-    suspender() {
+    suspender(numero_linea, facturaState) {
       alert("Factura cancelada");
       // Lógica específica para el estado Pendiente
     }
   
-    cancelar() {
+    cancelar(numero_linea, facturaState) {
       alert("Factura ya cancelada");
       // Lógica específica para el estado Pendiente
     }
@@ -90,11 +102,13 @@ class EstadoBase {
       this.id = "";
       this.precio = 0;
       this.estado = new EstadoBase();
+      this.numero_linea=""
     }
   
-    actualizarDatos(id, precio, estado) {
+    actualizarDatos(id, precio, estado, numero_linea) {
       this.id = id;
       this.precio = precio;
+      this.numero_linea= numero_linea;
   
       // Cambiar dinámicamente al estado correspondiente
       switch (estado) {
@@ -117,16 +131,16 @@ class EstadoBase {
     }
   
     pagar() {
-      this.estado.pagar();
-    }
-  
-    suspender() {
-      this.estado.suspender();
-    }
-  
-    cancelar() {
-      this.estado.cancelar();
-    }
+        this.estado.pagar(this.numero_linea, this);
+      }
+    
+      suspender() {
+        this.estado.suspender(this.numero_linea);
+      }
+    
+      cancelar() {
+        this.estado.cancelar(this.numero_linea);
+      }
   }
   
   export default FacturaState;

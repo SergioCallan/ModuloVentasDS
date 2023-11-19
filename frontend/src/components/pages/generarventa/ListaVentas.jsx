@@ -66,6 +66,7 @@ export default function ListaVentas() {
       dni_cliente: localStorage.getItem("dnicliente"),
       fecha: new Date(),
     }
+    CalcularCoste(venta.id_venta)
     const url2= `https://modulo-ventas.onrender.com/registersell`
     const response2= await axios.post(url2, venta)
     alert("Venta realizada")
@@ -76,6 +77,13 @@ export default function ListaVentas() {
       localStorage.clear()
       navigate("/buscarcliente")
     }
+  }
+
+  const CalcularCoste= async (id_venta)=>{
+    e.preventDefault()
+    const url= `https://modulo-ventas.onrender.com/calcularcoste/${id_venta}`
+    const response= await axios.get(url)
+    return response.data
   }
 
   return (

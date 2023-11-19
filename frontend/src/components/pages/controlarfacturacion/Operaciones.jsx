@@ -12,7 +12,8 @@ const Operaciones = () => {
     try {
       const response = await axios.get(url);
       const nuevaFactura = new FacturaState();
-      nuevaFactura.actualizarDatos(idfactura, response.data.precio, response.data.estado);
+      console.log(response.data.numero_linea)
+      nuevaFactura.actualizarDatos(idfactura, response.data.precio, response.data.estado, response.data.numero_linea);
       setFactura(nuevaFactura);
       setEstado(response.data.estado)
     } catch (error) {
@@ -28,11 +29,12 @@ const Operaciones = () => {
     <div>
       <p>Factura</p>
       <p>ID: {factura.id}</p>
+      <p>Numero facturado: {factura.numero_linea} </p>
       <p>Precio: {factura.precio}</p>
       <p>Estado: {estado}</p>
-      <button onClick={() => factura.pagar()}>Pagar</button>
-      <button onClick={() => factura.suspender()}>Suspender</button>
-      <button onClick={() => factura.cancelar()}>Cancelar</button>
+      <button onClick={() => factura.pagar(factura.numero_linea, factura)}>Pagar</button>
+      <button onClick={() => factura.suspender(factura.numero_linea, factura)}>Suspender</button>
+      <button onClick={() => factura.cancelar(factura.numero_linea, factura)}>Cancelar</button>
     </div>
   );
 };

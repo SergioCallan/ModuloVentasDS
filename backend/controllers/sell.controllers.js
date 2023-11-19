@@ -98,6 +98,31 @@ const deleteDetail= async(req, res)=>{
     }
 }
 
+const calculateCost= async (req, res)=>{
+    try{
+        const id_venta = req.params.id_venta;
+
+        // Consulta para obtener los id_producto de la tabla detalleventa
+        const detalleventaQuery = `SELECT id_producto FROM detalleventa WHERE id_venta = $1`;
+        const detalleventaResult = await pool.query(detalleventaQuery, [id_venta]);
+
+        // Obtén los id_producto de los resultados
+        const idProductos = detalleventaResult.rows.map(row => row.id_producto);
+
+        // Consulta para sumar los valores del campo precio en la tabla celular
+        const celularQuery = `SELECT SUM(precio) as total_cost FROM celular WHERE id_producto = ANY($1::text[])`;
+        const celularResult = await pool.query(celularQuery, [idProductos]);
+
+        // Obtén el resultado de la suma
+        const totalCost = celularResult.rows[0].total_cost;
+
+        // Envía la respuesta con el costo calculado
+        res.status(200).json({ totalCost });
+    } catch(error){
+        console.error("Error al calcular los costes: ", error)
+    }
+}
+
 module.exports={
     addDetails,
     getSellDetails,
@@ -105,5 +130,6 @@ module.exports={
     registerSell,
     deleteDetail,
     getSelldni,
-    getSellid
+    getSellid,
+    calculateCost
 }
