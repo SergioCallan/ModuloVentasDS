@@ -98,27 +98,22 @@ const deleteDetail= async(req, res)=>{
     }
 }
 
-const calculateCost = async (req, res) => {
-    try {
+const calculateCost= async (req, res)=>{
+    try{
         const id_venta = req.params.id_venta;
 
         // Consulta para obtener los id_producto de la tabla detalleventa
         const detalleventaQuery = `SELECT id_producto FROM detalleventa WHERE id_venta = $1`;
         const detalleventaResult = await pool.query(detalleventaQuery, [id_venta]);
 
-        // Obtener la suma de precios agrupada por id_producto
-        const idProductoQuery = `SELECT id_producto, SUM(precio) as total_precio FROM celular WHERE id_producto = ANY($1) GROUP BY id_producto`;
-        const idProductoValues = detalleventaResult.rows.map(row => row.id_producto);
-        const costeResult = await pool.query(idProductoQuery, [idProductoValues]);
-
-        // Devolver el resultado como un objeto JSON
-        return res.json(costeResult.rows);
-    } catch (error) {
-        console.error("Error al calcular los costes: ", error);
-        return res.status(500).json({ error: "Error interno del servidor" });
+        const idProductoQuery= `SELECT SUM(precio) FROM celular WHERE id_celular = $1`
+        const costeResult= await pool.query(idProductoQuery, detalleventaResult.rows)
+        const totalCost = costeResult.rows[0];
+        return res.json(totalCost)
+    } catch(error){
+        console.error("Error al calcular los costes: ", error)
     }
-};
-
+}
 
 module.exports={
     addDetails,
