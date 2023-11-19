@@ -107,13 +107,16 @@ const calculateCost = async (req, res) => {
         const detalleventaResult = await pool.query(detalleventaQuery, [id_venta]);
 
         // Crear una cadena de marcadores de posición ($1, $2, $3, ...) según la cantidad de registros
-        const placeholders = detalleventaResult.rows.map((row, index) => `$${index + 1}`).join(',');
-        const idProductoQuery = `SELECT SUM(precio * cantidad) as total FROM celular WHERE id_celular IN (${placeholders})`;
+        const placeholders = detalleventaResult.rows.map((row, index) => `$${index * 2 + 1}, $${index * 2 + 2}`).join(',');
+        const idProductoQuery = `SELECT SUM(precio * $2) as total FROM celular WHERE id_celular IN (${placeholders})`;
 
-        // Crear un array con los valores de id_producto
-        const idProductos = detalleventaResult.rows.map(row => row.id_producto);
+        // Crear un array con los valores de id_producto y cantidad alternados
+        const values = detalleventaResult.rows.reduce((acc, row) => {
+            acc.push(row.id_producto, row.cantidad);
+            return acc;
+        }, []);
 
-        const costeResult = await pool.query(idProductoQuery, idProductos);
+        const costeResult = await pool.query(idProductoQuery, values);
 
         // Obtener el resultado total de la suma de precios multiplicados por cantidad
         const totalCost = costeResult.rows[0].total;
@@ -124,6 +127,7 @@ const calculateCost = async (req, res) => {
         return res.status(500).json({ error: 'Error al calcular los costes' });
     }
 };
+
 
 
 
