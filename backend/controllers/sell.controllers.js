@@ -98,22 +98,28 @@ const deleteDetail= async(req, res)=>{
     }
 }
 
-const calculateCost= async (req, res)=>{
-    try{
+const calculateCost = async (req, res) => {
+    try {
         const id_venta = req.params.id_venta;
 
         // Consulta para obtener los id_producto de la tabla detalleventa
-        const detalleventaQuery = `SELECT id_producto FROM detalleventa WHERE id_venta = $1`;
+        const detalleventaQuery = 'SELECT id_producto FROM detalleventa WHERE id_venta = $1';
         const detalleventaResult = await pool.query(detalleventaQuery, [id_venta]);
 
-        const idProductoQuery= `SELECT SUM(precio) FROM celular WHERE id_celular = $1`
-        const costeResult= await pool.query(idProductoQuery, detalleventaResult.rows)
-        const totalCost = costeResult.rows[0];
-        return res.json(totalCost)
-    } catch(error){
-        console.error("Error al calcular los costes: ", error)
+        // Utilizar IN para obtener la suma de precios de múltiples productos
+        const idProductos = detalleventaResult.rows.map(row => row.id_producto);
+        const idProductoQuery = 'SELECT SUM(precio) as total FROM celular WHERE id_celular IN ($1)';
+        const costeResult = await pool.query(idProductoQuery, [idProductos]);
+
+        // Obtener el resultado total de la suma de precios
+        const totalCost = costeResult.rows[0].total;
+
+        return res.json({ totalCost });
+    } catch (error) {
+        console.error('Error al calcular los costes: ', error);
+        return res.status(500).json({ error: 'Error al calcular los costes' });
     }
-}
+};
 
 module.exports={
     addDetails,
