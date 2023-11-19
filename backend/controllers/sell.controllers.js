@@ -108,8 +108,10 @@ const calculateCost = async (req, res) => {
 
         // Utilizar IN para obtener la suma de precios de múltiples productos
         const idProductos = detalleventaResult.rows.map(row => row.id_producto);
-        const idProductoQuery = 'SELECT SUM(precio) as total FROM celular WHERE id_celular IN ($1)';
-        const costeResult = await pool.query(idProductoQuery, [idProductos]);
+        // Crear una cadena de marcadores de posición ($1, $2, $3, ...) según la cantidad de IDs
+        const placeholders = idProductos.map((id, index) => `$${index + 1}`).join(',');
+        const idProductoQuery = `SELECT SUM(precio) as total FROM celular WHERE id_celular IN (${placeholders})`;
+        const costeResult = await pool.query(idProductoQuery, idProductos);
 
         // Obtener el resultado total de la suma de precios
         const totalCost = costeResult.rows[0].total;
@@ -120,6 +122,7 @@ const calculateCost = async (req, res) => {
         return res.status(500).json({ error: 'Error al calcular los costes' });
     }
 };
+
 
 module.exports={
     addDetails,
