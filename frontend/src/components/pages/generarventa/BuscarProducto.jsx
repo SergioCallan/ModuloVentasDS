@@ -160,22 +160,23 @@ export default function BuscarProducto() {
       tipo: "Celular",
       coste_total: 0
     }
+    
+    const costeTotal= await CalcularCoste(detalleventa.cantidad, Precio, detalleventa.id_garantia)
     detalleventa.coste_total = costeTotal;
-    const costeTotal= CalcularCoste(detalleventa.cantidad, Precio, detalleventa.id_garantia)
+    alert(costeTotal)
     const url5= `https://modulo-ventas.onrender.com/adddetail`
     const response5= await axios.post(url5, detalleventa)
     console.log(response5.data)
-    localStorage.setItem("tipo", detalleventa.tipo)
-    
+    localStorage.setItem("tipo", detalleventa.tipo) 
     navigate('/listaventas')
   }
 
   const CalcularCoste= async (cantidad, Precio, id_garantia)=>{
-    let precioDetalle= cantidad*Precio
+    let precioDetalle= cantidad* parseFloat(Precio)
     if(id_garantia>0){
-      const url= `https://modulo-ventas.onrender.com/searchwarranty/${Garantia}`
+      const url= `https://modulo-ventas.onrender.com/searchwarranty/${id_garantia}`
       const response= await axios.get(url)
-      const precioGarantia= response.data.precio
+      const precioGarantia= parseFloat(response.data.precio)
       precioDetalle+=precioGarantia
     }
     return precioDetalle

@@ -70,7 +70,7 @@ export default function ListaVentas() {
     }
     const url0= `https://modulo-ventas.onrender.com/calculatesell`
     const response0= await axios.get(url0, venta.id_venta)
-    alert(response.data)
+    console.log(response0.data)
     venta.monto= response0.data.monto
     const url1= `https://modulo-ventas.onrender.com/registersell`
     const response1= await axios.post(url1, venta)
@@ -161,6 +161,7 @@ function TablaDetalles({datos}){
             <TableCell>Tipo de Compra</TableCell>
             <TableCell>ID de la garantia</TableCell>
             <TableCell>Tiempo de la garantia (Meses)</TableCell>
+            <TableCell>Coste</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -175,6 +176,7 @@ function TablaDetalles({datos}){
               <TableCell>{detalles.tipo}</TableCell>
               <TableCell>{detalles.id_garantia}</TableCell>
               <TableCell>{detalles.tiempo_garantia}</TableCell>
+              <TableCell>{detalles.coste_total}</TableCell>
               <TableCell>
                 <button className="Rojo" onClick={()=>eliminarDetalle(detalles.id_detalle)}>Eliminar de la lista</button>
               </TableCell>

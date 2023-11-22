@@ -77,7 +77,7 @@ const registerSell= async(req, res)=>{
     try{
         const {id_venta, dni_cliente, fecha, monto}= req.body
         const query= "INSERT INTO venta (id_venta, dni_cliente, fecha, monto) VALUES($1, $2, $3, $4) RETURNING *"
-        const values= [id_venta, dni_cliente, fecha]
+        const values= [id_venta, dni_cliente, fecha, monto]
         const result= await pool.query(query, values)
         return res.json(result.rows[0])
     }catch(error){
