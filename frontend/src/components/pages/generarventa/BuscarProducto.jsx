@@ -58,6 +58,7 @@ export default function BuscarProducto() {
   const [Nombre, setNombre] = useState("");
   const [Marca, setMarca] = useState("");
   const [Modelo, setModelo] = useState("");
+  const [Precio, setPrecio]= useState("");
   const [PrecioMin, setPrecioMin] = useState("");
   const [PrecioMax, setPrecioMax] = useState("");
   const [Cantidad, setCantidad] = useState("");
@@ -156,14 +157,28 @@ export default function BuscarProducto() {
       cantidad: Cantidad,
       id_garantia: Garantia,
       tiempo_garantia: TiempoG,
-      tipo: "Celular"
+      tipo: "Celular",
+      coste_total: 0
     }
-    console.log(detalleventa)
+    detalleventa.coste_total = costeTotal;
+    const costeTotal= CalcularCoste(detalleventa.cantidad, Precio, detalleventa.id_garantia)
     const url5= `https://modulo-ventas.onrender.com/adddetail`
     const response5= await axios.post(url5, detalleventa)
     console.log(response5.data)
     localStorage.setItem("tipo", detalleventa.tipo)
+    
     navigate('/listaventas')
+  }
+
+  const CalcularCoste= async (cantidad, Precio, id_garantia)=>{
+    let precioDetalle= cantidad*Precio
+    if(id_garantia>0){
+      const url= `https://modulo-ventas.onrender.com/searchwarranty/${Garantia}`
+      const response= await axios.get(url)
+      const precioGarantia= response.data.precio
+      precioDetalle+=precioGarantia
+    }
+    return precioDetalle
   }
 
   const Regresar= async(e)=>{
@@ -249,7 +264,7 @@ export default function BuscarProducto() {
                 </button>
 
             <div className="TablaP">
-              <TablaProductos datos={datosP} setID={setID} />
+              <TablaProductos datos={datosP} setID={setID} setPrecio={setPrecio} />
             </div>
           </div>
         <input type="number" className="input" name= "Cantidad" placeholder="Cantidad" onChange={changingCantidad} required value={Cantidad}></input>
@@ -270,10 +285,11 @@ export default function BuscarProducto() {
   );
 }
 
-function TablaProductos({ datos, setID }) {
-    const obtenerDatosProducto=(marca, modelo, idproducto)=>{
+function TablaProductos({ datos, setID, setPrecio }) {
+    const obtenerDatosProducto=(marca, modelo, idproducto, precio)=>{
       alert(`Producto seleccionado: ${marca} ${modelo}`)
       setID(idproducto)
+      setPrecio(precio)
     }
     return (
     <TableContainer component={Paper}>
@@ -299,7 +315,7 @@ function TablaProductos({ datos, setID }) {
               <TableCell>{productos.almacenamiento}</TableCell>
               <TableCell>{productos.precio}</TableCell>
               <TableCell>
-                <button className="Azul" onClick={()=>obtenerDatosProducto(productos.marca, productos.modelo, productos.id_celular)}>Seleccionar producto</button>
+                <button className="Azul" onClick={()=>obtenerDatosProducto(productos.marca, productos.modelo, productos.id_celular, productos.precio)}>Seleccionar producto</button>
               </TableCell>
             </TableRow>
           ))}

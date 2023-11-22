@@ -25,6 +25,7 @@ export default function ListaVentas() {
     const response0= await axios.get(url0)
     if(response0.data==null){
       alert("No se encontraron productos en la lista")
+      localStorage.clear()
       navigate("/menuventas")
     }
     setData(response0.data)
@@ -65,10 +66,14 @@ export default function ListaVentas() {
       id_venta: localStorage.getItem("venta"),
       dni_cliente: localStorage.getItem("dnicliente"),
       fecha: new Date(),
+      monto: 0
     }
-    CalcularCoste(venta.id_venta)
-    const url2= `https://modulo-ventas.onrender.com/registersell`
-    const response2= await axios.post(url2, venta)
+    const url0= `https://modulo-ventas.onrender.com/calculatesell`
+    const response0= await axios.get(url0, venta.id_venta)
+    alert(response.data)
+    venta.monto= response0.data.monto
+    const url1= `https://modulo-ventas.onrender.com/registersell`
+    const response1= await axios.post(url1, venta)
     alert("Venta realizada")
     if(localStorage.getItem("tipo")==="Plan" && localStorage.getItem("tipo")!=null){
       navigate("/asociarplan")

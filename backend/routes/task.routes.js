@@ -3,7 +3,7 @@ const { getAllPhone, getPhone, createPhone, deletePhone, updatePhone } = require
 const { getAllInternet, getInternet, createInternet, deleteInternet, updateInternet } = require('../controllers/internet.controllers');
 const {searchproduct, searchbrand, searchmodel, searchid}= require('../controllers/searchphone.controllers')
 const {searchdni}= require('../controllers/client.controllers')
-const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail, getSelldni, getSellid}= require('../controllers/sell.controllers')
+const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail, getSelldni, getSellid, calculateSell}= require('../controllers/sell.controllers')
 const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan.controllers')
 const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea, searchLinea, cambioLinea, suspenderLinea, reactivarLinea}= require('../controllers/factura.controllers')
 const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilldni, searchpaybillnumero}= require('../controllers/bills.controllers')
@@ -71,6 +71,8 @@ router.delete('/deletedetail/:id_detalle', deleteDetail)
 router.get('/getselldni/:dni_cliente', getSelldni)
 
 router.get('/getsellid/:id_venta', getSellid)
+
+router.get('/calculatesell', calculateSell)
 
 
 //Rutas para las facturas(actuales)
