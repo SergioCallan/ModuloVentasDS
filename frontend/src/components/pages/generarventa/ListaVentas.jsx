@@ -68,8 +68,9 @@ export default function ListaVentas() {
       fecha: new Date(),
       monto: 0
     }
-    const url0= `https://modulo-ventas.onrender.com/calculatesell`
-    const response0= await axios.get(url0, venta.id_venta)
+    const id_venta= venta.id_venta
+    const url0= `https://modulo-ventas.onrender.com/calculatesell/${id_venta}`
+    const response0= await axios.get(url0)
     console.log(response0.data)
     venta.monto= response0.data.monto
     const url1= `https://modulo-ventas.onrender.com/registersell`

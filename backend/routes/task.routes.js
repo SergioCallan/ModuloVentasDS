@@ -72,7 +72,7 @@ router.get('/getselldni/:dni_cliente', getSelldni)
 
 router.get('/getsellid/:id_venta', getSellid)
 
-router.get('/calculatesell', calculateSell)
+router.get('/calculatesell/:id_venta', calculateSell)
 
 
 //Rutas para las facturas(actuales)
