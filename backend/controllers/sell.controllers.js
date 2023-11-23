@@ -4,12 +4,11 @@ const pool= require ('../db')
 
 const addDetails= async(req, res)=>{
     try{
-        const {id_venta, id_detalle, id_producto, cantidad, id_garantia, tiempo_garantia, tipo}= req.body
-        const query= "INSERT INTO detalleventa (id_venta, id_detalle, id_producto, cantidad, id_garantia, tiempo_garantia, tipo) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *"
-        const values= [id_venta, id_detalle, id_producto, cantidad, id_garantia, tiempo_garantia, tipo]
+        const {id_venta, id_detalle, id_producto, cantidad, id_garantia, tiempo_garantia, tipo, coste_total}= req.body
+        const query= "INSERT INTO detalleventa (id_venta, id_detalle, id_producto, cantidad, id_garantia, tiempo_garantia, tipo, coste_total) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *"
+        const values= [id_venta, id_detalle, id_producto, cantidad, id_garantia, tiempo_garantia, tipo, coste_total]
         const result= await pool.query(query, values)
         return res.json(result.rows[0])
-
     } catch(error){
         console.error('Error al guardar el detalle de venta: ', error)
     }
@@ -76,9 +75,9 @@ const deleteSell= async(req, res)=>{
 
 const registerSell= async(req, res)=>{
     try{
-        const {id_venta, dni_cliente, fecha}= req.body
-        const query= "INSERT INTO venta (id_venta, dni_cliente, fecha) VALUES($1, $2, $3) RETURNING *"
-        const values= [id_venta, dni_cliente, fecha]
+        const {id_venta, dni_cliente, fecha, monto}= req.body
+        const query= "INSERT INTO venta (id_venta, dni_cliente, fecha, monto) VALUES($1, $2, $3, $4) RETURNING *"
+        const values= [id_venta, dni_cliente, fecha, monto]
         const result= await pool.query(query, values)
         return res.json(result.rows[0])
     }catch(error){
@@ -89,7 +88,6 @@ const registerSell= async(req, res)=>{
 const deleteDetail= async(req, res)=>{
     try{
         const iddetalle= req.params.id_detalle
-        console.log(iddetalle)
         const query= "DELETE FROM detalleventa WHERE id_detalle=$1"
         const result= await pool.query(query, [iddetalle])
         res.send("Detalle de venta eliminado")
@@ -98,6 +96,18 @@ const deleteDetail= async(req, res)=>{
     }
 }
 
+const calculateSell= async(req, res)=>{
+    try{
+        const id_venta= req.params.id_venta
+        const query= "SELECT SUM(coste_total) AS monto FROM detalleventa WHERE id_venta = $1"
+        const result= await pool.query(query, [id_venta])
+        res.send(result.rows[0])
+    } catch(error){
+        console.error("Error al calcular el monto total: ", error)
+    }
+}
+
+
 module.exports={
     addDetails,
     getSellDetails,
@@ -105,5 +115,6 @@ module.exports={
     registerSell,
     deleteDetail,
     getSelldni,
-    getSellid
+    getSellid,
+    calculateSell
 }

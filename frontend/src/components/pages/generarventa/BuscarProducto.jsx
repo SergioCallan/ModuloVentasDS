@@ -60,6 +60,7 @@ export default function BuscarProducto() {
   const [Nombre, setNombre] = useState("");
   const [Marca, setMarca] = useState("");
   const [Modelo, setModelo] = useState("");
+  const [Precio, setPrecio]= useState("");
   const [PrecioMin, setPrecioMin] = useState("");
   const [PrecioMax, setPrecioMax] = useState("");
   const [Cantidad, setCantidad] = useState("");
@@ -158,14 +159,29 @@ export default function BuscarProducto() {
       cantidad: Cantidad,
       id_garantia: Garantia,
       tiempo_garantia: TiempoG,
-      tipo: "Celular"
+      tipo: "Celular",
+      coste_total: 0
     }
-    console.log(detalleventa)
+    
+    const costeTotal= await CalcularCoste(detalleventa.cantidad, Precio, detalleventa.id_garantia)
+    detalleventa.coste_total = costeTotal;
+    alert(costeTotal)
     const url5= `https://modulo-ventas.onrender.com/adddetail`
     const response5= await axios.post(url5, detalleventa)
     console.log(response5.data)
-    localStorage.setItem("tipo", detalleventa.tipo)
+    localStorage.setItem("tipo", detalleventa.tipo) 
     navigate('/listaventas')
+  }
+
+  const CalcularCoste= async (cantidad, Precio, id_garantia)=>{
+    let precioDetalle= cantidad* parseFloat(Precio)
+    if(id_garantia>0){
+      const url= `https://modulo-ventas.onrender.com/searchwarranty/${id_garantia}`
+      const response= await axios.get(url)
+      const precioGarantia= parseFloat(response.data.precio)
+      precioDetalle+=precioGarantia
+    }
+    return precioDetalle
   }
 
   const Regresar= async(e)=>{
@@ -265,7 +281,7 @@ export default function BuscarProducto() {
                 </button>}
                 </div>
 
-              <TablaProductos datos={datosP} setID={setID} />
+              <TablaProductos datos={datosP} setID={setID} setPrecio={setPrecio}/>
 
           </div>
         <div className="capsula">
@@ -296,12 +312,11 @@ export default function BuscarProducto() {
   );
 }
 
-function TablaProductos({ datos, setID }){
-
-
-    const obtenerDatosProducto=(marca, modelo, idproducto)=>{
+function TablaProductos({ datos, setID, setPrecio }) {
+    const obtenerDatosProducto=(marca, modelo, idproducto, precio)=>{
       alert(`Producto seleccionado: ${marca} ${modelo}`)
       setID(idproducto)
+      setPrecio(precio)
     }
 
     return (
@@ -328,7 +343,7 @@ function TablaProductos({ datos, setID }){
               <TCelda>{productos.almacenamiento} GB</TCelda>
               <TCelda>{productos.precio}</TCelda>
               <TCelda>
-                <button className="Azul btn-seleccionar-producto" onClick={()=>obtenerDatosProducto(productos.marca, productos.modelo, productos.id_celular)}>Seleccionar producto</button>
+                <button className="Azul btn-seleccionar-producto" onClick={()=>obtenerDatosProducto(productos.marca, productos.modelo, productos.id_celular,productos.precio)}>Seleccionar producto</button>
               </TCelda>
             </TableRow>
           ))}

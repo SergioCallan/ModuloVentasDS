@@ -32,6 +32,8 @@ export default function MenuVentas(){
                 <button className="Azul" onClick={irPlan}>Buscar planes</button>
                 <h3>Para cobrar una factura: </h3>
                 <button className="Azul" onClick={irFacturacion}>Ver facturas</button>
+                <h3>Ver lineas asociadas al cliente: </h3>
+                <button className="Azul">Lineas</button>
             </div>
         </main>
     )

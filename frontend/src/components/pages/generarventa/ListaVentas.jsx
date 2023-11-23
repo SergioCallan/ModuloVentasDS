@@ -11,7 +11,6 @@ import {
   TableHead,
   TableBody,
   TableRow,
-  TableCell,
   Paper,
 } from "@mui/material";
 import { TCelda, TCelda2 } from "../../styles/CeldaTablaPersonalizada";
@@ -26,6 +25,7 @@ export default function ListaVentas() {
     const response0= await axios.get(url0)
     if(response0.data==null){
       alert("No se encontraron productos en la lista")
+      localStorage.clear()
       navigate("/menuventas")
     }
     setData(response0.data)
@@ -66,9 +66,15 @@ export default function ListaVentas() {
       id_venta: localStorage.getItem("venta"),
       dni_cliente: localStorage.getItem("dnicliente"),
       fecha: new Date(),
+      monto: 0
     }
-    const url2= `https://modulo-ventas.onrender.com/registersell`
-    const response2= await axios.post(url2, venta)
+    const id_venta= venta.id_venta
+    const url0= `https://modulo-ventas.onrender.com/calculatesell/${id_venta}`
+    const response0= await axios.get(url0)
+    console.log(response0.data)
+    venta.monto= response0.data.monto
+    const url1= `https://modulo-ventas.onrender.com/registersell`
+    const response1= await axios.post(url1, venta)
     alert("Venta realizada")
     if(localStorage.getItem("tipo")==="Plan" && localStorage.getItem("tipo")!=null){
       navigate("/asociarplan")
@@ -174,6 +180,7 @@ function TablaDetalles({datos}){
             <TCelda2>Tipo de Compra</TCelda2>
             <TCelda2>ID de la garantia</TCelda2>
             <TCelda2>Tiempo de la garantia (Meses)</TCelda2>
+            <TCelda2>Coste (garantia)</TCelda2>
             <TCelda2>Opción</TCelda2>
           </TableRow>
         </TableHead>
@@ -188,6 +195,7 @@ function TablaDetalles({datos}){
               <TCelda>{detalles.tipo}</TCelda>
               <TCelda>{detalles.id_garantia}</TCelda>
               <TCelda>{detalles.tiempo_garantia}</TCelda>
+              <TCelda>{detalles.coste_total}</TCelda>
               <TCelda>
                 <button className="Rojo btn-eliminar" onClick={()=>eliminarDetalle(detalles.id_detalle)}>Eliminar de la lista</button>
               </TCelda>
