@@ -2,9 +2,9 @@ const pool= require('../db')
 
 const associate= async (req, res)=>{
     try{
-        const {numero, plan, fecha_compra, fecha_pago, monto_pago, dni_cliente, estado}= req.body
-        const query= 'INSERT INTO linea_telefono(numero, plan, fecha_compra, fecha_pago, monto_pago, dni_cliente, estado) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *'
-        const values= [numero, plan, fecha_compra, fecha_pago, monto_pago, dni_cliente, estado]
+        const {numero, plan, fecha_compra, ultimo_pago, monto_pago, dni_cliente, estado}= req.body
+        const query= 'INSERT INTO linea_telefono(numero, plan, fecha_compra, ultimo_pago, monto_pago, dni_cliente, estado) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *'
+        const values= [numero, plan, fecha_compra, ultimo_pago, monto_pago, dni_cliente, estado]
         const result= await pool.query(query, values)
         return res.json(result.rows[0])
     }catch(error){

@@ -48,14 +48,14 @@ export default function AsociarPlan(){
             numero: Numero,
             plan: IDPlan,
             fecha_compra: new Date(),
-            fecha_pago: new Date(),
+            ultimo_pago: new Date(),
             monto_pago: localStorage.getItem("montoplan"),
             dni_cliente: localStorage.getItem("dnicliente"),
             estado: 0
         }
-        linea.fecha_pago.setMonth(linea.fecha_pago.getMonth() + 1);
-        linea.fecha_pago = linea.fecha_pago.toISOString().split('T')[0];
-        linea.fecha_compra = linea.fecha_compra.toISOString().split('T')[0];
+        //linea.ultimo_pago.setMonth(linea.fecha_pago.getMonth() + 1);
+        //linea.fecha_pago = linea.fecha_pago.toISOString().split('T')[0];
+        //linea.fecha_compra = linea.fecha_compra.toISOString().split('T')[0];
         const url= `https://modulo-ventas.onrender.com/associate`
         const response= await axios.post(url, linea)
         CrearFactura()

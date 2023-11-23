@@ -22,6 +22,7 @@ export default function BuscarPlan(){
     const [Filtro, setFiltro] = useState("");
     const [Tipo, setTipo]= useState("");
     const [Megas, setMegas]= useState("");
+    const [Precio, setPrecio]= useState("");
     const [PrecioMin, setPrecioMin]= useState("");
     const [PrecioMax, setPrecioMax]= useState("");
     const SelectTipo = () => {
@@ -115,7 +116,8 @@ export default function BuscarPlan(){
         cantidad: 1,
         id_garantia: 0,
         tiempo_garantia: 0,
-        tipo: "Plan"
+        tipo: "Plan",
+        coste_total: Precio
       }
       const url5= `https://modulo-ventas.onrender.com/adddetail`
       const response5= await axios.post(url5, detalleventa)
@@ -165,7 +167,7 @@ export default function BuscarPlan(){
                     Filtrar Plan
                     </button>
                     <div className="TablaP">
-                        <TablaP datos={datosP} setID={setID}/>
+                        <TablaP datos={datosP} setID={setID} setPrecio={setPrecio}/>
                     </div>
                 </div>
                 <button id="Regresar" className="Rojo">Regresar</button>
@@ -175,12 +177,13 @@ export default function BuscarPlan(){
     )
 }
 
-function TablaP({datos, setID}){
+function TablaP({datos, setID, setPrecio}){
     const obtenerDatosPlan=(tipo, megas, id, precio)=>{
         alert(`Plan seleccionado: ${tipo} de ${megas} megas`)
         localStorage.setItem("montoplan", precio)
         localStorage.setItem("idplan", id)
         setID(id)
+        setPrecio(precio)
     }
     return(
         <TableContainer component={Paper}>
