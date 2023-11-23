@@ -47,7 +47,7 @@ const getLineas= async (req, res)=>{
 const pagoLinea = async (req, res) => {
     try {
         const numero = req.params.numero;
-        const query = 'UPDATE linea_telefono SET fecha_pago = fecha_pago + interval \'1 month\', estado=0 WHERE numero = $1';
+        const query = 'UPDATE linea_telefono SET ultimo_pago = ultimo_pago + interval \'1 month\', estado=0 WHERE numero = $1';
         await pool.query(query, [numero]);
         res.status(200).json({ message: 'Fecha de pago actualizada con éxito' });
     } catch (error) {
@@ -71,7 +71,7 @@ const atrasoLinea= async (req, res)=>{
 const suspenderLinea= async (req, res)=>{
     try{
         const numero= req.params.numero;
-        const query= 'UPDATE linea_telefono SET estado= 1, fecha_pago="9999-01-01" WHERE numero= $1'
+        const query= 'UPDATE linea_telefono SET estado= 1, ultimo_pago="9999-01-01" WHERE numero= $1'
         const results= await pool.query(query, [numero])
         res.status(200).json({ message: 'Estado actualizado con éxito' });
     } catch(error){
@@ -83,7 +83,7 @@ const suspenderLinea= async (req, res)=>{
 const reactivarLinea= async(req, res)=>{
     try{
         const {numero, fecha_pago}= req.body;
-        const query= 'UPDATE linea_telefono SET estado=0, fecha_pago=$1+ interval \'1 month\' WHERE numero= $2'
+        const query= 'UPDATE linea_telefono SET estado=0, ultimo_pago=$1+ interval \'1 month\' WHERE numero= $2'
         const results= await pool.query(query, [fecha_pago, numero])
     } catch(error){
         console.error("Error al reactivar la linea: ", error)

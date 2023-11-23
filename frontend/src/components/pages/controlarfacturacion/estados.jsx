@@ -18,8 +18,8 @@ class EstadoBase {
   class EstadoPendiente extends EstadoBase {
     async pagar(numero_linea, facturaState) {
       alert("Realizando pago.");
-      const url= `https://modulo-ventas.onrender.com/pagolinea/${numero_linea}`
       try{
+        const url= `https://modulo-ventas.onrender.com/pagolinea/${numero_linea}`
         const response= await axios.put(url)
         alert("Pago realizado")
       } catch(error){
