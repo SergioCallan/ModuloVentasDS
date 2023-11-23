@@ -109,7 +109,7 @@ router.get('/searchpaidbillnumero/:numero_linea', searchpaybillnumero)
 
 router.post('/createbill', createbill)
 
-router.get('/searchlastnumbre/:numero_linea', searchlastnumber)
+router.get('/searchlastnumber/:numero_linea', searchlastnumber)
 
 //Rutas para las garantias
 
