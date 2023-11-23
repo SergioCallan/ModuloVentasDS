@@ -35,7 +35,8 @@ export default function AsociarPlan(){
         }
         factura.fecha_pago.setMonth(factura.fecha_pago.getMonth() + 1);
         factura.fecha_pago = factura.fecha_pago.toISOString().split('T')[0];
-        const url= "https://modulo-ventas.onrender.com/"
+        const url= "https://modulo-ventas.onrender.com/createbill"
+        const response= await axios.post(url, factura)
     }
 
     const AsociarNumero= async(e)=>{
@@ -53,12 +54,9 @@ export default function AsociarPlan(){
             dni_cliente: localStorage.getItem("dnicliente"),
             estado: 0
         }
-        //linea.ultimo_pago.setMonth(linea.fecha_pago.getMonth() + 1);
-        //linea.fecha_pago = linea.fecha_pago.toISOString().split('T')[0];
-        //linea.fecha_compra = linea.fecha_compra.toISOString().split('T')[0];
         const url= `https://modulo-ventas.onrender.com/associate`
         const response= await axios.post(url, linea)
-        CrearFactura()
+        CrearFactura(linea)
         alert("Numero asociado exitosamente")
         console.log(response.data)
     }
