@@ -32,9 +32,9 @@ const Operaciones = () => {
       <p>Numero facturado: {factura.numero_linea} </p>
       <p>Precio: {factura.precio}</p>
       <p>Estado: {estado}</p>
-      <button onClick={() => factura.pagar(factura.numero_linea, factura)}>Pagar</button>
-      <button onClick={() => factura.suspender(factura.numero_linea, factura)}>Suspender</button>
-      <button onClick={() => factura.cancelar(factura.numero_linea, factura)}>Cancelar</button>
+      <button onClick={() => factura.pagar(factura.numero_linea, factura.id, factura)}>Pagar</button>
+      <button onClick={() => factura.suspender(factura.numero_linea, factura.id, factura)}>Suspender</button>
+      <button onClick={() => factura.cancelar(factura.numero_linea, factura.id, factura)}>Cancelar</button>
     </div>
   );
 };
