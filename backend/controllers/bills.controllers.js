@@ -33,6 +33,23 @@ const searchbillnumber= async(req, res)=>{
     }
 }
 
+const searchlastnumber= async(req, res)=>{
+    try{
+        const numero_linea= req.params.numero_linea
+        const query= "SELECT * FROM facturas WHERE numero_linea= $1 ORDER BY fecha_pago DESC LIMIT 1";
+        const result= await pool.query(query, [numero_linea])
+        if(result.rows.length===0){
+            res.json(null)
+        }
+        else{
+            res.json(result.rows)
+        }
+    }catch(error){
+        console.error("Error al obtener las facturas: ", error)
+    }
+}
+
+
 const searchbillid= async(req, res)=>{
     try{
         const id_factura= req.params.id_factura
@@ -99,5 +116,6 @@ module.exports={
     searchbillid,
     createbill,
     searchpaybilldni,
-    searchpaybillnumero
+    searchpaybillnumero,
+    searchlastnumber
 }

@@ -18,9 +18,12 @@ class EstadoBase {
   class EstadoPendiente extends EstadoBase {
     async pagar(numero_linea, facturaState) {
       alert("Realizando pago.");
-      const url= `https://modulo-ventas.onrender.com/pagolinea/${numero_linea}`
       try{
-        const response= await axios.put(url)
+        const url0= `https://modulo-ventas.onrender.com/pagolinea/${numero_linea}`
+        const response0= await axios.put(url0)
+
+        const url1= `https://modulo-ventas.onrender.com/searchlastnumber/${numero_linea}`
+        const response1= await axios.get(url1)
         alert("Pago realizado")
       } catch(error){
         console.log(error)
@@ -40,6 +43,8 @@ class EstadoBase {
       // Lógica específica para el estado Pendiente
       facturaState.estado= new EstadoCancelado();
     }
+
+
   }
 
   class EstadoSuspendido extends EstadoBase {
