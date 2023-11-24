@@ -9,6 +9,7 @@ export default function MenuVentas(){
     const irProducto= async(e)=>{
         e.preventDefault
         navigate('/buscarproducto')
+        // console.log(e.target.innerHTML)
     }
 
     const irPlan= async(e)=>{

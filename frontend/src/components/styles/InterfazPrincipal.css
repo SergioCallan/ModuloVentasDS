@@ -1,0 +1,25 @@
+.menu-botones{
+    margin: auto;
+    margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 10vh;
+    background-color: #DCDCDC;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    width: 40%;
+    border-radius: 50px;
+    border: 5px solid black;
+}
+
+.btn-opcion{
+    width: 80%;
+    min-height: 50px;
+    border-radius: 15px;
+    background-color: blue;
+    font-size: large;
+    font-weight: 600;
+    color: white;
+}

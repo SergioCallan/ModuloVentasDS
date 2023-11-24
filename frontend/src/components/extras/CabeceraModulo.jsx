@@ -20,6 +20,16 @@ export const CabeceraModulo = () => {
     )
 }
 
+export const CabeceraModulo2 = () => {
+     return (
+         <div className="Header">
+                     <div className="Contenedor-Nombre-Modulo">
+                     <h1 className="Nombre-Modulo">Módulo de Ventas</h1>
+                     </div> 
+                 </div>
+     )
+ }
+
 const useSidebar = () => {
 const [sidebarOpen, setSidebarOpen] = useState(false);
 

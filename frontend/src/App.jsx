@@ -15,6 +15,7 @@ import Listado from "./components/pages/agregaractualizar/listado"
 import SearchById from './components/pages/imprimirventa/buscarventa';
 import SellDetails from './components/pages/imprimirventa/verdetalles';
 import Operaciones from './components/pages/controlarfacturacion/Operaciones'
+import { InterfazBase } from "./components/pages/Interfaz principal/InterfazBase"
 
 function App(){
   return(
@@ -38,6 +39,7 @@ function App(){
               <Route path="/sell/:idVenta" element={<SearchById />} />
               <Route path="/selldetails/:id_detalle" element={<SellDetails />} />
               <Route path="/operaciones" element={<Operaciones/>}/>
+              <Route path="/principal" element={<InterfazBase></InterfazBase>}></Route>
           </Routes>
     </BrowserRouter>
   )
