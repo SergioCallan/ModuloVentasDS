@@ -36,6 +36,18 @@ const searchbillnumber= async(req, res)=>{
     }
 }
 
+const paybill= async (req, res)=>{
+    try{
+        const id_factura= req.params.id_factura
+        const query= "UPDATE facturas SET estado='Pagado' WHERE id_factura= $1"
+        const result= await pool.query(query, [id_factura])
+        res.status(200).json({ message: 'Estado actualizado con éxito' });
+    } catch(error){
+        console.error("Error al registrar el nuevo estado: ", error);
+        res.status(500).json({ error: 'Hubo un error al actualizar el pago' });
+    }
+}
+
 const updateBill= async(req, res)=>{
     try{
         const numero_linea= req.params.numero_linea
@@ -133,5 +145,6 @@ module.exports={
     createbill,
     searchpaybilldni,
     searchpaybillnumero,
+    paybill,
     updateBill
 }
