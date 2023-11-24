@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../../styles/ListaVentas.css"
+import "../../styles/EstilosGenerarVenta/ListaVentas.css"
 import {
   TableContainer,
   Table,

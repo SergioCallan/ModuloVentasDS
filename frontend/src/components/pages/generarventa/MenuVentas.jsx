@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import '../../styles/MenuVentas.css'
+import '../../styles/EstilosGenerarVenta/MenuVentas.css'
 
 export default function MenuVentas(){
     const navigate= useNavigate()

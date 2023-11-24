@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { TCelda} from "../../styles/CeldaTablaPersonalizada";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "../../styles/MenuVentas.css"
-import '../../styles/BuscarProducto.css'
+import '../../styles/EstilosGenerarVenta/BuscarProducto.css'
 
 export default function BuscarProducto() {
   const navigate= useNavigate()
