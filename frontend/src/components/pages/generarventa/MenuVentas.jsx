@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { CabeceraModulo } from "../../extras/CabeceraModulo.jsx";
 import '../../styles/EstilosGenerarVenta/MenuVentas.css'
 
 export default function MenuVentas(){
@@ -22,9 +23,7 @@ export default function MenuVentas(){
 
     return(
         <main>
-            <div className="Header">
-                <h1>Módulo de Ventas</h1>
-            </div>
+            <CabeceraModulo></CabeceraModulo>
             <div className="Opciones">
                 <h3>Para vender productos:</h3>
                 <button className="Azul" onClick={irProducto}>Buscar productos</button>

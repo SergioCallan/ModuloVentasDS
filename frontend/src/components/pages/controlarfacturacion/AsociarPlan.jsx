@@ -8,7 +8,7 @@ import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../styles/MenuVentas.css"
+// import "../../styles/EstilosGenerarVenta/MenuVentas.css"
 
 export default function AsociarPlan(){
     const [Numero, setNumero]=useState("")

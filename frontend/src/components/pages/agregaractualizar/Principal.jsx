@@ -6,9 +6,7 @@ import { useState } from 'react';
 import { Grid, Card, Button } from '@mui/material';
 import {Cambio} from './patronObservador.ts'
 import '../../styles/Principal.css'
-import Sidebar from '../../extras/Sidebar.jsx';
-import {IconButton} from '@mui/material';
-import MenuIcon from "@mui/icons-material/Menu";
+import { CabeceraModulo } from '../../extras/CabeceraModulo.jsx';
 
 export default function Principal() {
   const navigate= useNavigate()
@@ -29,28 +27,12 @@ export default function Principal() {
 
   };
 
-  //sidebar
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const handleSidebarOpen = () => {
-    setSidebarOpen(true);
-  };
-  const handleSidebarClose = () => {
-    setSidebarOpen(false);
-  };
 
 
 
   return (
     <div className='contenedor-agregacion'>
-       <div className="Header">
-                    <IconButton className="contenedor-acordeon" onClick={handleSidebarOpen} edge="start" color="inherit" aria-label="menu">
-                        <MenuIcon className="icono-acordeon"/>
-                    </IconButton>
-                    <Sidebar className="Menu-lateral-desplegable" open={sidebarOpen} onClose={handleSidebarClose}/>
-                    <div className="Contenedor-Nombre-Modulo">
-                    <h1 className="Nombre-Modulo">Módulo de Ventas</h1>
-                    </div> 
-                </div>
+    <CabeceraModulo></CabeceraModulo>
 
     <Grid container alignItems='center' justifyContent='center' columns={16}>
       <Grid item xs={9}>

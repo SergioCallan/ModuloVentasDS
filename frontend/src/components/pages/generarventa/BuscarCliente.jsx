@@ -1,10 +1,8 @@
 import {useState} from "react"
-import Sidebar from "../../extras/Sidebar"
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import axios from 'axios'
 import "../../styles/EstilosGenerarVenta/BuscarCliente.css"
 import {useNavigate} from 'react-router-dom'
+import { CabeceraModulo } from "../../extras/CabeceraModulo";
 
 
 export default function BuscarCliente(){
@@ -77,16 +75,7 @@ export default function BuscarCliente(){
     return(
         <body>
             <main>
-                
-                <div className="Header">
-                    <IconButton className="contenedor-acordeon" onClick={handleSidebarOpen} edge="start" color="inherit" aria-label="menu">
-                        <MenuIcon className="icono-acordeon"/>
-                    </IconButton>
-                    <Sidebar className="Menu-lateral-desplegable" open={sidebarOpen} onClose={handleSidebarClose}/>
-                    <div className="Contenedor-Nombre-Modulo">
-                    <h1 className="Nombre-Modulo">Módulo de Ventas</h1>
-                    </div> 
-                </div>
+              <CabeceraModulo></CabeceraModulo>
                 <div className="Clientes">
                 
                     <div className="Clientes_Busqueda">

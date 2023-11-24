@@ -4,6 +4,7 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate, useParams } from 'react-router-dom';
 import ListInternet from './ListInternet';
+import { CabeceraModulo } from '../../extras/CabeceraModulo.jsx';
 
 const createProxyHandler = (setStateFunction) => {
   return {
@@ -102,6 +103,8 @@ export default function Internet(){
       }
     },[params.id])
     return(
+        <div>
+        <CabeceraModulo></CabeceraModulo>
         <Grid container alignItems='center' justifyContent='center' columns={9}>
         <Grid item xs={8}>
             <Card
@@ -221,5 +224,6 @@ export default function Internet(){
             </Card>
         </Grid>
     </Grid>
+    </div>
     )
 }

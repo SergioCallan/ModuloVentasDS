@@ -1,7 +1,4 @@
 import { useState, useEffect } from "react";
-import Sidebar from "../../extras/Sidebar";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { TableContainer, Paper, Table, TableHead, TableBody, TableRow } from "@mui/material";
@@ -11,6 +8,7 @@ import { TCelda} from "../../styles/CeldaTablaPersonalizada";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "../../styles/MenuVentas.css"
 import '../../styles/EstilosGenerarVenta/BuscarProducto.css'
+import { CabeceraModulo } from "../../extras/CabeceraModulo.jsx";
 
 export default function BuscarProducto() {
   const navigate= useNavigate()
@@ -189,15 +187,6 @@ export default function BuscarProducto() {
     navigate("/buscarcliente")
   }
 
-  // Sidebar
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const handleSidebarOpen = () => {
-    setSidebarOpen(true);
-  };
-  const handleSidebarClose = () => {
-    setSidebarOpen(false);
-  };
-
   const BuscarGarantia= async(e)=>{
     e.preventDefault()
     const url= `https://modulo-ventas.onrender.com/searchwarranty/${Garantia}`
@@ -217,17 +206,8 @@ export default function BuscarProducto() {
   return (
     <main>
       {/* Empieza cabecera modulo */}
-      <div className="Header">
-                    <IconButton className="contenedor-acordeon" onClick={handleSidebarOpen} edge="start" color="inherit" aria-label="menu">
-                        <MenuIcon className="icono-acordeon"/>
-                    </IconButton>
-                    <Sidebar className="Menu-lateral-desplegable" open={sidebarOpen} onClose={handleSidebarClose}/>
-                    <div className="Contenedor-Nombre-Modulo">
-                    <h1 className="Nombre-Modulo">Módulo de Ventas</h1>
-                    </div> 
-                </div>
+      <CabeceraModulo></CabeceraModulo>
       {/* Termina cabecera modulo */}
-
       <div className="Menu">
         <div className="contenedor-nombre-menu">
           <h2>Seleccionar productos</h2>

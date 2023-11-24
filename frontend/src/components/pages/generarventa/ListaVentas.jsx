@@ -5,6 +5,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../styles/EstilosGenerarVenta/ListaVentas.css"
+import { CabeceraModulo } from "../../extras/CabeceraModulo.jsx";
 import {
   TableContainer,
   Table,
@@ -84,28 +85,12 @@ export default function ListaVentas() {
       navigate("/buscarcliente")
     }
   }
-// Sidebar 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const handleSidebarOpen = () => {
-    setSidebarOpen(true)
-};
-  const handleSidebarClose = () => {
-    setSidebarOpen(false)}
 // termina sidebar
   return (
     <div>
-      {/* empieza la cabecera */}
       <main>
-      <div className="Header">
-                    <IconButton className="contenedor-acordeon" onClick={handleSidebarOpen} edge="start" color="inherit" aria-label="menu">
-                        <MenuIcon className="icono-acordeon"/>
-                    </IconButton>
-                    <Sidebar className="Menu-lateral-desplegable" open={sidebarOpen} onClose={handleSidebarClose}/>
-                    <div className="Contenedor-Nombre-Modulo">
-                    <h1 className="Nombre-Modulo">Módulo de Ventas</h1>
-                    </div> 
-                </div>
+         {/* empieza la cabecera */}
+        <CabeceraModulo></CabeceraModulo>
         {/* termina la cabecera */}
         <div className="contenedor-cuerpo">
         <div className="contenedor-nombre-seccion">

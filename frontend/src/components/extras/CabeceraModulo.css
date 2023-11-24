@@ -1,0 +1,21 @@
+
+
+.Header{
+    display: grid;
+    grid-template-areas: 
+    "element2 element1 element1 element1 element1 element1 element1 element1 element1 element1 element1 element1 element1";
+    background-color: #1741AD;
+    text-align: center;
+    color: white; 
+    width: 100vw;
+    height: 15vh;
+}
+
+.Contenedor-Nombre-Modulo{
+    grid-area: element1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 6vw;
+}
