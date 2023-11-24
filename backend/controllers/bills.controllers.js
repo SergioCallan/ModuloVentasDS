@@ -1,5 +1,5 @@
 const pool= require ('../db')
-import { v4 as uuidv4 } from 'uuid';
+const uuid= require('uuid')
 const moment = require('moment');
 
 
@@ -46,7 +46,7 @@ const updateBill= async(req, res)=>{
         }
         else{
             const factura= result.rows[0]
-            factura.id_factura= uuidv4();
+            factura.id_factura= uuid();
             factura.fecha_pago = moment(factura.fecha_pago).add(1, 'months').format('YYYY-MM-DD');
             const query2= "INSERT INTO facturas (id_factura, dni_cliente, numero_linea, precio, fecha_pago, estado) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *"
             const values = [
