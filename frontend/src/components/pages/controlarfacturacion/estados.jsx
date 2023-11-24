@@ -21,12 +21,11 @@ class EstadoBase {
       try{
         const url0= `https://modulo-ventas.onrender.com/pagolinea/${numero_linea}`
         const response0= await axios.put(url0)
-
-        const url1= `https://modulo-ventas.onrender.com/searchlastnumber/${numero_linea}`
-        const response1= await axios.get(url1)
+        const url1= `https://modulo-ventas.onrender.com/updatebill/${numero_linea}`
+        const response1= await axios.post(url1)
         alert("Pago realizado")
       } catch(error){
-        console.log(error)
+        console.log("Error al realizar el pago: ", error)
       }
       // Lógica específica para el estado Pendiente
       facturaState.estado= new EstadoPagado();
