@@ -39,7 +39,7 @@ function App(){
               <Route path="/sell/:idVenta" element={<SearchById />} />
               <Route path="/selldetails/:id_detalle" element={<SellDetails />} />
               <Route path="/operaciones" element={<Operaciones/>}/>
-              <Route path="/principal" element={<InterfazBase></InterfazBase>}></Route>
+              <Route path="/principal" element={<InterfazBase/>}/>
           </Routes>
     </BrowserRouter>
   )
