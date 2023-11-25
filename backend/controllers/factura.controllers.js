@@ -82,7 +82,7 @@ const suspenderLinea= async (req, res)=>{
 //Arreglar esta hvda
 const reactivarLinea= async(req, res)=>{
     try{
-        const numero= req.body;
+        const numero= req.params.numero;
         const ultimo_pago= Date();
         const query= 'UPDATE linea_telefono SET estado=0, ultimo_pago=$1 WHERE numero= $2'
         const results= await pool.query(query, [ultimo_pago, numero])
