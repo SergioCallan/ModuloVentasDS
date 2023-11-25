@@ -165,7 +165,7 @@ function TablaDetalles({datos}){
             <TCelda2>Tipo de Compra</TCelda2>
             <TCelda2>ID de la garantia</TCelda2>
             <TCelda2>Tiempo de la garantia (Meses)</TCelda2>
-            <TCelda2>Coste (garantia)</TCelda2>
+            <TCelda2>Coste Total</TCelda2>
             <TCelda2>Opción</TCelda2>
           </TableRow>
         </TableHead>

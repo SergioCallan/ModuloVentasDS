@@ -250,10 +250,10 @@ export default function BuscarProducto() {
                 )}
                 {MostrarPrecio && (
                 <div className="contenedor-precios">
-                    <label htmlFor="Modelo">Precio minimo:</label> 
-                    <input type="text" className="campo campo-min" name="PrecioMin" placeholder="Prec. minimo" onChange={changingPrecioMin} value={PrecioMin}></input>
-                    <label htmlFor="Modelo">Precio maximo:</label>
-                    <input type="text" className="campo campo-max" name="PrecioMax" placeholder="Prec. maximo" onChange={changingPrecioMax} value={PrecioMax}></input>
+                    <label htmlFor="PrecioMin">Precio minimo:</label> 
+                    <input type="text" className="campo campo-min" name="PrecioMin" onChange={changingPrecioMin} value={PrecioMin}></input>
+                    <label htmlFor="PrecioMax">Precio maximo:</label>
+                    <input type="text" className="campo campo-max" name="PrecioMax" onChange={changingPrecioMax} value={PrecioMax}></input>
                 </div>
                 )}
                 {Filtro && <button className="btn-filtrar" onClick={Filtrar}>

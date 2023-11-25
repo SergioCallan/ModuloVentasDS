@@ -1,0 +1,57 @@
+.subseccion-filtrar-por{
+    margin-top: 3vh;
+    display: flex;
+    gap: 10px;
+}
+
+.seccion-select-filtro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 3vh;
+    padding-bottom: 2vw;
+}
+
+.contenedor-precios{
+    display: flex;
+    gap: 1.5vw;
+}
+
+.campo{
+    border-color: black;
+}
+
+.campo-nombre{
+    width: 30vw;
+}
+
+.campo-min{
+    width: 8vw;
+}
+
+.campo-max{
+    width: 8vw;
+}
+
+.btn-estructura{
+    width: 30%;
+    height: 6vh;
+}
+
+.btn-filtrar{
+    width: 20vw;
+    height: 6vh;
+    background-color: orange;
+    color: #f8f8f8;
+    border-radius: 15px;
+    border-color: orange;
+}
+
+.capsula{
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    margin: 0 auto;
+    margin-bottom: 2vh;
+}
+

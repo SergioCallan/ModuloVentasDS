@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../extras/Sidebar";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+// import Sidebar from "../../extras/Sidebar";
+// import IconButton from "@mui/material/IconButton";
+// import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
-import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
+import { TableContainer, Paper, Table, TableHead, TableBody, TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import "bootstrap/dist/css/bootstrap.min.css";
-
-
+import { CabeceraModulo } from "../../extras/CabeceraModulo";
+import '../../styles/BuscarPlan/BuscarPlan.css'
+import { TCelda } from "../../styles/CeldaTablaPersonalizada";
 export default function BuscarPlan(){
     const navigate= useNavigate()
     const [ID, setID]=useState("")
@@ -127,18 +128,19 @@ export default function BuscarPlan(){
 
     return(
         <main>
-            <div className="Header">
-                <h1>Módulo de Ventas</h1>
-            </div>
+            <CabeceraModulo></CabeceraModulo>
             <div className="Menu">
-                <h2 className="h2">Seleccionar planes</h2>
-                <h3>Tipo de venta: Planes</h3>
-                <br />
+                <div className="contenedor-nombre-menu">
+                <h2>Seleccionar planes</h2>
+                </div>
+                {/* <h3>Tipo de venta: Planes</h3> */}
                 <div className="Planes">
-                    <h3>Filtrar por: </h3>
+                <div className="seccion-select-filtro">
+                    <div className="subseccion-filtrar-por">
+                    <h4>Filtrar por: </h4>
                     <Dropdown isOpen={dropdownF} toggle={abrirCerrarDropdownF}>
                         <DropdownToggle caret className="DropdownF">
-                            {Filtro}
+                        {Filtro ? Filtro : 'Seleccionar filtro'}
                         </DropdownToggle>
                         <DropdownMenu>
                             <DropdownItem divider />
@@ -147,31 +149,41 @@ export default function BuscarPlan(){
                             <DropdownItem onClick={() => SelectPrecio()}>Precio</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
+                    </div>
                     {MostrarTipo &&(
-                        <div>
-                            <input type="text" className="input" name="TipoPlan" placeholder="Nombre del Plan" onChange={changingPlan} value={Tipo}></input>
+                        <div className="contenedor-filtro">
+                            <label htmlFor="NombrePlan">Nombre del Producto:</label>
+                            <input type="text" className="campo campo-nombre" name="NombrePlan" onChange={changingPlan} value={Tipo}></input>
                         </div>
                     )}
                     {MostrarMegas &&(
-                        <div>
-                            <input type="text" className="input" name="Megas" placeholder="Megas del Plan" onChange={changingMegas} value={Megas}></input>
+                        <div className="contenedor-filtro">
+                            <label htmlFor="Megas">Cantidad de Megas:</label>
+                            <input type="text" className="campo campo-min" name="Megas" onChange={changingMegas} value={Megas}></input>
                         </div>
                     )}
                     {MostrarPrecio && (
-                    <div>
-                        <input type="text" className="input" name="PrecioMin" placeholder="Precio minimo del producto" onChange={changingPrecioMin} value={PrecioMin}></input>
-                        <input type="text" className="input" name="PrecioMax" placeholder="Precio maximo del producto" onChange={changingPrecioMax} value={PrecioMax}></input>
+                    <div className="contenedor-filtro">
+                        <label htmlFor="PrecioMin">Precio minimo:</label> 
+                        <input type="text" className="campo campo-min" name="PrecioMin" onChange={changingPrecioMin} value={PrecioMin}></input>
+                        <label htmlFor="PrecioMax">Precio maximo:</label>
+                        <input type="text" className="campo campo-max" name="PrecioMax" onChange={changingPrecioMax} value={PrecioMax}></input>
                     </div>
                     )}
-                    <button id="FilterProduct" className="Celeste" onClick={Filtrar}>
-                    Filtrar Plan
-                    </button>
-                    <div className="TablaP">
-                        <TablaP datos={datosP} setID={setID} setPrecio={setPrecio}/>
+                    {Filtro && <button className="btn-filtrar" onClick={Filtrar}>
+                    Filtrar Plan(es)
+                    </button>}
                     </div>
+
+                    <TablaP datos={datosP} setID={setID} setPrecio={setPrecio}/>
+                    
                 </div>
-                <button id="Regresar" className="Rojo">Regresar</button>
-                <button id="Continuar" className="Verde" onClick={Agregar}>Continuar</button>
+
+                <div className="capsula contenedor-btns">
+                <button id="Regresar" className="Rojo btn-estructura">Regresar</button>
+                <button id="Continuar" className="Verde btn-estructura" onClick={Agregar}>Continuar</button>
+                </div>
+
             </div>
         </main>
     )
@@ -186,28 +198,28 @@ function TablaP({datos, setID, setPrecio}){
         setPrecio(precio)
     }
     return(
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{maxHeight:'300px', maxWidth: '70vw',marginBottom: '3vh'}}>
       <Table>
-        <TableHead>
+        <TableHead component={Paper} sx={{position:'sticky', top:'0px'}}>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Tipo</TableCell>
-            <TableCell>Megas</TableCell>
-            <TableCell>Precio</TableCell>
-            <TableCell>Estado</TableCell>
+            <TCelda>ID</TCelda>
+            <TCelda>Tipo</TCelda>
+            <TCelda>Megas</TCelda>
+            <TCelda>Precio</TCelda>
+            <TCelda>Estado</TCelda>
           </TableRow>
         </TableHead>
         <TableBody>
           {datos.map((planes, index) => (
             <TableRow key={index}>
-              <TableCell>{planes.id_plan}</TableCell>
-              <TableCell>{planes.tipo}</TableCell>
-              <TableCell>{planes.megas}</TableCell>
-              <TableCell>{planes.precio}</TableCell>
-              <TableCell>{planes.estado}</TableCell>
-              <TableCell>
-                <button className="Azul" onClick={()=>obtenerDatosPlan(planes.tipo, planes.megas, planes.id_plan, planes.precio)}>Seleccionar producto</button>
-              </TableCell>
+              <TCelda>{planes.id_plan}</TCelda>
+              <TCelda>{planes.tipo}</TCelda>
+              <TCelda>{planes.megas}</TCelda>
+              <TCelda>{planes.precio}</TCelda>
+              <TCelda>{planes.estado}</TCelda>
+              <TCelda>
+                <button className="Azul btn-seleccionar-producto" onClick={()=>obtenerDatosPlan(planes.tipo, planes.megas, planes.id_plan, planes.precio)}>Seleccionar producto</button>
+              </TCelda>
             </TableRow>
           ))}
         </TableBody>
