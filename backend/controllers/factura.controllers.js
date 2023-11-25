@@ -71,7 +71,7 @@ const atrasoLinea= async (req, res)=>{
 const suspenderLinea= async (req, res)=>{
     try{
         const numero= req.params.numero;
-        const query= 'UPDATE linea_telefono SET estado= 1, ultimo_pago="9999-01-01" WHERE numero= $1'
+        const query= 'UPDATE linea_telefono SET estado= 1 WHERE numero= $1'
         const results= await pool.query(query, [numero])
         res.status(200).json({ message: 'Estado actualizado con éxito' });
     } catch(error){
@@ -79,12 +79,13 @@ const suspenderLinea= async (req, res)=>{
         res.status(500).json({ error: 'Hubo un error al actualizar el estado' });
     }
 }
-
+//Arreglar esta hvda
 const reactivarLinea= async(req, res)=>{
     try{
-        const {numero, fecha_pago}= req.body;
-        const query= 'UPDATE linea_telefono SET estado=0, ultimo_pago=$1+ interval \'1 month\' WHERE numero= $2'
-        const results= await pool.query(query, [fecha_pago, numero])
+        const numero= req.body;
+        const ultimo_pago= Date();
+        const query= 'UPDATE linea_telefono SET estado=0, ultimo_pago=$1 WHERE numero= $2'
+        const results= await pool.query(query, [ultimo_pago, numero])
     } catch(error){
         console.error("Error al reactivar la linea: ", error)
         res.status(500).json({error: 'Hubo un error al actualizar el estado'});

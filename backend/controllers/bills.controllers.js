@@ -77,6 +77,16 @@ const updateBill= async(req, res)=>{
     }
 }
 
+const suspendBill= async(req, res)=>{
+    try{
+        const id_factura= req.params.id_factura
+        const query= "UPDATE facturas SET estado='Atrasado' WHERE id_factura= $1"
+        const result= await pool.query(query, [id_factura])
+        res.status(200).json({ message: 'Estado actualizado con éxito' })
+    } catch(error){
+        console.error("Error al atrasar la factura: ", error)
+    }
+}
 
 const searchbillid= async(req, res)=>{
     try{
@@ -146,5 +156,6 @@ module.exports={
     searchpaybilldni,
     searchpaybillnumero,
     paybill,
-    updateBill
+    updateBill,
+    suspendBill
 }

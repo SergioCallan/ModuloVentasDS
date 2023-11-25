@@ -6,7 +6,7 @@ const {searchdni}= require('../controllers/client.controllers')
 const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail, getSelldni, getSellid, calculateSell}= require('../controllers/sell.controllers')
 const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan.controllers')
 const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea, searchLinea, cambioLinea, suspenderLinea, reactivarLinea}= require('../controllers/factura.controllers')
-const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilldni, searchpaybillnumero, paybill, updateBill}= require('../controllers/bills.controllers')
+const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilldni, searchpaybillnumero, paybill, updateBill, suspendBill}= require('../controllers/bills.controllers')
 const {searchWarranty}= require('../controllers/warranty.controllers')
 const {getSellDetailsById, getLastSell, getSaleAndClientDetails}= require('../controllers/searchById.controllers')
 
@@ -91,7 +91,7 @@ router.put('/atrasolinea/:numero', atrasoLinea)
 
 router.put('/suspenderlinea/:numero', suspenderLinea)
 
-router.put('/reactivarlinea', reactivarLinea)
+router.put('/reactivarlinea/:numero', reactivarLinea)
 
 router.put('/cancelarlinea/:numero', cancelarLinea)
 
@@ -108,6 +108,8 @@ router.get('/searchpaidbilldni/:dni_cliente', searchpaybilldni)
 router.get('/searchpaidbillnumero/:numero_linea', searchpaybillnumero)
 
 router.put('/paybill/:id_factura', paybill)
+
+router.put('/suspendbill/:id_factura', suspendBill)
 
 router.post('/createbill', createbill)
 
