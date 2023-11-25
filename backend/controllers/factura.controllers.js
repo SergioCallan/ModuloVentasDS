@@ -83,7 +83,7 @@ const suspenderLinea= async (req, res)=>{
 const reactivarLinea= async(req, res)=>{
     try{
         const numero= req.params.numero;
-        const ultimo_pago= Date();
+        const ultimo_pago = `${fechaActual.getFullYear()}/${(fechaActual.getMonth() + 1).toString().padStart(2, '0')}/${fechaActual.getDate().toString().padStart(2, '0')}`;
         const query= 'UPDATE linea_telefono SET estado=0, ultimo_pago=$1 WHERE numero= $2'
         const results= await pool.query(query, [ultimo_pago, numero])
     } catch(error){
