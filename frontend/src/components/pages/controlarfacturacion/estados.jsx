@@ -32,18 +32,25 @@ class EstadoBase {
       facturaState.estado= new EstadoPagado();
     }
   
-    suspender(numero_linea, id, facturaState) {
+    async suspender(numero_linea, id, facturaState) {
       alert("Suspendiendo temporalmente el servicio");
       const url0= `https://modulo-ventas.onrender.com/atrasolinea/${numero_linea}`
+      const response0= await axios.put(url0)
       const url1= `https://modulo-ventas.onrender.com/suspendbill/${id}`
-
+      const response1= await axios.put(url1)
+      alert("Servicio suspendido")
       // Lógica específica para el estado Pendiente
       facturaState.estado= new EstadoSuspendido();
     }
   
-    cancelar(numero_linea, id, facturaState) {
-      alert("Cancelar definitivamente la facturación?");
-      // Lógica específica para el estado Pendiente
+    async cancelar(numero_linea, id, facturaState) {
+      alert("Cancelando el servicio");
+      const url0= `https://modulo-ventas.onrender.com/cancelarlinea/${numero_linea}`
+      const response0= await axios.put(url0)
+      const url1= `https://modulo-ventas.onrender.com/paybill/${id}`
+      const response1= await axios.put(url1)
+      alert("Servicio cancelado y última factura pagada")
+      // Probablemente debas agregar el cambio de ultimo pago en numero_linea
       facturaState.estado= new EstadoCancelado();
     }
 
@@ -63,24 +70,39 @@ class EstadoBase {
     }
   
     cancelar(numero_linea, id, facturaState) {
-      alert("Factura ya pagada");
+      alert("Factura ya pagada, no puede cancelarse");
       // Lógica específica para el estado Pendiente
     }
   }
 
   class EstadoAtrasado extends EstadoBase {
-    pagar(numero_linea, id, facturaState) {
-      alert("Factura cancelada");
-      // Lógica específica para el estado Pendiente
+    async pagar(numero_linea, id, facturaState) {
+      alert("Realizando pago.");
+      try{
+        const url0= `https://modulo-ventas.onrender.com/pagolinea/${numero_linea}`
+        const response0= await axios.put(url0)
+        const url1= `https://modulo-ventas.onrender.com/updatebill/${numero_linea}`
+        const response1= await axios.post(url1)
+        const url2= `https://modulo-ventas.onrender.com/paybill/${id}`
+        const response2= await axios.put(url2)
+        alert("Pago realizado")
+      } catch(error){
+        console.log("Error al realizar el pago: ", error)
+      }
+      facturaState.estado= new EstadoPagado();
     }
   
     suspender(numero_linea, id, facturaState) {
-      alert("Factura cancelada");
+      alert("Factura ya registrada como atrasada y línea suspendida");
       // Lógica específica para el estado Pendiente
     }
   
-    cancelar(numero_linea, id, facturaState) {
-      alert("Factura ya cancelada");
+    async cancelar(numero_linea, id, facturaState) {
+      alert("Cancelando el servicio");
+      const url0= `https://modulo-ventas.onrender.com/cancelarlinea/${numero_linea}`
+      const response0= await axios.put(url0)
+      alert("Servicio cancelado.")
+      facturaState.estado= new EstadoCancelado();
       // Lógica específica para el estado Pendiente
     }
   }
@@ -123,11 +145,11 @@ class EstadoBase {
       }
     
       suspender() {
-        this.estado.suspender(this.numero_linea);
+        this.estado.suspender(this.numero_linea, this.id, this);
       }
     
       cancelar() {
-        this.estado.cancelar(this.numero_linea);
+        this.estado.cancelar(this.numero_linea, this.id, this);
       }
   }
   
