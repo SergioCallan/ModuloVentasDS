@@ -53,8 +53,6 @@ class EstadoBase {
       // Probablemente debas agregar el cambio de ultimo pago en numero_linea
       facturaState.estado= new EstadoCancelado();
     }
-
-
   }
 
   class EstadoPagado extends EstadoBase {
