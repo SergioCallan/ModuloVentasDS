@@ -9,6 +9,7 @@ const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea, searchLinea,
 const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilldni, searchpaybillnumero, paybill, updateBill, suspendBill}= require('../controllers/bills.controllers')
 const {searchWarranty}= require('../controllers/warranty.controllers')
 const {getSellDetailsById, getLastSell, getSaleAndClientDetails}= require('../controllers/searchById.controllers')
+const { getSellAndClientDetails } = require('../controllers/sellDetails.controllers');
 
 const router = Router();
 
@@ -130,3 +131,5 @@ router.get('/sell/last', getLastSell);
 router.get('/selldetails/:id_detalle', getSellDetailsById);
 
 router.get('/selldetails/:id_detalle', getSaleAndClientDetails);
+
+router.get('/selldetails/:id_detalle', getSellAndClientDetails);

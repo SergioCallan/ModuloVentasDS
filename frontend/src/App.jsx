@@ -40,6 +40,7 @@ function App(){
               <Route path="/selldetails/:id_detalle" element={<SellDetails />} />
               <Route path="/operaciones" element={<Operaciones/>}/>
               <Route path="/reporte" element={<VisualizarReporte/>}/>
+              <Route path="/selldetails/:id_detalle" element={<SellDetails />} />
           </Routes>
     </BrowserRouter>
   )
