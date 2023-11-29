@@ -8,6 +8,11 @@ class EstadoBase {
   class General extends EstadoBase {
     async buscarDatos(tiempo, periodo1, periodo2){
         //TODO: Darle logica a buscar datos, agregar las graficas y arreglar todo el codigo
+        try{
+          const query= "SELECT * FROM "
+        }catch(error){
+          console.error("Error al buscar datos: ", error)
+        }
     }
   }
 

@@ -11,17 +11,10 @@ const getSellAndClientDetails = async (req, res) => {
     }
 
     const sellDetails = sellDetailsResult.rows[0];
-    const clientQuery = 'SELECT * FROM clientes WHERE dni = $1';
-    const clientResult = await pool.query(clientQuery, [sellDetails.dni_cliente]);
-
-    if (clientResult.rows.length === 0) {
-      return res.status(404).json({ message: 'Cliente no encontrado.' });
-    }
-
-    const clientDetails = clientResult.rows[0];
-    res.json({ sellDetails, clientDetails });
+    
+    res.json(sellDetails);  // Devuelve solo los detalles de la venta
   } catch (error) {
-    console.error('Error al obtener detalles de venta y cliente:', error);
+    console.error('Error al obtener detalles de venta:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
