@@ -8,8 +8,9 @@ const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan
 const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea, searchLinea, cambioLinea, suspenderLinea, reactivarLinea}= require('../controllers/factura.controllers')
 const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilldni, searchpaybillnumero, paybill, updateBill, suspendBill}= require('../controllers/bills.controllers')
 const {searchWarranty}= require('../controllers/warranty.controllers')
-const {getSellDetailsById, getLastSell, getSaleAndClientDetails}= require('../controllers/searchById.controllers')
+const {getSellDetailsById, getLastSell}= require('../controllers/searchById.controllers')
 const { getSellAndClientDetails } = require('../controllers/sellDetails.controllers');
+const {createReport}= require('../controllers/report.controllers')
 
 const router = Router();
 
@@ -123,6 +124,10 @@ router.get('/searchwarranty/:id_garantia', searchWarranty)
 module.exports = router;
 
 //Intentar aplicar mostrar equipos comprados
+
+//Rutas para los reportes
+
+router.get('/createreport', createReport)
 
 //Sebas
 
