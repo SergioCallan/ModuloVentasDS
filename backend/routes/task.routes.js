@@ -130,4 +130,4 @@ router.get('/sell/last', getLastSell);
 
 router.get('/selldetails/:id_detalle', getSellDetailsById);
 
-router.get('/selldetails/:id_detalle', getSaleAndClientDetails);
+router.get('/selldetailsbyid/:id_detalle', getSellAndClientDetails);
