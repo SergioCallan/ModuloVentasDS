@@ -103,7 +103,7 @@ export default function BuscarPlan(){
     const [datosP, setDatosP] = useState([]);
 
     //Paso a pagina
-    const Agregar= async(e)=>{
+    const Agregar = async(e)=>{
       e.preventDefault()
       const id= localStorage.getItem("venta") 
       if(id=="" || id==null){
