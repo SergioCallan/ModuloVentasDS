@@ -45,27 +45,7 @@ class General extends EstadoBase {
 class Equipo extends EstadoBase {
   async buscarDatosDia(tiempo, periodo1, periodo2){
     //TODO: Agregarle la parte de detalleventa
-    try{
-      const queryVentas = "SELECT id_venta, fecha FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
-      const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
-
-      const detallePromises = resultVentas.rows.map(async (venta) => {
-          const queryDetalles = "SELECT SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1";
-          const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
-          return resultDetalles.rows[0].total || 0;
-      });
-
-      const detallesTotales = await Promise.all(detallePromises);
-
-      const result = resultVentas.rows.map((venta, index) => ({
-          fecha: venta.fecha,
-          total: detallesTotales[index]
-      }));
-
-      return result;
-    }catch(error){
-        console.error("Error al buscar datos: ", error)
-    }
+    
   }
   async buscarDatosSemana(tiempo, periodo1, periodo2) {
     // TODO: Darle lógica a buscar datos, agregar las gráficas y arreglar todo el código
