@@ -1,59 +1,68 @@
-const pool = require('../db');
-const axios = require('axios');
+// Controlador en tu backend
+const pool= require ('../db')
 
-const getSellAndClientDetails = async (req, res) => {
+// Controlador para encontrar los detalles de la venta según id_detalle
+const getDetalleVentaById = async (req, res) => {
   try {
     const { id_detalle } = req.params;
-    
-    // Primero, obtén el id_venta basado en el id_detalle
-    const sellDetailsQuery = 'SELECT * FROM detalleventa WHERE id_detalle = $1';
-    const sellDetailsResult = await pool.query(sellDetailsQuery, [id_detalle]);
+    const query = 'SELECT * FROM detalleventa WHERE id_detalle = $1';
+    const result = await pool.query(query, [id_detalle]);
 
-    if (sellDetailsResult.rows.length === 0) {
+    if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Detalle de venta no encontrado.' });
     }
 
-    // Después, usa id_venta para obtener dni_cliente de la tabla venta
-    const id_venta = sellDetailsResult.rows[0].id_venta;
-    const ventaQuery = 'SELECT dni_cliente FROM venta WHERE id_venta = $1';
-    const ventaResult = await pool.query(ventaQuery, [id_venta]);
-
-    if (ventaResult.rows.length === 0) {
-      return res.status(404).json({ message: 'Venta no encontrada.' });
-    }
-
-    const dniCliente = ventaResult.rows[0].dni_cliente;
-    if (!dniCliente) {
-      return res.status(404).json({ message: 'DNI del cliente no encontrado.' });
-    }
-
-    // Finalmente, con el dni_cliente obtén la información del cliente de la API externa
-    const clientResponse = await axios.get(`https://clientemodulocrm.onrender.com/clientes/buscarPorDNI/${dniCliente}`);
-    if (!clientResponse.data) {
-      return res.status(404).json({ message: 'Datos del cliente no encontrados.' });
-    }
-
-    const cliente = {
-      nombre: clientResponse.data.nombre,
-      apellido: clientResponse.data.apellido,
-      correo: clientResponse.data.correo,
-      sexo: clientResponse.data.sexo
-      // Incluye aquí otros campos que necesites
-    };
-
-    // Combina los detalles de venta con la información del cliente y envía la respuesta
-    const responseData = {
-      detalleVenta: sellDetailsResult.rows[0],
-      cliente: cliente
-    };
-
-    res.json(responseData);
+    res.json(result.rows[0]);
   } catch (error) {
-    console.error('Error al obtener detalles de venta y cliente:', error);
+    console.error('Error al obtener el detalle de la venta:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
 
-module.exports = {
-  getSellAndClientDetails
+// Controlador para obtener id_venta a partir de id_detalle
+const getIdVentaByIdDetalle = async (req, res) => {
+  try {
+    const { id_detalle } = req.params;
+    const query = 'SELECT id_venta FROM detalleventa WHERE id_detalle = $1';
+    const result = await pool.query(query, [id_detalle]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Detalle de venta no encontrado.' });
+    }
+
+    // Extrae id_venta de los resultados y devuélvelo
+    const id_venta = result.rows[0].id_venta;
+    res.json({ id_venta }); // Devuelve el id_venta
+  } catch (error) {
+    console.error('Error al obtener el id_venta:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 };
+
+// Controlador para obtener dni_cliente a partir de id_venta
+const getDniClienteByIdVenta = async (req, res) => {
+  try {
+    const { id_venta } = req.params;
+    const query = 'SELECT dni_cliente FROM venta WHERE id_venta = $1';
+    const result = await pool.query(query, [id_venta]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Cliente no encontrado para la venta.' });
+    }
+
+    const dni_cliente = result.rows[0].dni_cliente;
+    res.json({ dni_cliente }); // Devuelve el dni_cliente
+  } catch (error) {
+    console.error('Error al obtener el dni del cliente:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+
+
+
+module.exports = {
+  getDetalleVentaById,
+  getIdVentaByIdDetalle,
+  getDniClienteByIdVenta
+}

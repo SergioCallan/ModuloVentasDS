@@ -9,7 +9,7 @@ const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea, searchLinea,
 const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilldni, searchpaybillnumero, paybill, updateBill, suspendBill}= require('../controllers/bills.controllers')
 const {searchWarranty}= require('../controllers/warranty.controllers')
 const {getSellDetailsById, getLastSell}= require('../controllers/searchById.controllers')
-const { getSellAndClientDetails } = require('../controllers/sellDetails.controllers');
+const { getDetalleVentaById, getIdVentaByIdDetalle, getDniClienteByIdVenta } = require('../controllers/sellDetails.controllers');
 const {createReport}= require('../controllers/report.controllers')
 
 const router = Router();
@@ -121,7 +121,7 @@ router.post('/updatebill/:numero_linea', updateBill)
 
 router.get('/searchwarranty/:id_garantia', searchWarranty)
 
-module.exports = router;
+
 
 //Intentar aplicar mostrar equipos comprados
 
@@ -135,4 +135,10 @@ router.get('/sell/last', getLastSell);
 
 router.get('/selldetails/:id_detalle', getSellDetailsById);
 
-router.get('/selldetailsbyid/:id_detalle', getSellAndClientDetails);
+router.get('/selldetailsbyid/:id_detalle', getDetalleVentaById);
+
+router.get('/idventabyid/:id_detalle', getIdVentaByIdDetalle);
+
+router.get('/clientebyid/:id_venta', getDniClienteByIdVenta);
+
+module.exports = router;
