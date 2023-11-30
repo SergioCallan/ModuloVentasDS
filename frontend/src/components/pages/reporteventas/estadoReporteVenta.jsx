@@ -39,15 +39,119 @@ class General extends EstadoBase {
 }
 
 class Equipo extends EstadoBase {
-  
+  async buscarDatosDia(tiempo, periodo1, periodo2){
+    //TODO: Agregarle la parte de detalleventa
+    try{
+      const queryVentas = "SELECT id_venta, fecha FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
+      const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
+
+      const detallePromises = resultVentas.rows.map(async (venta) => {
+          const queryDetalles = "SELECT SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1";
+          const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
+          return resultDetalles.rows[0].total || 0;
+      });
+
+      const detallesTotales = await Promise.all(detallePromises);
+
+      const result = resultVentas.rows.map((venta, index) => ({
+          fecha: venta.fecha,
+          total: detallesTotales[index]
+      }));
+
+      return result;
+    }catch(error){
+        console.error("Error al buscar datos: ", error)
+    }
+  }
+  async buscarDatosSemana(tiempo, periodo1, periodo2){
+//TODO: Darle logica a buscar datos, agregar las graficas y arreglar todo el codigo
+        try{
+            const query= "SELECT SUM(monto) AS total, DATE_TRUNC('week', fecha) AS semana FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY semana ORDER BY semana"
+            const resultVentas= await pool.query(query, [periodo1, periodo2])
+            return resultVentas.rows
+        }catch(error){
+            console.error("Error al buscar datos: ", error)
+        }
+    }
+
+    async buscarDatosMes(tiempo, periodo1, periodo2){
+//TODO: Darle logica a buscar datos, agregar las graficas y arreglar todo el codigo
+        try{
+            const query= "SELECT SUM(monto) AS total, DATE_TRUNC('month', fecha) AS mes FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY mes ORDER BY mes"
+            const resultVentas= await pool.query(query, [periodo1, periodo2])
+            return resultVentas.rows
+        }catch(error){
+            console.error("Error al buscar datos: ", error)
+        }
+    }
 }
 
 class Plan extends EstadoBase {
-  
+  async buscarDatosDia(tiempo, periodo1, periodo2){
+  //TODO: Darle logica a buscar datos, agregar las graficas y arreglar todo el codigo
+  try{
+      const query= "SELECT SUM(monto) AS total, fecha FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY fecha ORDER BY fecha"
+      const resultVentas= await pool.query(query, [periodo1, periodo2])
+      return resultVentas.rows
+  }catch(error){
+      console.error("Error al buscar datos: ", error)
+  }
+}
+  async buscarDatosSemana(tiempo, periodo1, periodo2){
+//TODO: Darle logica a buscar datos, agregar las graficas y arreglar todo el codigo
+    try{
+        const query= "SELECT SUM(monto) AS total, DATE_TRUNC('week', fecha) AS semana FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY semana ORDER BY semana"
+        const resultVentas= await pool.query(query, [periodo1, periodo2])
+        return resultVentas.rows
+    }catch(error){
+        console.error("Error al buscar datos: ", error)
+    }
+  }
+
+  async buscarDatosMes(tiempo, periodo1, periodo2){
+//TODO: Darle logica a buscar datos, agregar las graficas y arreglar todo el codigo
+    try{
+        const query= "SELECT SUM(monto) AS total, DATE_TRUNC('month', fecha) AS mes FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY mes ORDER BY mes"
+        const resultVentas= await pool.query(query, [periodo1, periodo2])
+        return resultVentas.rows
+    }catch(error){
+        console.error("Error al buscar datos: ", error)
+    }
+  }
 }
 
 class Factura extends EstadoBase {
-  
+  async buscarDatosDia(tiempo, periodo1, periodo2){
+    //TODO: Darle logica a buscar datos, agregar las graficas y arreglar todo el codigo
+    try{
+        const query= "SELECT SUM(monto) AS total, fecha FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY fecha ORDER BY fecha"
+        const resultVentas= await pool.query(query, [periodo1, periodo2])
+        return resultVentas.rows
+    }catch(error){
+        console.error("Error al buscar datos: ", error)
+    }
+  }
+  async buscarDatosSemana(tiempo, periodo1, periodo2){
+//TODO: Darle logica a buscar datos, agregar las graficas y arreglar todo el codigo
+        try{
+            const query= "SELECT SUM(monto) AS total, DATE_TRUNC('week', fecha) AS semana FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY semana ORDER BY semana"
+            const resultVentas= await pool.query(query, [periodo1, periodo2])
+            return resultVentas.rows
+        }catch(error){
+            console.error("Error al buscar datos: ", error)
+        }
+    }
+
+    async buscarDatosMes(tiempo, periodo1, periodo2){
+//TODO: Darle logica a buscar datos, agregar las graficas y arreglar todo el codigo
+        try{
+            const query= "SELECT SUM(monto) AS total, DATE_TRUNC('month', fecha) AS mes FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY mes ORDER BY mes"
+            const resultVentas= await pool.query(query, [periodo1, periodo2])
+            return resultVentas.rows
+        }catch(error){
+            console.error("Error al buscar datos: ", error)
+        }
+    }
 }
 
 // Otros Estados se implementarían de manera similar
