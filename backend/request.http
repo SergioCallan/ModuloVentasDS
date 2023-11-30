@@ -8,6 +8,20 @@ Content-Type: application/json
 }
 
 ###
+PUT https://modulo-ventas.onrender.com/reactivarlinea/912572342 HTTP/1.1
+
+###
+GET http://localhost:4000/createreport HTTP/1.1
+Content-Type: application/json
+
+{
+    "tipo":"General",
+    "tiempo":"Mes",
+    "periodo1":"2023-11-20",
+    "periodo2":"2023-11-24"
+}
+
+###
 POST https://modulo-ventas.onrender.com/adddetail HTTP/1.1
 Content-Type: application/json
 
@@ -37,6 +51,9 @@ GET https://clientemodulocrm.onrender.com/buscarPorDNI/123456789 HTTP/1.1
 
 ###
 GET https://modulo-ventas.onrender.com/getlineas/70911900 HTTP/1.1
+
+###
+PUT https://modulo-ventas.onrender.com/paybill/5b40d888-1d87-4b83-9568-d4f4d573ceeb HTTP/1.1
 
 ###
 GET https://clientemodulocrm.onrender.com/buscarPorDNI/123456789 HTTP/1.1

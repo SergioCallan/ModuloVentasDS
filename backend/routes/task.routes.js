@@ -6,9 +6,11 @@ const {searchdni}= require('../controllers/client.controllers')
 const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail, getSelldni, getSellid, calculateSell}= require('../controllers/sell.controllers')
 const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan.controllers')
 const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea, searchLinea, cambioLinea, suspenderLinea, reactivarLinea}= require('../controllers/factura.controllers')
-const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilldni, searchpaybillnumero, paybill, updateBill}= require('../controllers/bills.controllers')
+const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilldni, searchpaybillnumero, paybill, updateBill, suspendBill}= require('../controllers/bills.controllers')
 const {searchWarranty}= require('../controllers/warranty.controllers')
-const {getSellDetailsById, getLastSell, getSaleAndClientDetails}= require('../controllers/searchById.controllers')
+const {getSellDetailsById, getLastSell}= require('../controllers/searchById.controllers')
+const { getSellAndClientDetails } = require('../controllers/sellDetails.controllers');
+const {createReport}= require('../controllers/report.controllers')
 
 const router = Router();
 
@@ -91,7 +93,7 @@ router.put('/atrasolinea/:numero', atrasoLinea)
 
 router.put('/suspenderlinea/:numero', suspenderLinea)
 
-router.put('/reactivarlinea', reactivarLinea)
+router.put('/reactivarlinea/:numero', reactivarLinea)
 
 router.put('/cancelarlinea/:numero', cancelarLinea)
 
@@ -109,6 +111,8 @@ router.get('/searchpaidbillnumero/:numero_linea', searchpaybillnumero)
 
 router.put('/paybill/:id_factura', paybill)
 
+router.put('/suspendbill/:id_factura', suspendBill)
+
 router.post('/createbill', createbill)
 
 router.post('/updatebill/:numero_linea', updateBill)
@@ -121,10 +125,14 @@ module.exports = router;
 
 //Intentar aplicar mostrar equipos comprados
 
+//Rutas para los reportes
+
+router.get('/createreport', createReport)
+
 //Sebas
 
 router.get('/sell/last', getLastSell);
 
 router.get('/selldetails/:id_detalle', getSellDetailsById);
 
-router.get('/selldetails/:id_detalle', getSaleAndClientDetails);
+router.get('/selldetailsbyid/:id_detalle', getSellAndClientDetails);
