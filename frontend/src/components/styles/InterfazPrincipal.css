@@ -23,3 +23,11 @@
     font-weight: 600;
     color: white;
 }
+
+.btn-opcion[disabled]{
+    background-color: gray;
+}
+
+.btn-opcion:not([disabled]){
+    background-color: blue;
+}
