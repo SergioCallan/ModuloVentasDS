@@ -1,10 +1,13 @@
-// controllers/sellDetails.controllers.js
-const pool = require('../db');
+const pool= require ('../db')
 
 const getSellAndClientDetails = async (req, res) => {
   try {
     const { id_detalle } = req.params;
-    const sellDetailsQuery = 'SELECT * FROM detalleventa WHERE id_detalle = $1';
+    const sellDetailsQuery = `
+      SELECT dv.*, v.dni_cliente 
+      FROM detalleventa dv 
+      INNER JOIN venta v ON dv.id_venta = v.id_venta 
+      WHERE dv.id_detalle = $1`;
     const sellDetailsResult = await pool.query(sellDetailsQuery, [id_detalle]);
 
     if (sellDetailsResult.rows.length === 0) {
@@ -12,22 +15,26 @@ const getSellAndClientDetails = async (req, res) => {
     }
 
     const sellDetails = sellDetailsResult.rows[0];
-
-    // Obtener el dni_cliente de los detalles de venta
     const dniCliente = sellDetails.dni_cliente;
 
-    // Hacer una solicitud para obtener los datos del cliente por su DNI desde el servicio externo
-    // Reemplaza la URL con la correcta para tu servicio
+    if (!dniCliente) {
+      return res.status(404).json({ message: 'DNI del cliente no encontrado.' });
+    }
+
     const clientResponse = await axios.get(`https://clientemodulocrm.onrender.com/clientes/buscarPorDNI/${dniCliente}`);
 
-    // Extraer los datos del cliente
+    if (!clientResponse.data) {
+      return res.status(404).json({ message: 'Datos del cliente no encontrados.' });
+    }
+
     const cliente = {
       nombre: clientResponse.data.nombre,
       apellido: clientResponse.data.apellido,
-      correo: clientResponse.data.correo
+      correo: clientResponse.data.correo,
+      sexo: clientResponse.data.sexo
+      // Incluye aquí otros campos que necesites
     };
 
-    // Combinar los detalles de la venta con los datos del cliente
     const responseData = {
       ...sellDetails,
       cliente: cliente
@@ -35,11 +42,10 @@ const getSellAndClientDetails = async (req, res) => {
 
     res.json(responseData);
   } catch (error) {
-    console.error('Error al obtener detalles de venta:', error);
+    console.error('Error al obtener detalles de venta y cliente:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
-
-module.exports = {
+module.exports={
   getSellAndClientDetails
-};
+}
