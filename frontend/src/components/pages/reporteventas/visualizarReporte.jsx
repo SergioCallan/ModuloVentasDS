@@ -67,7 +67,8 @@ export default function VisualizarReporte(){
                 periodo1: Periodo1,
                 periodo2: Periodo2
             }
-            const url= `https://modulo-ventas.onrender.com/createreport`
+            /*Lo que puedo hacer es crear los if para definir lo que se usa, pero no creo que sea buena idea,
+            otra cosa que podria  */
             const response= await axios.get(url, Filtrado)
             if(response.data===null){
               alert("No existen registros anteriores")

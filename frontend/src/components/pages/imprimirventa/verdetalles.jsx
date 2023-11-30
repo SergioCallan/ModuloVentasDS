@@ -13,11 +13,11 @@ const SellDetails = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const detailsResponse = await axios.get(https://modulo-ventas.onrender.com/selldetails/${id_detalle});
+        const detailsResponse = await axios.get(`https://modulo-ventas.onrender.com/selldetails/${id_detalle}`);
         setDetails(detailsResponse.data);
 
         if (detailsResponse.data) {
-          const clientResponse = await axios.get(https://modulo-ventas.onrender.com/searchdni/${detailsResponse.data.dni_cliente});
+          const clientResponse = await axios.get(`https://modulo-ventas.onrender.com/searchdni/${detailsResponse.data.dni_cliente}`);
           setClient(clientResponse.data);
         }
       } catch (err) {
