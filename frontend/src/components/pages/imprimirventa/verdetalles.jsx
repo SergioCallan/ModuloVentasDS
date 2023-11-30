@@ -7,39 +7,58 @@ import jsPDF from 'jspdf';
 const SellDetails = () => {
   const { id_detalle } = useParams();
   const [details, setDetails] = useState(null);
-  const [client, setClient] = useState(null);
+  const [cliente, setCliente] = useState(null);
   const [error, setError] = useState('');
+  const [isButtonVisible, setIsButtonVisible] = useState(true);
 
-  useEffect(() => {
-    const fetchDetails = async () => {
-      try {
-        const detailsResponse = await axios.get(`https://modulo-ventas.onrender.com/selldetails/${id_detalle}`);
-        setDetails(detailsResponse.data);
-
-        if (detailsResponse.data) {
-          const clientResponse = await axios.get(`https://modulo-ventas.onrender.com/searchdni/${detailsResponse.data.dni_cliente}`);
-          setClient(clientResponse.data);
+  const SellDetails = () => {
+    const { id_detalle } = useParams();
+    const [details, setDetails] = useState(null);
+    const [cliente, setCliente] = useState(null);
+    const [error, setError] = useState('');
+  
+    useEffect(() => {
+      const fetchDetails = async () => {
+        try {
+          // Obtener los detalles de la venta
+          const response = await axios.get(`https://modulo-ventas.onrender.com/selldetailsbyid/${id_detalle}`);
+          setDetails(response.data);
+  
+          // Obtener id_venta a partir de id_detalle
+          const ventaResponse = await axios.get(`https://modulo-ventas.onrender.com/idventabyid/${id_detalle}`);
+          const id_venta = ventaResponse.data.id_venta;
+  
+          // Obtener dni_cliente usando id_venta
+          const clienteResponse = await axios.get(`https://modulo-ventas.onrender.com/clientebyid/${id_venta}`);
+          const dni_cliente = clienteResponse.data.dni_cliente;
+  
+          // Obtener detalles del cliente usando dni_cliente
+          if (dni_cliente) {
+            const clientDetailsResponse = await axios.get(`https://clientemodulocrm.onrender.com/clientes/buscarPorDNI/${dni_cliente}`);
+            setCliente(clientDetailsResponse.data);
+          }
+  
+        } catch (error) {
+          console.error('Error al obtener los detalles de la venta:', error);
+          setError('Ocurrió un error al obtener los detalles de la venta.');
         }
-      } catch (err) {
-        console.error('Error al obtener los detalles de la venta o el cliente:', err);
-        setError('Ocurrió un error al obtener los detalles de la venta o la información del cliente.');
-      }
-    };
-
-    fetchDetails();
-  }, [id_detalle]);
+      };
+  
+      fetchDetails();
+    }, [id_detalle]);
+  }
 
   const downloadPdfDocument = () => {
+    setIsButtonVisible(false); // Ocultar el botón antes de generar el PDF
+
     const domElement = document.getElementById('boletaContainer');
-    html2canvas(domElement, {
-      onclone: (document) => {
-        document.getElementById('boletaContainer').style.visibility = 'visible';
-      }
-    }).then((canvas) => {
+    html2canvas(domElement).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF();
       pdf.addImage(imgData, 'PNG', 0, 0);
       pdf.save('boleta.pdf');
+
+      setIsButtonVisible(true); // Mostrar el botón nuevamente
     });
   };
 
@@ -47,37 +66,92 @@ const SellDetails = () => {
     return <p>{error}</p>;
   }
 
-  if (!details || !client) {
+  if (!details) {
     return <p>Cargando...</p>;
   }
 
   return (
-    <div>
-      <div id="boletaContainer" className="boleta-container">
+    <div id='boletaContainer' style={boletaStyle}>
+      <div style={headerStyle}>
         <h1>Boleta de Venta</h1>
-        <div className="cliente-info">
-          <h2>Información del Cliente</h2>
-          <p>Nombre: {client.nombre}</p>
-          <p>Apellido: {client.apellido}</p>
-          <p>DNI: {client.dni}</p>
-          <p>Correo: {client.correo}</p>
-          <p>Sexo: {client.sexo}</p>
-        </div>
-
-        <div className="venta-info">
-          <h2>Detalles de la Venta</h2>
-          <p>ID Venta: {details.id_venta}</p>
-          <p>ID Detalle: {details.id_detalle}</p>
-          <p>ID Producto: {details.id_producto}</p>
-          <p>Cantidad: {details.cantidad}</p>
-          <p>ID Garantía: {details.id_garantia}</p>
-          <p>Tipo: {details.tipo}</p>
-          <p>Tiempo de Garantía: {details.tiempo_garantia}</p>
-        </div>
       </div>
-      <button onClick={downloadPdfDocument}>Descargar Boleta</button>
+      <div style={detailStyle}>
+        <span style={labelStyle}>ID Detalle:</span>
+        <span>{details.id_detalle}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>ID Venta:</span>
+        <span>{details.id_venta}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>ID Producto:</span>
+        <span>{details.id_producto}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>Tipo:</span>
+        <span>{details.tipo}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>Cantidad:</span>
+        <span>{details.cantidad}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>ID Garantía:</span>
+        <span>{details.id_garantia}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>Tiempo de Garantía:</span>
+        <span>{details.tiempo_garantia}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>Coste total:</span>
+        <span>{details.coste_total}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>Nombre del Cliente:</span>
+        <span>{cliente.nombre}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>Apellido del Cliente:</span>
+        <span>{cliente.apellido}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>Sexo del Cliente:</span>
+        <span>{cliente.sexo}</span>
+      </div>
+      <div style={detailStyle}>
+        <span style={labelStyle}>Correo del Cliente:</span>
+        <span>{cliente.correo}</span>
+      </div>
+      {isButtonVisible && <button onClick={downloadPdfDocument}>Descargar Boleta</button>}
     </div>
   );
+};
+
+const boletaStyle = {
+  maxWidth: '600px',
+  margin: '20px auto',
+  padding: '20px',
+  border: '1px solid #ddd',
+  borderRadius: '5px',
+  backgroundColor: '#f9f9f9',
+  fontFamily: 'Arial, sans-serif',
+  color: '#333',
+};
+
+const headerStyle = {
+  textAlign: 'center',
+  marginBottom: '20px',
+};
+
+const detailStyle = {
+  margin: '10px 0',
+  display: 'flex',
+  justifyContent: 'space-between',
+};
+
+const labelStyle = {
+  fontWeight: 'bold',
 };
 
 export default SellDetails;
