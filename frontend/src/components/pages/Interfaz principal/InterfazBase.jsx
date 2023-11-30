@@ -14,7 +14,13 @@ export const InterfazBase = () => {
 
     const verificar = () => {
         const clave = inputpswd.current.value
-        setDisabled(verificacion({clave:clave})) 
+        const result = verificacion({clave:clave})
+        if(result){
+            alert("Clave de administrador incorrecta o invalida")
+            return
+        } 
+
+        setDisabled(result)
     }
 
     return(

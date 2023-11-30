@@ -1,7 +1,7 @@
 import {React, useState, useEffect} from "react";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
-
+import { CabeceraModulo } from "../../extras/CabeceraModulo";
 
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -81,9 +81,7 @@ export default function VisualizarReporte(){
     return(
         <main>
             <body>
-                <div className="Header">
-                    <h2>Modulo de ventas</h2>
-                </div>
+                <CabeceraModulo/>
                 <div className="Filtros">
                     <h3>Filtrar: </h3>
                     <Dropdown isOpen={dropdownF} toggle={abrirCerrarDropdownF}>

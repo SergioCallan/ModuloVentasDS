@@ -73,7 +73,7 @@ export default function BuscarCliente(){
     };
 
     return(
-        <body>
+  
             <main>
               <CabeceraModulo></CabeceraModulo>
                 <div className="Clientes">
@@ -104,6 +104,5 @@ export default function BuscarCliente(){
                     <button id= "AvanzarSeleccion" className="Verde btn-seleccionar" onClick={Avanzar}>Seleccionar productos</button>
                 </div>
             </main>
-        </body>
     )
 }
