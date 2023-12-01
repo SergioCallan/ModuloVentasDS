@@ -83,7 +83,7 @@ const createEReportWeekly = async (req, res) => {
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
             const queryDetalles = `SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 GROUP BY id_venta`;
-
+            console.log(resultVentas)
             const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
             return resultDetalles.rows[0] || { id_venta: venta.id_venta, total: 0 };
         });
@@ -99,7 +99,7 @@ const createEReportWeekly = async (req, res) => {
             end_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).end_date,
             total: detalle.total,
         }));
-
+        console.log(result)
         return res.json(result);
     } catch (error) {
         console.error("Error al buscar datos: ", error);
