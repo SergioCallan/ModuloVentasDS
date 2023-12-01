@@ -10,7 +10,7 @@ const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilld
 const {searchWarranty}= require('../controllers/warranty.controllers')
 const {getSellDetailsById, getLastSell}= require('../controllers/searchById.controllers')
 const { getDetalleVentaById, getIdVentaByIdDetalle, getDniClienteByIdVenta } = require('../controllers/sellDetails.controllers');
-const {createGReportDaily, createGReportWeekly, createEReportDaily, createPReportDaily, createGReportWeekly}= require('../controllers/report.controllers')
+const {createGReportDaily, createGReportWeekly, createEReportDaily, createPReportDaily}= require('../controllers/report.controllers')
 
 const router = Router();
 
