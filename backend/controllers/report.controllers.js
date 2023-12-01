@@ -73,7 +73,8 @@ const createPReportDaily= async(req, res)=>{
 
         const detallesTotales = await Promise.all(detallePromises);
 
-        const detallesFiltrados = detallesTotales.filter((detalle) => detalle.total !== 0);
+        // Filtrar los detalles que tienen total diferente de 0
+        const detallesFiltrados = detallesTotales.filter((detallesTotales) => detallesTotales.total > 0);
 
         const result = detallesFiltrados.map((detalle) => ({
             id_venta: detalle.id_venta,
