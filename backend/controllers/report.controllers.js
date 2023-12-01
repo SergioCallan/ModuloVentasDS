@@ -79,7 +79,7 @@ const createEReportWeekly = async (req, res) => {
 
         const queryVentas = `SELECT id_venta, MIN(fecha) as start_date, MAX(fecha) as end_date FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, EXTRACT(WEEK FROM fecha) ORDER BY start_date`;
 
-        const resultVentas = await pool.query(queryVentas, [periodo1.start, periodo2.end]);
+        const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
             const queryDetalles = `SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 GROUP BY id_venta`;
