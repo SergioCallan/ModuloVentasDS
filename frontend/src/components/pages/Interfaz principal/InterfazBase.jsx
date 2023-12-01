@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router-dom"
 import { CabeceraModulo2 } from "../../extras/CabeceraModulo"
 import '../../styles/InterfazPrincipal.css'
-import { useRef, useState } from "react"
+import {useContext, useRef, useState } from "react"
 import { verificacion } from "./verificarClaveAdmin"
+import { AvailableContext } from "../../../context/AvailableContext"
+
 
 export const InterfazBase = () => {
     // al ser la propiedad disabled
     // esta aparentemente invertido los valores de true y false 
-    
-    const [isDisabled,setDisabled]=useState(true)
+    const {locked,setLocked} = useContext(AvailableContext)
+    // console.log(locked,setLocked)
+    // const [isDisabled,setDisabled]=useState(true)
     const inputpswd = useRef(null)
     const navigate=useNavigate()
 
@@ -19,8 +22,9 @@ export const InterfazBase = () => {
             alert("Clave de administrador incorrecta o invalida")
             return
         } 
-
-        setDisabled(result)
+       
+        setLocked(false)
+  
     }
 
     return(
@@ -36,8 +40,8 @@ export const InterfazBase = () => {
 
             <div className="menu-botones">
                 <button className="btn-opcion" onClick={()=>navigate('/buscarcliente')}>Opciones ligadas al cliente</button>
-                <button className="btn-opcion" disabled={isDisabled} onClick={()=>navigate('/')}>Agregar planes y productos</button>
-                <button className="btn-opcion" disabled={isDisabled} onClick={()=>navigate('/reporte')}>Reportes</button>
+                <button className="btn-opcion" disabled={locked} onClick={()=>navigate('/')}>Agregar planes y productos</button>
+                <button className="btn-opcion" disabled={locked} onClick={()=>navigate('/reporte')}>Reportes</button>
             </div>
         </div>
     )

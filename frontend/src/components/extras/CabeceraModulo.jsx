@@ -12,7 +12,9 @@ export const CabeceraModulo = () => {
                     <IconButton className="contenedor-acordeon" onClick={handleSidebarOpen} edge="start" color="inherit" aria-label="menu">
                         <MenuIcon className="icono-acordeon"/>
                     </IconButton>
+    
                     <Sidebar className="Menu-lateral-desplegable" open={sidebarOpen} onClose={handleSidebarClose}/>
+
                     <div className="Contenedor-Nombre-Modulo">
                     <h1 className="Nombre-Modulo">Módulo de Ventas</h1>
                     </div> 

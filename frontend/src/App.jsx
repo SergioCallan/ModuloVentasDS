@@ -17,11 +17,14 @@ import SellDetails from './components/pages/imprimirventa/verdetalles';
 import Operaciones from './components/pages/controlarfacturacion/Operaciones'
 import {InterfazBase} from './components/pages/Interfaz principal/InterfazBase'
 import VisualizarReporte from "./components/pages/reporteventas/visualizarReporte"
+import { AvailableContextProvider } from "./context/AvailableContext"
 
 function App(){
   return(
     <BrowserRouter>
+    <AvailableContextProvider>
           <Routes>
+            
               <Route path ='/' element={<Principal/>} />
               <Route path='/phone' element={<Phone/>}/>
               <Route path='/internet' element={<Internet/>}/>
@@ -42,7 +45,8 @@ function App(){
               <Route path="/operaciones" element={<Operaciones/>}/>
               <Route path="/reporte" element={<VisualizarReporte/>}/>
               <Route path="/principal" element={<InterfazBase/>}/>
-          </Routes>
+          
+          </Routes></AvailableContextProvider>
     </BrowserRouter>
   )
 }
