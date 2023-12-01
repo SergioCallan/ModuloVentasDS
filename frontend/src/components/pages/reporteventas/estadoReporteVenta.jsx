@@ -24,7 +24,7 @@ class General extends EstadoBase {
             periodo1: periodo1,
             periodo2: periodo2
         }
-        const response= await axios.post(url, periodo)
+        const response= await axios.post(url, {params: periodo})
         
         return response.data
     } catch(error){
