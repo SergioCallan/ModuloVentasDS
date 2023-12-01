@@ -127,7 +127,11 @@ module.exports = router;
 
 //Rutas para los reportes
 
+router.get('/creategreportdaily', createGReportDaily)
 
+router.get('/createereportdaily', createEReportDaily)
+
+router.get('/createpreportdaily', createPReportDaily)
 
 //Sebas
 
