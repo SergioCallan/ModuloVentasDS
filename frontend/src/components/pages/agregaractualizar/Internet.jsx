@@ -104,7 +104,7 @@ export default function Internet(){
     },[params.id])
     return(
         <div>
-        <CabeceraModulo></CabeceraModulo>
+        <CabeceraModulo/>
         <Grid container alignItems='center' justifyContent='center' columns={9}>
         <Grid item xs={8}>
             <Card
@@ -172,8 +172,8 @@ export default function Internet(){
                         justifyContent:'end'
                       }}
                     >
-                    <Button variant="contained" color="success"   disabled={!proxyInternet.megas  || !proxyInternet.precio} onClick={handleConfirmar} type="submit">Confirmar</Button>
-                    <Button variant="contained" color="success" onClick={handleRegresar} style={{marginLeft: '20px'}}>
+                    <Button variant="contained" color="success" disabled={!proxyInternet.megas  || !proxyInternet.precio} onClick={handleConfirmar} type="submit">Confirmar</Button>
+                    <Button variant="contained" color="error" onClick={handleRegresar} style={{marginLeft: '20px'}}>
                       Regresar
                     </Button>
                     </div>

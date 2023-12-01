@@ -3,6 +3,7 @@ import ListInternet from './ListInternet';
 import { useNavigate} from 'react-router-dom';
 import { Card , Button} from '@mui/material';
 import { CabeceraModulo } from '../../extras/CabeceraModulo.jsx';
+import '../../styles/EstilosAgregarActualizar/listado.css'
 const PhoneListStrategy = () => {
     return (
       <div>
@@ -26,7 +27,6 @@ const PhoneListStrategy = () => {
 const InternetListStrategy = () => {
     return (
       <div>
-        <CabeceraModulo></CabeceraModulo>
         <Card
             sx={{
               mt: 5,
@@ -68,10 +68,12 @@ const Phone = ({ listStrategy }) => {
     return (
       <div>
         <CabeceraModulo></CabeceraModulo>
+        <div className='encabezado'>
         <h1> Lista Total de Productos</h1>
-        <Button variant="contained" color="success" onClick={handleRegresar} style={{marginLeft: '20px'}}>
+        <Button variant="contained" color="error" onClick={handleRegresar} style={{marginLeft: '20px'}}>
       Regresar
     </Button>
+    </div>
         <Phone listStrategy={PhoneListStrategy} />
         <Internet listStrategy={InternetListStrategy} />
       </div>

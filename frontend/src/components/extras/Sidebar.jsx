@@ -9,13 +9,13 @@ const Sidebar = ({ open, onClose }) => {
     <Drawer anchor="left" open={open} onClose={onClose}>
       <List>
         <ListItem button>
-          <ListItemText primary="Generar Nueva Venta" />
+          <ListItemText primary="Opciones ligadas al cliente" />
         </ListItem>
         <ListItem button>
-          <ListItemText primary="Anular una Venta" />
+          <ListItemText primary="Agregar Planes y Productos" />
         </ListItem>
         <ListItem button>
-          <ListItemText primary="Facturación" />
+          <ListItemText primary="Reportes" />
         </ListItem>
       </List>
     </Drawer>

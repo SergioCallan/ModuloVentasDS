@@ -2,7 +2,7 @@ import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-
+import '../../styles/EstilosAgregarActualizar/listado.css'
 export default function ListInternet(){
 
     const [tasks, setTasks] = useState([]);
@@ -34,7 +34,7 @@ export default function ListInternet(){
 
     return (
         <>
-            <h1>Lista de Internet</h1>
+            <h1 className="title-list">Lista de Internet</h1>
             {
             tasks.map((task) =>(
                     <Card style={{

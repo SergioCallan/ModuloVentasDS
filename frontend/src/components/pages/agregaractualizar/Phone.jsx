@@ -205,7 +205,7 @@ export default function Phone() {
                       }}>
                       <Button variant="contained" color="success" disabled={!proxyPhone.modelo || !proxyPhone.marca || !proxyPhone.color || !proxyPhone.almacenamiento || !proxyPhone.precio} onClick={handleConfirmar} type="submit">Confirmar</Button>
 
-                      <Button variant="contained" color="success" onClick={handleRegresar} style={{marginLeft: '20px'}}>
+                      <Button variant="contained" color="error" onClick={handleRegresar} style={{marginLeft: '20px'}}>
                       Regresar
                     </Button>
                       </div>
