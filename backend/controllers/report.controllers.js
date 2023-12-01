@@ -18,9 +18,12 @@ module.exports={
 
 const createGReportDaily= async(req,res)=>{
     try{
+        const {periodo1, periodo2}= req.body
+        console.log(periodo1, periodo2)
         const query= "SELECT SUM(monto) AS total, fecha FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY fecha ORDER BY fecha"
         const resultVentas= await pool.query(query, [periodo1, periodo2])
-        return resultVentas.rows
+        console.log(resultVentas.rows)
+        return res.json(resultVentas.rows)
     }catch(error){
         console.error("Error al buscar datos: ", error)
     }
