@@ -34,10 +34,7 @@ const createGReportWeekly= async(req,res)=>{
         const {periodo1, periodo2}= req.body
         console.log(periodo1, periodo2)
 
-        const fechaInicio = new Date(periodo1);
-        const fechaFin = new Date(periodo2);
-
-        const query= "SELECT SUM(monto) AS total, DATE_TRUNC('week', fecha) AS semana FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY semana ORDER BY semana"
+        const query= "SELECT DATE_TRUNC('week', fecha) AS semana, SUM(monto) OVER (PARTITION BY DATE_TRUNC('week', fecha) ORDER BY fecha) AS total FROM venta WHERE fecha BETWEEN $1 AND $2 ORDER BY semana"
         const resultVentas= await pool.query(query, [periodo1, periodo2])
         console.log(resultVentas.rows)
         return res.json(resultVentas.rows)
