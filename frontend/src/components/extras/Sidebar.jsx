@@ -3,20 +3,24 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import { ListItemButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const Sidebar = ({ open, onClose }) => {
+const Sidebar = ({ open, onClose ,isActived}) => {
+  const navigate= useNavigate()
+
   return (
     <Drawer anchor="left" open={open} onClose={onClose}>
       <List>
-        <ListItem button>
+        <ListItemButton onClick={()=>navigate("/buscarcliente")}>
           <ListItemText primary="Opciones ligadas al cliente" />
-        </ListItem>
-        <ListItem button>
+        </ListItemButton>
+        <ListItemButton onClick={()=>navigate("/")}>
           <ListItemText primary="Agregar Planes y Productos" />
-        </ListItem>
-        <ListItem button>
+        </ListItemButton>
+        <ListItemButton onClick={()=>navigate("/reporte")}>
           <ListItemText primary="Reportes" />
-        </ListItem>
+        </ListItemButton>
       </List>
     </Drawer>
   );
