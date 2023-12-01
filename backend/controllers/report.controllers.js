@@ -29,23 +29,21 @@ const createGReportDaily= async(req,res)=>{
     }
 }
 
-const createEReportDaily= async(req,res)=>{
+const createEReportDaily = async (req, res) => {
     try {
-        const {periodo1, periodo2}= req.body
+        const { periodo1, periodo2 } = req.body;
         const queryVentas = "SELECT id_venta, fecha FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
         const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
-            const queryDetalles = "SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 GROUP BY id_venta";
+            const queryDetalles = "SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 GROUP BY id_venta HAVING SUM(coste_total) > 0";
             const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
             return resultDetalles.rows[0] || { id_venta: venta.id_venta, total: 0 };
         });
 
         const detallesTotales = await Promise.all(detallePromises);
 
-        const detallesFiltrados = detallesTotales.filter((detalle) => detalle.total !== 0);
-
-        const result = detallesFiltrados.map((detalle) => ({
+        const result = detallesTotales.map((detalle) => ({
             id_venta: detalle.id_venta,
             fecha: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).fecha,
             total: detalle.total,
@@ -56,7 +54,7 @@ const createEReportDaily= async(req,res)=>{
         console.error("Error al buscar datos: ", error);
         throw error;
     }
-}
+};
 
 const createPReportDaily= async(req, res)=>{
     try {
