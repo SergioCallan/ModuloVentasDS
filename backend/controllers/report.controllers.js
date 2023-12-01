@@ -81,8 +81,6 @@ const createEReportWeekly = async (req, res) => {
 
         const resultVentas = await pool.query(queryVentas, [periodo1.start, periodo2.end]);
 
-        const ventasRows = resultVentas.rows;
-
         const detallePromises = resultVentas.rows.map(async (venta) => {
             const queryDetalles = `SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 GROUP BY id_venta`;
 
@@ -95,20 +93,17 @@ const createEReportWeekly = async (req, res) => {
         // Filtrar los detalles que tienen total diferente de 0
         const detallesFiltrados = detallesTotales.filter((detalle) => detalle.total > 0);
 
-        const result = detallesFiltrados.map(({ id_venta, total }) => {
-            const venta = ventasRows.find((venta) => venta.id_venta === id_venta);
-            return {
-                id_venta,
-                start_date: venta.start_date,
-                end_date: venta.end_date,
-                total,
-            };
-        });
+        const result = detallesFiltrados.map((detalle) => ({
+            id_venta: detalle.id_venta,
+            start_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).start_date,
+            end_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).end_date,
+            total: detalle.total,
+        }));
 
         return res.json(result);
     } catch (error) {
         console.error("Error al buscar datos: ", error);
-        return res.status(500).json({ error: "Error interno del servidor" });
+        throw error;
     }
 };
 
