@@ -31,6 +31,7 @@ const createGReportDaily= async(req,res)=>{
 
 const createEReportDaily= async(req,res)=>{
     try {
+        const {periodo1, periodo2}= req.body
         const queryVentas = "SELECT id_venta, fecha FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
         const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
@@ -57,6 +58,7 @@ const createEReportDaily= async(req,res)=>{
 
 const createPReportDaily= async(req, res)=>{
     try {
+        const {periodo1, periodo2}= req.body
         const queryVentas = "SELECT id_venta, fecha FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
         const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
