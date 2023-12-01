@@ -36,7 +36,7 @@ const createEReportDaily= async(req,res)=>{
         const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
-            const queryDetalles = "SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 GROUP BY id_venta";
+            const queryDetalles = "SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 GROUP BY id_venta HAVING SUM(coste_total)>0";
             const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
             return resultDetalles.rows[0] || { id_venta: venta.id_venta, total: 0 };
         });
@@ -63,7 +63,7 @@ const createPReportDaily= async(req, res)=>{
         const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
-            const queryDetalles = "SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Plan' AND id_venta= $1 GROUP BY id_venta";
+            const queryDetalles = "SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Plan' AND id_venta= $1 GROUP BY id_venta HAVING SUM(coste_total)>0";
             const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
             return resultDetalles.rows[0] || { id_venta: venta.id_venta, total: 0 };
         });
