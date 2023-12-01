@@ -59,8 +59,9 @@ export default function VisualizarReporte(){
             const nuevoFiltro= new FiltroState()
             nuevoFiltro.actualizarDatos(FiltroVenta, FiltroIntervalo, Periodo1, Periodo2)
             setFiltro(nuevoFiltro)
+            
             if(FiltroIntervalo=="Dia"){
-              setDatos(Filtro.buscarDatosDia(Periodo1, Periodo2))
+              setDatos(Filtro.tipo.buscarDatosDia(Periodo1, Periodo2))
             }
             if(FiltroIntervalo=="Semana"){
               setDatos(Filtro.buscarDatosSemana(Periodo1, Periodo2))
@@ -89,7 +90,7 @@ export default function VisualizarReporte(){
                             <DropdownItem divider/>
                             <DropdownItem onClick={()=> SelectGeneral()}>Ventas generales</DropdownItem>
                             <DropdownItem onClick={()=> SelectEquipo()}>Venta de equipos</DropdownItem>
-                            <DropdownItem onClick={()=>SelectPlan()}>Venta de planes</DropdownItem>S
+                            <DropdownItem onClick={()=>SelectPlan()}>Venta de planes</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                     <h3>Fecha del periodo (Formato YYYY-MM-DD): </h3>

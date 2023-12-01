@@ -127,7 +127,7 @@ module.exports = router;
 
 //Rutas para los reportes
 
-router.get('/creategreportdaily', createGReportDaily)
+router.post('/creategreportdaily', createGReportDaily)
 
 router.get('/creategreportweekly', createGReportWeekly)
 

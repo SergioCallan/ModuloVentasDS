@@ -20,11 +20,12 @@ class General extends EstadoBase {
   async buscarDatosDia(periodo1, periodo2){
     try{
         const url= `https://modulo-ventas.onrender.com/creategreportdaily`
-        const Periodo={
+        const periodo={
             periodo1: periodo1,
             periodo2: periodo2
         }
-        const response= await axios.get(url, Periodo)
+        const response= await axios.post(url, periodo)
+        
         return response.data
     } catch(error){
         console.error(error)
@@ -163,16 +164,16 @@ class FiltroState {
 
     switch (tipo) {
       case "General":
-        this.tiempo = new General();
+        this.tipo = new General();
         break;
       case "Equipo":
-          this.tiempo= new Equipo();
+          this.tipo= new Equipo();
           break;
       case "Plan":
-          this.tiempo= new Plan();
+          this.tipo= new Plan();
           break;
       default:
-        this.estado = new EstadoBase();
+        this.tipo = new EstadoBase();
         break;
     }
   }

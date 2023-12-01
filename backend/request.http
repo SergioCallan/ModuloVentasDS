@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ###
-GET https://modulo-ventas.onrender.com/createpreportmonthly HTTP/1.1
+GET https://modulo-ventas.onrender.com/creategreportdaily HTTP/1.1
 Content-Type: application/json
 
 {
