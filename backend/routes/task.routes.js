@@ -2,7 +2,6 @@ const { Router } = require('express');
 const { getAllPhone, getPhone, createPhone, deletePhone, updatePhone } = require('../controllers/phone.controllers');
 const { getAllInternet, getInternet, createInternet, deleteInternet, updateInternet } = require('../controllers/internet.controllers');
 const {searchproduct, searchbrand, searchmodel, searchid}= require('../controllers/searchphone.controllers')
-const {searchdni}= require('../controllers/client.controllers')
 const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail, getSelldni, getSellid, calculateSell}= require('../controllers/sell.controllers')
 const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan.controllers')
 const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea, searchLinea, cambioLinea, suspenderLinea, reactivarLinea}= require('../controllers/factura.controllers')
@@ -37,10 +36,6 @@ router.post('/internet', createInternet)
 router.delete('/internet/:id', deleteInternet)
 
 router.put('/internet/:id', updateInternet)
-
-//Rutas para clientes
-
-router.get('/searchdni/:dni', searchdni)
 
 //Rutas para busquedas y filtros
 
