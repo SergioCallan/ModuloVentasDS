@@ -63,10 +63,10 @@ export default function VisualizarReporte(){
               setDatos(await nuevoFiltro.tipo.buscarDatosDia(Periodo1, Periodo2))
             }
             if(FiltroIntervalo=="Semana"){
-              result= Filtro.tipo.buscarDatosSemana(Periodo1, Periodo2)
+              setDatos(await nuevoFiltro.tipo.buscarDatosSemana(Periodo1, Periodo2))
             }
             if(FiltroIntervalo=="Mes"){
-              result= Filtro.tipo.buscarDatosMes(Periodo1, Periodo2)
+              setDatos(await nuevoFiltro.tipo.buscarDatosMes(Periodo1, Periodo2))
             }
         } catch(error){
           console.log(error)
@@ -131,7 +131,8 @@ function TablaReporte({datos}){
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Fecha</TableCell>
+            <TableCell>Fecha de inicio</TableCell>
+            <TableCell>Fecha de fin</TableCell>
             <TableCell>Cantidad generada</TableCell>
             <TableCell>Crecimiento</TableCell>
             <TableCell>Porcentaje de crecimiento</TableCell>
@@ -139,8 +140,9 @@ function TablaReporte({datos}){
         </TableHead>
         <TableBody>
           {datos.map((dato) => (
-            <TableRow key={dato.fecha}>
-              <TableCell>{dato.fecha}</TableCell>
+            <TableRow key={dato.start_date}>
+              <TableCell>{dato.start_date}</TableCell>
+              <TableCell>{dato.end_date}</TableCell>
               <TableCell>{dato.total}</TableCell>
               {/* Aquí puedes calcular crecimiento y porcentaje de crecimiento si es necesario */}
               <TableCell>{/* dato.crecimiento */}</TableCell>
