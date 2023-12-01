@@ -49,7 +49,7 @@ const createEReportDaily= async(req,res)=>{
             total: detalle.total
         }));
 
-        return result;
+        return res.json(result);
     } catch (error) {
         console.error("Error al buscar datos: ", error);
         throw error;
@@ -76,7 +76,7 @@ const createPReportDaily= async(req, res)=>{
             total: detalle.total
         }));
 
-        return result;
+        return res.json(result);
     } catch (error) {
         console.error("Error al buscar datos: ", error);
         throw error;
