@@ -24,7 +24,6 @@ function App(){
     <BrowserRouter>
     <AvailableContextProvider>
           <Routes>
-            
               <Route path ='/' element={<Principal/>} />
               <Route path='/phone' element={<Phone/>}/>
               <Route path='/internet' element={<Internet/>}/>

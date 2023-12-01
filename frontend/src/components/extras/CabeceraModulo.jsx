@@ -4,7 +4,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import './CabeceraModulo.css'
 
-export const CabeceraModulo = () => {
+export const CabeceraModulo = ({lock}) => {
    const { sidebarOpen,handleSidebarClose,handleSidebarOpen } = useSidebar()
 
     return (
@@ -13,7 +13,7 @@ export const CabeceraModulo = () => {
                         <MenuIcon className="icono-acordeon"/>
                     </IconButton>
     
-                    <Sidebar className="Menu-lateral-desplegable" open={sidebarOpen} onClose={handleSidebarClose}/>
+                    <Sidebar className="Menu-lateral-desplegable" open={sidebarOpen} onClose={handleSidebarClose} lock={lock}/>
 
                     <div className="Contenedor-Nombre-Modulo">
                     <h1 className="Nombre-Modulo">Módulo de Ventas</h1>

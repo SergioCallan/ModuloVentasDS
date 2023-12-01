@@ -8,10 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import { AvailableContext } from '../../context/AvailableContext';
 
 
-const Sidebar = ({ open, onClose}) => {
+const Sidebar = ({ open, onClose, lock }) => {
   const navigate= useNavigate()
   const {locked,setLocked} = useContext(AvailableContext)
 
+  const isLocked = (lock!==undefined) ? lock : locked
+  console.log(lock)
+  console.log(isLocked)
   return (
     <Drawer anchor="left" open={open} onClose={onClose}>
       
@@ -19,10 +22,10 @@ const Sidebar = ({ open, onClose}) => {
         <ListItemButton onClick={()=>navigate("/buscarcliente")}>
           <ListItemText primary="Opciones ligadas al cliente" />
         </ListItemButton>
-        <ListItemButton disabled={locked} onClick={()=>navigate("/")}>
+        <ListItemButton disabled={isLocked} onClick={()=>navigate("/")}>
           <ListItemText primary="Agregar Planes y Productos" />
         </ListItemButton>
-        <ListItemButton disabled={locked} onClick={()=>navigate("/reporte")}>
+        <ListItemButton disabled={isLocked} onClick={()=>navigate("/reporte")}>
           <ListItemText primary="Reportes" />
         </ListItemButton>
         <ListItemButton onClick={()=>{

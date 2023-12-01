@@ -9,14 +9,14 @@ import '../../styles/Principal.css'
 import { CabeceraModulo } from '../../extras/CabeceraModulo.jsx';
 
 export default function Principal() {
+  const locked=false
   const navigate= useNavigate()
   const tipoProducto = new Cambio()
 
   const handleSelectionChange = (event,value) => {
- 
    tipoProducto.cambiarTipoProducto(value.label)
- 
   }
+
   const [mostrarLista, setMostrarLista] = useState(false);
 
   const handleLista = () => {
@@ -32,7 +32,7 @@ export default function Principal() {
 
   return (
     <div className='contenedor-agregacion'>
-    <CabeceraModulo></CabeceraModulo>
+    <CabeceraModulo lock={locked}></CabeceraModulo>
 
     <Grid container alignItems='center' justifyContent='center' columns={16}>
       <Grid item xs={9}>

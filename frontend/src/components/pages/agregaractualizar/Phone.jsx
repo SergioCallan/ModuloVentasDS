@@ -1,10 +1,12 @@
 import {Button, Card, CardContent, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField, Dialog, Typography} from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate, useParams } from 'react-router-dom';
 import ListPhone from './ListPhone';
 import { CabeceraModulo } from '../../extras/CabeceraModulo';
+import { AvailableContext } from '../../../context/AvailableContext';
+
 
 const createProxyHandler = (setStateFunction) => {
   return {
@@ -35,7 +37,7 @@ const createProxyHandler = (setStateFunction) => {
 export default function Phone() {
   const navigate = useNavigate();
   const params = useParams();
-
+  const locked=false
   const [phone, setPhone] = useState({
     id: '',
     marca: '',
@@ -114,7 +116,7 @@ export default function Phone() {
 
     return(
         <div>
-        <CabeceraModulo></CabeceraModulo>
+        <CabeceraModulo lock={locked}></CabeceraModulo>
         <Grid container alignItems='center' justifyContent='center' columns={9} >
             <Grid item xs={8}>
                 <Card
