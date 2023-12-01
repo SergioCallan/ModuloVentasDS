@@ -1,7 +1,7 @@
 import {React, useState, useEffect} from "react";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
-
+import FiltroState from "./estadoReporteVenta";
 
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function VisualizarReporte(){
     const [datos, setDatos]= useState([])
+    const [Filtro, setFiltro]= useState(new FiltroState())
     const [FiltroVenta, setFiltroVenta]= useState("")
     const [FiltroIntervalo, setFiltroIntervalo]= useState("")
     const [Periodo1, setPeriodo1]= useState("")
@@ -36,18 +37,12 @@ export default function VisualizarReporte(){
       const SelectPlan = () => {
         setFiltroVenta("Plan");
       };
-      const SelectFactura = () => {
-        setFiltroVenta("Factura");
-      };
 
       const SelectDia = () => {
         setFiltroIntervalo("Dia");
       };
       const SelectSemana = () => {
         setFiltroIntervalo("Semana");
-      };
-      const SelectQuincena = () => {
-        setFiltroIntervalo("Quincena");
       };
       const SelectMes = () => {
         setFiltroIntervalo("Mes");
@@ -61,17 +56,17 @@ export default function VisualizarReporte(){
     const CargarTabla= async(e)=>{
         e.preventDefault();
         try{
-            const Filtrado={
-                tipo: FiltroVenta,
-                tiempo: FiltroIntervalo,
-                periodo1: Periodo1,
-                periodo2: Periodo2
+            const nuevoFiltro= new FiltroState()
+            nuevoFiltro.actualizarDatos(FiltroVenta, FiltroIntervalo, Periodo1, Periodo2)
+            setFiltro(nuevoFiltro)
+            if(FiltroIntervalo=="Dia"){
+              setDatos(Filtro.buscarDatosDia(Periodo1, Periodo2))
             }
-            /*Lo que puedo hacer es crear los if para definir lo que se usa, pero no creo que sea buena idea,
-            otra cosa que podria  */
-            const response= await axios.get(url, Filtrado)
-            if(response.data===null){
-              alert("No existen registros anteriores")
+            if(FiltroIntervalo=="Semana"){
+              setDatos(Filtro.buscarDatosSemana(Periodo1, Periodo2))
+            }
+            if(FiltroIntervalo=="Mes"){
+              setDatos(Filtro.buscarDatosMes(Periodo1, Periodo2))
             }
         } catch(error){
           console.log(error)
@@ -94,8 +89,7 @@ export default function VisualizarReporte(){
                             <DropdownItem divider/>
                             <DropdownItem onClick={()=> SelectGeneral()}>Ventas generales</DropdownItem>
                             <DropdownItem onClick={()=> SelectEquipo()}>Venta de equipos</DropdownItem>
-                            <DropdownItem onClick={()=>SelectPlan()}>Venta de planes</DropdownItem>
-                            <DropdownItem onClick={()=>SelectFactura()}>Ganancias por facturas</DropdownItem>
+                            <DropdownItem onClick={()=>SelectPlan()}>Venta de planes</DropdownItem>S
                         </DropdownMenu>
                     </Dropdown>
                     <h3>Fecha del periodo (Formato YYYY-MM-DD): </h3>
@@ -110,7 +104,6 @@ export default function VisualizarReporte(){
                             <DropdownItem divider/>
                             <DropdownItem onClick={()=> SelectDia()}>Ventas diarias</DropdownItem>
                             <DropdownItem onClick={()=> SelectSemana()}>Ventas semanales</DropdownItem>
-                            <DropdownItem onClick={()=> SelectQuincena()}>Ventas quincenales</DropdownItem>
                             <DropdownItem onClick={()=> SelectMes()}>Ventas mensuales</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
