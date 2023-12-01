@@ -74,6 +74,10 @@ export default function VisualizarReporte(){
         
     }
 
+    const LimpiarTabla= async (e)=>{
+      setDatos([])
+    }
+
     return(
         <main>
             <body>
@@ -109,6 +113,7 @@ export default function VisualizarReporte(){
                         </DropdownMenu>
                     </Dropdown>
                     <button onClick={CargarTabla}>Cargar tabla</button>
+                    <button onClick={LimpiarTabla}>Limpiar tabla</button>
                 </div>
                 <div className="Tabla">
                     <TablaReporte datos={datos}/>
@@ -139,14 +144,13 @@ function TablaReporte({datos}){
           </TableRow>
         </TableHead>
         <TableBody>
-          {datos.map((dato) => (
+          {datos.map((dato, index) => (
             <TableRow key={dato.start_date}>
               <TableCell>{dato.start_date}</TableCell>
               <TableCell>{dato.end_date}</TableCell>
               <TableCell>{dato.total}</TableCell>
-              {/* Aquí puedes calcular crecimiento y porcentaje de crecimiento si es necesario */}
-              <TableCell>{/* dato.crecimiento */}</TableCell>
-              <TableCell>{/* dato.porcentajeCrecimiento */}</TableCell>
+              <TableCell>{index > 0 ? dato.total - datos[index - 1].total : 0}</TableCell>
+              <TableCell>{index > 0 ? ((dato.total - datos[index - 1].total) / datos[index - 1].total) * 100 : 0}%</TableCell>
             </TableRow>
           ))}
         </TableBody>
