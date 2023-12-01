@@ -36,7 +36,7 @@ const createEReportDaily = async (req, res) => {
         const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
-            const queryDetalles = "SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 AND total > 0 GROUP BY id_venta";
+            const queryDetalles = "SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 GROUP BY id_venta";
             const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
             return resultDetalles.rows[0] || { id_venta: venta.id_venta, total: 0 };
         });
@@ -44,7 +44,7 @@ const createEReportDaily = async (req, res) => {
         const detallesTotales = await Promise.all(detallePromises);
 
         // Filtrar los detalles que tienen total diferente de 0
-        const detallesFiltrados = detallesTotales.filter((detalle) => detalle.total > 0);
+        const detallesFiltrados = detallesTotales.filter((detallesTotales) => detallesTotales.total > 0);
 
         const result = detallesFiltrados.map((detalle) => ({
             id_venta: detalle.id_venta,
