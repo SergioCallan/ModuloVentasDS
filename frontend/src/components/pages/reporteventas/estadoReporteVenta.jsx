@@ -24,8 +24,7 @@ class General extends EstadoBase {
             periodo1: periodo1,
             periodo2: periodo2
         }
-        const response= await axios.post(url, {params: periodo})
-        
+        const response= await axios.get(url, {params: periodo})
         return response.data
     } catch(error){
         console.error(error)
@@ -34,11 +33,11 @@ class General extends EstadoBase {
   async buscarDatosSemana(periodo1, periodo2){
         try{
             const url= `https://modulo-ventas.onrender.com/creategreportweekly`
-            const Periodo={
+            const periodo={
                 periodo1: periodo1,
                 periodo2: periodo2
             }
-            const response= await axios.get(url, Periodo)
+            const response= await axios.get(url, {params: periodo})
             return response.data
         } catch(error){
             console.error(error)
@@ -48,11 +47,11 @@ class General extends EstadoBase {
     async buscarDatosMes(periodo1, periodo2){
         try{
             const url= `https://modulo-ventas.onrender.com/creategreportmonthly`
-            const Periodo={
+            const periodo={
                 periodo1: periodo1,
                 periodo2: periodo2
             }
-            const response= await axios.get(url, Periodo)
+            const response= await axios.get(url, {params: periodo})
             return response.data
         } catch(error){
             console.error(error)
@@ -64,11 +63,11 @@ class Equipo extends EstadoBase {
   async buscarDatosDia(periodo1, periodo2){
     try{
         const url= `https://modulo-ventas.onrender.com/createereportdaily`
-        const Periodo={
+        const periodo={
             periodo1: periodo1,
             periodo2: periodo2
         }
-        const response= await axios.get(url, Periodo)
+        const response= await axios.get(url, {params: periodo})
         return response.data
     } catch(error){
         console.error(error)
@@ -77,11 +76,11 @@ class Equipo extends EstadoBase {
   async buscarDatosSemana(periodo1, periodo2) {
     try{
         const url= `https://modulo-ventas.onrender.com/createereportweekly`
-        const Periodo={
+        const periodo={
             periodo1: periodo1,
             periodo2: periodo2
         }
-        const response= await axios.get(url, Periodo)
+        const response= await axios.get(url, {params: periodo})
         return response.data
     } catch(error){
         console.error(error)
@@ -91,11 +90,11 @@ class Equipo extends EstadoBase {
     async buscarDatosMes(periodo1, periodo2){
         try{
             const url= `https://modulo-ventas.onrender.com/createereportmonthly`
-            const Periodo={
+            const periodo={
                 periodo1: periodo1,
                 periodo2: periodo2
             }
-            const response= await axios.get(url, Periodo)
+            const response= await axios.get(url, {params: periodo})
             return response.data
         } catch(error){
             console.error(error)
@@ -107,11 +106,11 @@ class Plan extends EstadoBase {
   async buscarDatosDia(periodo1, periodo2){
     try{
         const url= `https://modulo-ventas.onrender.com/createpreportdaily`
-        const Periodo={
+        const periodo={
             periodo1: periodo1,
             periodo2: periodo2
         }
-        const response= await axios.get(url, Periodo)
+        const response= await axios.get(url, {params: periodo})
         return response.data
     } catch(error){
         console.error(error)
@@ -120,11 +119,11 @@ class Plan extends EstadoBase {
   async buscarDatosSemana(periodo1, periodo2){
     try{
         const url= `https://modulo-ventas.onrender.com/createpreportweekly`
-        const Periodo={
+        const periodo={
             periodo1: periodo1,
             periodo2: periodo2
         }
-        const response= await axios.get(url, Periodo)
+        const response= await axios.get(url, {params: periodo})
         return response.data
     } catch(error){
         console.error(error)
@@ -134,11 +133,11 @@ class Plan extends EstadoBase {
   async buscarDatosMes(periodo1, periodo2){
     try{
         const url= `https://modulo-ventas.onrender.com/createpreportmonthly`
-        const Periodo={
+        const periodo={
             periodo1: periodo1,
             periodo2: periodo2
         }
-        const response= await axios.get(url, Periodo)
+        const response= await axios.get(url, {params: periodo})
         return response.data
     } catch(error){
         console.error(error)
@@ -182,10 +181,10 @@ class FiltroState {
         this.estado.buscarDatosDia(this.periodo1, this.periodo2, this);
     }
     buscarDatosSemana() {
-        this.estado.buscarDatosDia(this.periodo1, this.periodo2, this);
+        this.estado.buscarDatosSemana(this.periodo1, this.periodo2, this);
     }
     buscarDatosMes() {
-        this.estado.buscarDatosDia(this.periodo1, this.periodo2, this);
+        this.estado.buscarDatosMes(this.periodo1, this.periodo2, this);
     }
 }
 

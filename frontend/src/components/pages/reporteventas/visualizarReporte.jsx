@@ -59,19 +59,19 @@ export default function VisualizarReporte(){
             const nuevoFiltro= new FiltroState()
             nuevoFiltro.actualizarDatos(FiltroVenta, FiltroIntervalo, Periodo1, Periodo2)
             setFiltro(nuevoFiltro)
-            
             if(FiltroIntervalo=="Dia"){
-              setDatos(Filtro.tipo.buscarDatosDia(Periodo1, Periodo2))
+              setDatos(await nuevoFiltro.tipo.buscarDatosDia(Periodo1, Periodo2))
             }
             if(FiltroIntervalo=="Semana"){
-              setDatos(Filtro.buscarDatosSemana(Periodo1, Periodo2))
+              result= Filtro.tipo.buscarDatosSemana(Periodo1, Periodo2)
             }
             if(FiltroIntervalo=="Mes"){
-              setDatos(Filtro.buscarDatosMes(Periodo1, Periodo2))
+              result= Filtro.tipo.buscarDatosMes(Periodo1, Periodo2)
             }
         } catch(error){
           console.log(error)
         }
+        
     }
 
     return(
@@ -137,6 +137,17 @@ function TablaReporte({datos}){
             <TableCell>Porcentaje de crecimiento</TableCell>
           </TableRow>
         </TableHead>
+        <TableBody>
+          {datos.map((dato) => (
+            <TableRow key={dato.fecha}>
+              <TableCell>{dato.fecha}</TableCell>
+              <TableCell>{dato.total}</TableCell>
+              {/* Aquí puedes calcular crecimiento y porcentaje de crecimiento si es necesario */}
+              <TableCell>{/* dato.crecimiento */}</TableCell>
+              <TableCell>{/* dato.porcentajeCrecimiento */}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
     </TableContainer>
     )
