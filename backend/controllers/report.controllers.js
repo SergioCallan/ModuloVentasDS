@@ -1,20 +1,4 @@
 const pool= require ('../db')
-const { v4: uuidv4 } = require('uuid');
-const moment = require('moment');
-
-/*
-const createReport= async(req, res)=>{
-    const {tipo, tiempo, periodo1, periodo2}= req.body
-    const Filtro= new FiltroState()
-    Filtro.actualizarDatos(tipo, tiempo, periodo1, periodo2)
-    const dataTipo= Filtro.buscarDatos(tiempo, periodo1, periodo2)
-}
-
-module.exports={
-    createReport
-}
-
-*/
 
 const createGReportDaily= async(req,res)=>{
     try{
@@ -35,6 +19,20 @@ const createGReportWeekly= async(req,res)=>{
         console.log(periodo1, periodo2)
 
         const query= "SELECT DATE_TRUNC('week', fecha) AS semana, SUM(monto) AS total FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY semana ORDER BY semana"
+        const resultVentas= await pool.query(query, [periodo1, periodo2])
+        console.log(resultVentas.rows)
+        return res.json(resultVentas.rows)
+    }catch(error){
+        console.error("Error al buscar datos: ", error)
+    }
+}
+
+const createGReportMonthly= async(req,res)=>{
+    try{
+        const {periodo1, periodo2}= req.body
+        console.log(periodo1, periodo2)
+
+        const query= "SELECT DATE_TRUNC('month', fecha) AS mes, SUM(monto) AS total FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY mes ORDER BY mes"
         const resultVentas= await pool.query(query, [periodo1, periodo2])
         console.log(resultVentas.rows)
         return res.json(resultVentas.rows)
@@ -107,6 +105,40 @@ const createEReportWeekly = async (req, res) => {
     }
 };
 
+const createEReportMonthly = async (req, res) => {
+    try {
+        const { periodo1, periodo2 } = req.body;
+
+        const queryVentas = `SELECT id_venta, MIN(fecha) as start_date, MAX(fecha) as end_date FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, EXTRACT(MONTH FROM fecha) ORDER BY start_date`;
+
+        const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
+
+        const detallePromises = resultVentas.rows.map(async (venta) => {
+            const queryDetalles = `SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 GROUP BY id_venta`;
+            console.log(resultVentas)
+            const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
+            return resultDetalles.rows[0] || { id_venta: venta.id_venta, total: 0 };
+        });
+
+        const detallesTotales = await Promise.all(detallePromises);
+
+        // Filtrar los detalles que tienen total diferente de 0
+        const detallesFiltrados = detallesTotales.filter((detalle) => detalle.total > 0);
+
+        const result = detallesFiltrados.map((detalle) => ({
+            id_venta: detalle.id_venta,
+            start_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).start_date,
+            end_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).end_date,
+            total: detalle.total,
+        }));
+        console.log(result)
+        return res.json(result);
+    } catch (error) {
+        console.error("Error al buscar datos: ", error);
+        throw error;
+    }
+};
+
 
 const createPReportDaily= async(req, res)=>{
     try {
@@ -138,10 +170,83 @@ const createPReportDaily= async(req, res)=>{
     }
 }
 
+const createPReportWeekly = async (req, res) => {
+    try {
+        const { periodo1, periodo2 } = req.body;
+
+        const queryVentas = `SELECT id_venta, MIN(fecha) as start_date, MAX(fecha) as end_date FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, EXTRACT(WEEK FROM fecha) ORDER BY start_date`;
+
+        const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
+
+        const detallePromises = resultVentas.rows.map(async (venta) => {
+            const queryDetalles = `SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Plan' AND id_venta= $1 GROUP BY id_venta`;
+            console.log(resultVentas)
+            const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
+            return resultDetalles.rows[0] || { id_venta: venta.id_venta, total: 0 };
+        });
+
+        const detallesTotales = await Promise.all(detallePromises);
+
+        // Filtrar los detalles que tienen total diferente de 0
+        const detallesFiltrados = detallesTotales.filter((detalle) => detalle.total > 0);
+
+        const result = detallesFiltrados.map((detalle) => ({
+            id_venta: detalle.id_venta,
+            start_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).start_date,
+            end_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).end_date,
+            total: detalle.total,
+        }));
+        console.log(result)
+        return res.json(result);
+    } catch (error) {
+        console.error("Error al buscar datos: ", error);
+        throw error;
+    }
+};
+
+const createPReportMonthly = async (req, res) => {
+    try {
+        const { periodo1, periodo2 } = req.body;
+
+        const queryVentas = `SELECT id_venta, MIN(fecha) as start_date, MAX(fecha) as end_date FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, EXTRACT(MONTH FROM fecha) ORDER BY start_date`;
+
+        const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
+
+        const detallePromises = resultVentas.rows.map(async (venta) => {
+            const queryDetalles = `SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Plan' AND id_venta= $1 GROUP BY id_venta`;
+            console.log(resultVentas)
+            const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
+            return resultDetalles.rows[0] || { id_venta: venta.id_venta, total: 0 };
+        });
+
+        const detallesTotales = await Promise.all(detallePromises);
+
+        // Filtrar los detalles que tienen total diferente de 0
+        const detallesFiltrados = detallesTotales.filter((detalle) => detalle.total > 0);
+
+        const result = detallesFiltrados.map((detalle) => ({
+            id_venta: detalle.id_venta,
+            start_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).start_date,
+            end_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).end_date,
+            total: detalle.total,
+        }));
+        console.log(result)
+        return res.json(result);
+    } catch (error) {
+        console.error("Error al buscar datos: ", error);
+        throw error;
+    }
+};
+
+
 module.exports={
     createGReportDaily,
     createGReportWeekly,
+    createGReportMonthly,
     createEReportDaily,
     createEReportWeekly,
-    createPReportDaily
+    createEReportMonthly,
+    createPReportDaily,
+    createPReportWeekly,
+    createPReportMonthly
 }
