@@ -29,6 +29,19 @@ const createGReportDaily= async(req,res)=>{
     }
 }
 
+const createGReportWeekly= async(req,res)=>{
+    try{
+        const {periodo1, periodo2}= req.body
+        console.log(periodo1, periodo2)
+        const query= "SELECT SUM(monto) AS total, DATE_TRUNC('week', fecha) AS semana FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY semana ORDER BY semana"
+        const resultVentas= await pool.query(query, [periodo1, periodo2])
+        console.log(resultVentas.rows)
+        return res.json(resultVentas.rows)
+    }catch(error){
+        console.error("Error al buscar datos: ", error)
+    }
+}
+
 const createEReportDaily = async (req, res) => {
     try {
         const { periodo1, periodo2 } = req.body;
@@ -91,6 +104,7 @@ const createPReportDaily= async(req, res)=>{
 
 module.exports={
     createGReportDaily,
+    createGReportWeekly,
     createEReportDaily,
     createPReportDaily
 }
