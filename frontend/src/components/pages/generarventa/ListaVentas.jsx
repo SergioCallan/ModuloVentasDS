@@ -84,6 +84,9 @@ export default function ListaVentas() {
       navigate("/asociarplan")
     }
     else{
+      const promo= localStorage.getItem("promocionid")
+      const url2= `https://modulo-marketing.onrender.com/modificarEstadoPromocion/${promo}`
+      const response= await axios.put(url)
       localStorage.clear()
       navigate("/buscarcliente")
     }

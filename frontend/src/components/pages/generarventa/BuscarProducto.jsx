@@ -221,6 +221,7 @@ export default function BuscarProducto() {
     const url2= `https://modulo-marketing.onrender.com/buscarPromocionPorID/${promocion_id}`
     const response2= await axios.get(url2)
     setPromocion(response2.data.promocion)
+    localStorage.setItem("promocionid", promocion)
     if(promocion===0){
       alert("El cliente no cuenta con un descuento")
     }
