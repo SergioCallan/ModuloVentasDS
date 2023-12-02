@@ -82,10 +82,29 @@ export default function VisualizarReporte(){
     const downloadPdfDocument = () => {
       const domElement = document.getElementById('tablaReporte');
     
+      // Calcular la altura total para cubrir el encabezado y la tabla
+      const totalHeight = domElement.clientHeight + 30; // Sumar 30 para dejar espacio para el encabezado
+    
+      // Crear una nueva instancia de jsPDF
+      const pdf = new jsPDF('l', 'mm', [domElement.clientWidth, totalHeight]);
+    
+      // Definir el tamaño de la fuente para el encabezado
+      const fontSize = 32;
+    
+      // Agregar información de selección en el encabezado con letras más grandes
+      pdf.setFontSize(fontSize);
+      pdf.text(`Selección de Venta: ${FiltroVenta}`, 10, 10);
+      pdf.text(`Fecha del Periodo: ${Periodo1} - ${Periodo2}`, 10, 20);
+    
+      // Restablecer el tamaño de la fuente para el contenido de la tabla
+      pdf.setFontSize(24);
+    
+      // Convertir la tabla a imagen y agregarla al documento PDF
       html2canvas(domElement, { scrollY: -window.scrollY }).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('l', 'mm', [canvas.width, canvas.height]);
-        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.addImage(imgData, 'PNG', 0, 30, canvas.width, canvas.height);
+    
+        // Guardar el documento con un nombre específico
         pdf.save('reporte_ventas.pdf');
       });
     };
@@ -164,7 +183,7 @@ function TablaReporte({ datos }) {
   let acumulado=0;
 
   return (
-    <TableContainer component={Paper} sx={{maxHeight:'300px', maxWidth: '70vw',marginBottom: '3vh'}}>
+    <TableContainer id = 'tablaReporte' component={Paper} sx={{maxHeight:'300px', maxWidth: '70vw',marginBottom: '3vh'}} >
       <Table>
         <TableHead component={Paper} sx={{position:'sticky', top:'0px'}}>
           <TableRow>

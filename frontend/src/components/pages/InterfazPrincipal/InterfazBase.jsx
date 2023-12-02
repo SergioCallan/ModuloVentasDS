@@ -42,6 +42,7 @@ export const InterfazBase = () => {
                 <button className="btn-opcion" onClick={()=>navigate('/buscarcliente')}>Opciones ligadas al cliente</button>
                 <button className="btn-opcion" disabled={locked} onClick={()=>navigate('/menu')}>Agregar planes y productos</button>
                 <button className="btn-opcion" disabled={locked} onClick={()=>navigate('/reporte')}>Reportes</button>
+                <button className="btn-opcion" disabled={locked} onClick={()=>navigate('/sell')}>Imprimir Venta</button>
             </div>
         </div>
     )
