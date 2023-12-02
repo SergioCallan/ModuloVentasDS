@@ -173,7 +173,6 @@ function TablaReporte({ datos }) {
                 <TableCell>{dato.total}</TableCell>
                 <TableCell>{index > 0 ? dato.total - datos[index - 1].total : 0}</TableCell>
                 <TableCell>{index > 0 ? ((dato.total - datos[index - 1].total) / datos[index - 1].total) * 100 : 0}%</TableCell>
-                {/* Mostrar la cantidad acumulativa */}
                 <TableCell>{acumulado}</TableCell>
               </TableRow>
             );
