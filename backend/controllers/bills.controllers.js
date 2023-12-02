@@ -1,7 +1,7 @@
 const pool= require ('../db')
 const { v4: uuidv4 } = require('uuid');
 const moment = require('moment');
-const logError = require('./errorHandler');
+
 
 const searchbilldni= async(req, res)=>{
     try{
@@ -16,8 +16,7 @@ const searchbilldni= async(req, res)=>{
             res.json(result.rows)
         }
     }catch(error){
-        console.error("Error al obtener las facturas: ", error);
-        logError(error)
+        console.error("Error al obtener las facturas: ", error)
     }
 }
 
@@ -33,8 +32,7 @@ const searchbillnumber= async(req, res)=>{
             res.json(result.rows)
         }
     }catch(error){
-        console.error("Error al obtener las facturas: ", error);
-        logError(error)
+        console.error("Error al obtener las facturas: ", error)
     }
 }
 
@@ -47,7 +45,6 @@ const paybill= async (req, res)=>{
     } catch(error){
         console.error("Error al registrar el nuevo estado: ", error);
         res.status(500).json({ error: 'Hubo un error al actualizar el pago' });
-        logError(error)
     }
 }
 
@@ -76,8 +73,7 @@ const updateBill= async(req, res)=>{
             return res.json(result2.rows[0]);
         }
     }catch(error){
-        console.error("Error al obtener las facturas: ", error);
-        logError(error)
+        console.error("Error al obtener las facturas: ", error)
     }
 }
 
@@ -89,7 +85,6 @@ const suspendBill= async(req, res)=>{
         res.status(200).json({ message: 'Estado actualizado con éxito' })
     } catch(error){
         console.error("Error al atrasar la factura: ", error)
-        logError(error);
     }
 }
 
@@ -105,8 +100,7 @@ const searchbillid= async(req, res)=>{
             res.json(result.rows[0])
         }
     }catch(error){
-        console.error("Error al obtener las facturas: ", error);
-        logError(error)
+        console.error("Error al obtener las facturas: ", error)
     }
 }
 
@@ -118,8 +112,7 @@ const createbill= async(req, res)=>{
         const result= await pool.query(query, values)
         return res.json(result.rows[0])
     } catch(error){
-        console.error("Error al guardar la factura: ", error);
-        logError(error)
+        console.error("Error al guardar la factura: ", error)
     }
 }
 
@@ -135,8 +128,7 @@ const searchpaybillnumero= async(req, res)=>{
             res.json(result.rows)
         }
     }catch(error){
-        console.error("Error al obtener las facturas: ", error);
-        logError(error)
+        console.error("Error al obtener las facturas: ", error)
     }
 }
 
@@ -152,8 +144,7 @@ const searchpaybilldni= async(req, res)=>{
             res.json(result.rows)
         }
     }catch(error){
-        console.error("Error al obtener las facturas: ", error);
-        logError(error)
+        console.error("Error al obtener las facturas: ", error)
     }
 }
 

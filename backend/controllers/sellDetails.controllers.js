@@ -1,6 +1,5 @@
 // Controlador en tu backend
 const pool= require ('../db')
-const logError = require('./errorHandler');
 
 // Controlador para encontrar los detalles de la venta según id_detalle
 const getDetalleVentaById = async (req, res) => {
@@ -17,7 +16,6 @@ const getDetalleVentaById = async (req, res) => {
   } catch (error) {
     console.error('Error al obtener el detalle de la venta:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
-    logError(error);
   }
 };
 
@@ -38,7 +36,6 @@ const getIdVentaByIdDetalle = async (req, res) => {
   } catch (error) {
     console.error('Error al obtener el id_venta:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
-    logError(error);
   }
 };
 
@@ -58,7 +55,6 @@ const getDniClienteByIdVenta = async (req, res) => {
   } catch (error) {
     console.error('Error al obtener el dni del cliente:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
-    logError(error);
   }
 };
 

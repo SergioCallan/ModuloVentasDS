@@ -1,5 +1,4 @@
 const pool= require ('../db')
-const logError = require('./errorHandler');
 
 //Registrar Venta
 
@@ -12,7 +11,6 @@ const addDetails= async(req, res)=>{
         return res.json(result.rows[0])
     } catch(error){
         console.error('Error al guardar el detalle de venta: ', error)
-        logError(error);
     }
 }
 
@@ -29,7 +27,6 @@ const getSellDetails= async(req, res)=>{
         }
     }catch(error){
         console.log('Error al recuperar los detalles de venta: ', error)
-        logError(error);
     }
 }
 
@@ -46,7 +43,6 @@ const getSelldni= async(req, res)=>{
         }
     }catch(error){
         console.log('Error al recuperar las ventas: ', error)
-        logError(error);
     }
 }
 
@@ -63,7 +59,6 @@ const getSellid= async(req, res)=>{
         }
     }catch(error){
         console.log('Error al recuperar las ventas: ', error)
-        logError(error);
     }
 }
 
@@ -75,7 +70,6 @@ const deleteSell= async(req, res)=>{
         res.send("Venta eliminada")
     }catch(error){
         console.log('Error al eliminar los datos: ', error)
-        logError(error);
     }
 }
 
@@ -88,7 +82,6 @@ const registerSell= async(req, res)=>{
         return res.json(result.rows[0])
     }catch(error){
         console.error('Error al guardar la venta: ', error)
-        logError(error);
     }
 }
 
@@ -100,7 +93,6 @@ const deleteDetail= async(req, res)=>{
         res.send("Detalle de venta eliminado")
     }catch(error){
         console.error("Error al eliminar el detalle de venta: ", error)
-        logError(error);
     }
 }
 
@@ -112,7 +104,6 @@ const calculateSell= async(req, res)=>{
         res.send(result.rows[0])
     } catch(error){
         console.error("Error al calcular el monto total: ", error)
-        logError(error);
     }
 }
 

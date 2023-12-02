@@ -1,5 +1,4 @@
 const pool= require ('../db')
-const logError = require('./errorHandler');
 
 const searchWarranty= async (req, res)=>{
     try{
@@ -14,7 +13,6 @@ const searchWarranty= async (req, res)=>{
         }
     }catch(error){
         console.error("Error al conseguir los datos de la garantia: ", error)
-        logError(error);
     }
 }
 
