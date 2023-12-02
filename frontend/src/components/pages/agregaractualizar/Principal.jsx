@@ -14,8 +14,14 @@ export default function Principal() {
   const tipoProducto = new Cambio()
 
   const handleSelectionChange = (event,value) => {
- 
+    const selectedLabel = value ? value.label : '';
    tipoProducto.cambiarTipoProducto(value.label)
+
+   if (selectedLabel === 'Celular') {
+    navigate('/phone');
+  } else if (selectedLabel === 'Plan') {
+    navigate('/internet');
+  }
  
   }
   const [mostrarLista, setMostrarLista] = useState(false);
