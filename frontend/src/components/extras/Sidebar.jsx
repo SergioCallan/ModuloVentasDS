@@ -10,6 +10,7 @@ import { AvailableContext } from '../../context/AvailableContext';
 
 const Sidebar = ({ open, onClose, lock }) => {
   const navigate= useNavigate()
+  
   const {locked,setLocked} = useContext(AvailableContext)
 
   const isLocked = (lock!==undefined) ? lock : locked

@@ -45,7 +45,8 @@ function App(){
               <Route path="/reporte" element={<VisualizarReporte/>}/>
               <Route path="/principal" element={<InterfazBase/>}/>
           
-          </Routes></AvailableContextProvider>
+          </Routes>
+          </AvailableContextProvider>
     </BrowserRouter>
   )
 }
