@@ -9,22 +9,27 @@ import { CabeceraModulo } from '../../extras/CabeceraModulo.jsx';
 const createProxyHandler = (setStateFunction) => {
   return {
     set: function (target, key, value) {
+      if (key in target) {
         // Realizar validaciones aquí, por ejemplo, verificar si "precio" es un número válido
         if (key === 'precio' && isNaN(parseFloat(value)) && value!="") {
-
+          // Mostrar un mensaje de error amigable cerca del campo de entrada
           const errorMessage = 'El precio debe ser un número válido.';
-
+          // Muestra el mensaje de error cerca del campo de entrada
           document.getElementById('precio-error').textContent = errorMessage;
-          return true;
+          return true; // Indica que la operación fue exitosa
         }
-
+        // Si pasa la validación, actualiza el estado
         setStateFunction({ ...target, [key]: value });
+        // Borra el mensaje de error si se ha corregido
         if (key === 'precio') {
           document.getElementById('precio-error').textContent = '';
         }
-        return true;
-    }
-  }
+        return true; // Indica que la operación fue exitosa
+      } else {
+        throw new Error(`La propiedad "${key}" no es válida.`);
+      }
+    },
+  };
 };
 
 export default function Internet(){
@@ -40,7 +45,13 @@ export default function Internet(){
         tipo: ""
       })
 
-    const proxyInternet = new Proxy(internet, createProxyHandler(setInternet));
+      // Genera un nuevo UUID para el ID
+    const newId = uuidv4();
+
+    // Asigna el nuevo UUID al objeto phone
+    const updatedInternet = { ...internet, id: newId };
+
+    const proxyInternet = new Proxy(updatedInternet, createProxyHandler(setInternet));
     const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
     const [editing, setEditing] = useState(false);
 
@@ -64,29 +75,26 @@ export default function Internet(){
 
     const handleConfirmacionFinal = async(e) => {
       e.preventDefault();
-  
-      // Genera un nuevo UUID para el ID
-      const newId = uuidv4();
-  
-      // Asigna el nuevo UUID al objeto proxyPhone
-      navigate("/internet")
-      window.location.reload();
       
       setMostrarConfirmacion(false);
       if(editing){
+        
         await axios.put(`https://modulo-ventas.onrender.com/internet/${params.id}`, proxyInternet, {
           headers: { "Content-Type": "application/json" }
         });
       }else{
-        
-        await axios.post("https://modulo-ventas.onrender.com/internet", proxyInternet, {
+        const response = await axios.post("https://modulo-ventas.onrender.com/internet", proxyInternet, {
           headers: { "Content-Type": "application/json" },
         });
+        const newIntenetId = response.data.id;
+        console.log("Nuevo ID asignado:", newIntenetId);
+        
       }
+      window.location.reload();
     };
     
     const loadTask = async (id) => {
-
+      
       const res = await axios.get(`https://modulo-ventas.onrender.com/internet/${id}`);
       const data = await res.data;
       setInternet({
@@ -95,13 +103,14 @@ export default function Internet(){
         tipo: data.tipo
       });
       setEditing(true)
-  };
+    };
 
     useEffect(() => {
       if(params.id){
         loadTask(params.id);
       }
     },[params.id])
+
     return(
         <div>
         <CabeceraModulo lock={locked}/>
@@ -166,6 +175,7 @@ export default function Internet(){
                         margin: '10px'
                       }}
                     />
+                    <Typography id="precio-error" style={{ color: 'red' }}></Typography>
                     <div style={{
                         display:'flex',
                         alignItems:'center',

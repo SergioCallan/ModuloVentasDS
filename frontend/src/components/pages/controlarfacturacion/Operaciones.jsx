@@ -12,7 +12,6 @@ const Operaciones = () => {
     try {
       const response = await axios.get(url);
       const nuevaFactura = new FacturaState();
-      console.log(response.data.numero_linea)
       nuevaFactura.actualizarDatos(idfactura, response.data.precio, response.data.estado, response.data.numero_linea);
       setFactura(nuevaFactura);
       setEstado(response.data.estado)

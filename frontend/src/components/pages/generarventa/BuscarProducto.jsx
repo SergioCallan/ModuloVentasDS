@@ -126,12 +126,12 @@ export default function BuscarProducto() {
           preciomin: PrecioMin,
           preciomax: PrecioMax,
         };
-        const url4 = `https://modulo-ventas.onrender.com/searchprice/${intervaloP}`;
-        const response4 = await axios.get(url4);
+        const url4 = `https://modulo-ventas.onrender.com/searchprice`;
+        const response4 = await axios.get(url4, {params: intervaloP});
         if (response4.data.id === null) {
           alert("No se encontro el producto");
         } else {
-          alert("Se llegó aquí");
+          setDatosP(response4.data);
         }
       }
     } catch (error) {

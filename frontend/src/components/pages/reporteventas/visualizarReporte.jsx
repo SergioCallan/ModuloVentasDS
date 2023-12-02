@@ -4,11 +4,14 @@ import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow
 import { CabeceraModulo } from "../../extras/CabeceraModulo";
 
 
+import FiltroState from "./estadoReporteVenta";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
 export default function VisualizarReporte(){
     const [datos, setDatos]= useState([])
+    const [Filtro, setFiltro]= useState(new FiltroState())
     const [FiltroVenta, setFiltroVenta]= useState("")
     const [FiltroIntervalo, setFiltroIntervalo]= useState("")
     const [Periodo1, setPeriodo1]= useState("")
@@ -36,18 +39,12 @@ export default function VisualizarReporte(){
       const SelectPlan = () => {
         setFiltroVenta("Plan");
       };
-      const SelectFactura = () => {
-        setFiltroVenta("Factura");
-      };
 
       const SelectDia = () => {
         setFiltroIntervalo("Dia");
       };
       const SelectSemana = () => {
         setFiltroIntervalo("Semana");
-      };
-      const SelectQuincena = () => {
-        setFiltroIntervalo("Quincena");
       };
       const SelectMes = () => {
         setFiltroIntervalo("Mes");
@@ -61,21 +58,26 @@ export default function VisualizarReporte(){
     const CargarTabla= async(e)=>{
         e.preventDefault();
         try{
-            const Filtrado={
-                tipo: FiltroVenta,
-                tiempo: FiltroIntervalo,
-                periodo1: Periodo1,
-                periodo2: Periodo2
+            const nuevoFiltro= new FiltroState()
+            nuevoFiltro.actualizarDatos(FiltroVenta, FiltroIntervalo, Periodo1, Periodo2)
+            setFiltro(nuevoFiltro)
+            if(FiltroIntervalo=="Dia"){
+              setDatos(await nuevoFiltro.tipo.buscarDatosDia(Periodo1, Periodo2))
             }
-            /*Lo que puedo hacer es crear los if para definir lo que se usa, pero no creo que sea buena idea,
-            otra cosa que podria  */
-            const response= await axios.get(url, Filtrado)
-            if(response.data===null){
-              alert("No existen registros anteriores")
+            if(FiltroIntervalo=="Semana"){
+              setDatos(await nuevoFiltro.tipo.buscarDatosSemana(Periodo1, Periodo2))
+            }
+            if(FiltroIntervalo=="Mes"){
+              setDatos(await nuevoFiltro.tipo.buscarDatosMes(Periodo1, Periodo2))
             }
         } catch(error){
           console.log(error)
         }
+        
+    }
+
+    const LimpiarTabla= async (e)=>{
+      setDatos([])
     }
 
     return(
@@ -93,7 +95,6 @@ export default function VisualizarReporte(){
                             <DropdownItem onClick={()=> SelectGeneral()}>Ventas generales</DropdownItem>
                             <DropdownItem onClick={()=> SelectEquipo()}>Venta de equipos</DropdownItem>
                             <DropdownItem onClick={()=>SelectPlan()}>Venta de planes</DropdownItem>
-                            <DropdownItem onClick={()=>SelectFactura()}>Ganancias por facturas</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                     <h3>Fecha del periodo (Formato YYYY-MM-DD): </h3>
@@ -108,18 +109,14 @@ export default function VisualizarReporte(){
                             <DropdownItem divider/>
                             <DropdownItem onClick={()=> SelectDia()}>Ventas diarias</DropdownItem>
                             <DropdownItem onClick={()=> SelectSemana()}>Ventas semanales</DropdownItem>
-                            <DropdownItem onClick={()=> SelectQuincena()}>Ventas quincenales</DropdownItem>
                             <DropdownItem onClick={()=> SelectMes()}>Ventas mensuales</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                     <button onClick={CargarTabla}>Cargar tabla</button>
+                    <button onClick={LimpiarTabla}>Limpiar tabla</button>
                 </div>
                 <div className="Tabla">
                     <TablaReporte datos={datos}/>
-                    {/*Poner tabla y calculos*/}
-                </div>
-                <div className="Graficos">
-                    {/*Colocar los graficos */}
                 </div>
                 <div className="Opciones">
                     <button>Imprimir reporte</button>
@@ -129,19 +126,41 @@ export default function VisualizarReporte(){
     )
 }
 
-function TablaReporte({datos}){
-    return(
-        <TableContainer component={Paper}>
+function TablaReporte({ datos }) {
+  let acumulado=0;
+
+  return (
+    <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Fecha</TableCell>
+            <TableCell>Fecha de inicio</TableCell>
+            <TableCell>Fecha de fin</TableCell>
             <TableCell>Cantidad generada</TableCell>
             <TableCell>Crecimiento</TableCell>
             <TableCell>Porcentaje de crecimiento</TableCell>
+            <TableCell>Total generado hasta la fecha</TableCell>
           </TableRow>
         </TableHead>
+        <TableBody>
+          {datos.map((dato, index) => {
+            // Calcular la cantidad acumulativa
+            acumulado = parseFloat(acumulado)+ parseFloat(dato.total);
+
+            return (
+              <TableRow key={dato.start_date}>
+                <TableCell>{dato.start_date}</TableCell>
+                <TableCell>{dato.end_date}</TableCell>
+                <TableCell>{dato.total}</TableCell>
+                <TableCell>{index > 0 ? dato.total - datos[index - 1].total : 0}</TableCell>
+                <TableCell>{index > 0 ? ((dato.total - datos[index - 1].total) / datos[index - 1].total) * 100 : 0}%</TableCell>
+                {/* Mostrar la cantidad acumulativa */}
+                <TableCell>{acumulado}</TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
       </Table>
     </TableContainer>
-    )
-}
+  );
+};
