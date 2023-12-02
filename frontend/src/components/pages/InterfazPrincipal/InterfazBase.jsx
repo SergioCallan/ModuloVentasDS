@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { CabeceraModulo2 } from "../../extras/CabeceraModulo"
 import '../../styles/InterfazPrincipal.css'
 import {useContext, useRef, useState } from "react"
-import { verificacion } from "./verificarclaveAdmin"
+import { verificacion } from "./verificarClaveAdmin"
 import { AvailableContext } from "../../../context/AvailableContext"
 
 

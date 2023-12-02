@@ -39,7 +39,7 @@ function App(){
               <Route path="/asociarplan" element={<AsociarPlan/>}/>
               <Route path="/observarfacturas" element={<ObservarFacturas/>}/>
               <Route path="/listado" element={<Listado/>}/>
-              <Route path="/sell/:idVenta" element={<SearchById />} />
+              <Route path="/sell" element={<SearchById />} />
               <Route path="/selldetails/:id_detalle" element={<SellDetails />} />
               <Route path="/operaciones" element={<Operaciones/>}/>
               <Route path="/reporte" element={<VisualizarReporte/>}/>
