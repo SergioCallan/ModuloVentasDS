@@ -1,8 +1,8 @@
 import {React, useState, useEffect} from "react";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
-import FiltroState from "./estadoReporteVenta";
 
+import FiltroState from "./estadoReporteVenta";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -117,10 +117,6 @@ export default function VisualizarReporte(){
                 </div>
                 <div className="Tabla">
                     <TablaReporte datos={datos}/>
-                    {/*Poner tabla y calculos*/}
-                </div>
-                <div className="Graficos">
-                    {/*Colocar los graficos */}
                 </div>
                 <div className="Opciones">
                     <button>Imprimir reporte</button>
@@ -130,9 +126,11 @@ export default function VisualizarReporte(){
     )
 }
 
-function TablaReporte({datos}){
-    return(
-        <TableContainer component={Paper}>
+function TablaReporte({ datos }) {
+  let acumulado=0;
+
+  return (
+    <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
@@ -141,20 +139,28 @@ function TablaReporte({datos}){
             <TableCell>Cantidad generada</TableCell>
             <TableCell>Crecimiento</TableCell>
             <TableCell>Porcentaje de crecimiento</TableCell>
+            <TableCell>Total generado hasta la fecha</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {datos.map((dato, index) => (
-            <TableRow key={dato.start_date}>
-              <TableCell>{dato.start_date}</TableCell>
-              <TableCell>{dato.end_date}</TableCell>
-              <TableCell>{dato.total}</TableCell>
-              <TableCell>{index > 0 ? dato.total - datos[index - 1].total : 0}</TableCell>
-              <TableCell>{index > 0 ? ((dato.total - datos[index - 1].total) / datos[index - 1].total) * 100 : 0}%</TableCell>
-            </TableRow>
-          ))}
+          {datos.map((dato, index) => {
+            // Calcular la cantidad acumulativa
+            acumulado = parseFloat(acumulado)+ parseFloat(dato.total);
+
+            return (
+              <TableRow key={dato.start_date}>
+                <TableCell>{dato.start_date}</TableCell>
+                <TableCell>{dato.end_date}</TableCell>
+                <TableCell>{dato.total}</TableCell>
+                <TableCell>{index > 0 ? dato.total - datos[index - 1].total : 0}</TableCell>
+                <TableCell>{index > 0 ? ((dato.total - datos[index - 1].total) / datos[index - 1].total) * 100 : 0}%</TableCell>
+                {/* Mostrar la cantidad acumulativa */}
+                <TableCell>{acumulado}</TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
-    )
-}
+  );
+};
