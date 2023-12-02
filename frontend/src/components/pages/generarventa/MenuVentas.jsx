@@ -25,6 +25,7 @@ export default function MenuVentas(){
     return(
         <div>
             <CabeceraModulo></CabeceraModulo>
+            <div className="contenedor-opciones">
             <div className="Opciones">
                 <h3>Para vender productos:</h3>
                 <button className="Azul" onClick={irProducto}>Seleccionar productos</button>
@@ -34,6 +35,9 @@ export default function MenuVentas(){
                 <button className="Azul" onClick={irFacturacion}>Ver facturas</button>
                 {/* <h3>Ver lineas asociadas al cliente: </h3>
                 <button className="Azul">Lineas</button> */}
+            </div>
+
+            <button className="btn-regresar" onClick={()=>{navigate('/buscarcliente')}}>Regresar</button>
             </div>
         </div>
     )

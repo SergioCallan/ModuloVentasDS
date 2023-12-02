@@ -286,6 +286,7 @@ export default function BuscarProducto() {
         <button id="Continuar" className="Verde btn-estructura" onClick={Agregar}>
           Añadir Producto
         </button>
+        
         </div>
       </div>
     </main>

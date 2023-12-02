@@ -48,6 +48,8 @@ export default function ObservarFacturas() {
         <h3>{dni}</h3>
         <button onClick={ActualizarFactura}>Actualizar lista de facturas</button>
       </div>
+      <button className="btn-regresar" onClick={()=>{navigate('/menuventas')}}>Regresar</button>
+
       <div className="facturacion">
         <h1>Facturación</h1>
         <h2>Facturas Pendientes</h2>

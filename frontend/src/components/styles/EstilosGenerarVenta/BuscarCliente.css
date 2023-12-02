@@ -116,23 +116,23 @@ body{
 }
 
 .Verde{
-    background-color: greenyellow;
+    background-color: #008f39;
     color: white;
     font-size: 16px;
     /* height: 40px;
     width: 300px; */
-    border-color: greenyellow;
+    border-color: #008f39;
     border-width: 2px;
     border-radius: 25px;
 }
 
 .Celeste{
-    background-color: cyan;
+    background-color: rgb(0, 191, 255);
     color: white;
     font-size: 16px;
     /* height: 40px;
     width: 300px; */
-    border-color: cyan;
+    border-color: rgb(0, 191, 255);
     border-width: 2px;
     border-radius: 25px;
 }
@@ -209,6 +209,22 @@ body{
 
 .btn-seleccionar{
     width: 28%;
-    height: 8%;
+    height: 7vh;
+}
+
+.btns-change-pag{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2vh;
+    align-items: center;
+}
+
+.btn-regresar{
+    width: 15vw;
+    height: 5vh;
+    border-radius: 25px;
+    background-color: red;
+    color: white;
+    border: red;
 }
 

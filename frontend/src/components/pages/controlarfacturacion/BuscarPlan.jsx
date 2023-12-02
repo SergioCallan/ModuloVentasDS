@@ -195,7 +195,7 @@ export default function BuscarPlan(){
                 </div>
 
                 <div className="capsula contenedor-btns">
-                <button id="Regresar" className="Rojo btn-estructura">Regresar</button>
+                <button id="Regresar" className="Rojo btn-estructura" onClick={()=>navigate("/menuventas")}>Regresar</button>
                 <button id="Continuar" className="Verde btn-estructura" onClick={Agregar}>Continuar</button>
                 </div>
 

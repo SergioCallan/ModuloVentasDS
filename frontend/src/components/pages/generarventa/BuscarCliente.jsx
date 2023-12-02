@@ -101,7 +101,10 @@ export default function BuscarCliente(){
                             <button id="Confirm" className="Verde btn-confirmar" onClick={Confirmar}>Confirmar Cliente</button>
                         </div>
                     </div>
+                    <div className="btns-change-pag">
                     <button id= "AvanzarSeleccion" className="Verde btn-seleccionar" onClick={Avanzar}>Seleccionar productos</button>
+                    <button className="btn-regresar" onClick={()=>{navigate('/principal')}}>Regresar</button>
+                    </div>
                 </div>
             </main>
     )
