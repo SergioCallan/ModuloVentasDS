@@ -82,6 +82,7 @@ export default function ListaVentas() {
     alert("Venta realizada")
     if(localStorage.getItem("tipo")==="Plan" && localStorage.getItem("tipo")!=null){
       navigate("/asociarplan")
+      localStorage.removeItem("promocionid")
     }
     else{
       const promo= localStorage.getItem("promocionid")
