@@ -68,7 +68,7 @@ export default function Phone() {
 
   const handleRegresar = () => {
     // Navegar de nuevo a la página principal
-    navigate('/');
+    navigate('/menu');
   };
 
   const handleConfirmar = () => {

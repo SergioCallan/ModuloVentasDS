@@ -24,7 +24,7 @@ function App(){
     <BrowserRouter>
     <AvailableContextProvider>
           <Routes>
-              <Route path ='/' element={<Principal/>} />
+              <Route path ='/menu' element={<Principal/>} />
               <Route path='/phone' element={<Phone/>}/>
               <Route path='/internet' element={<Internet/>}/>
               <Route path='/listPhone' element={<ListPhone/>}/>
@@ -44,7 +44,7 @@ function App(){
               <Route path="/operaciones" element={<Operaciones/>}/>
               <Route path="/reporte" element={<VisualizarReporte/>}/>
               <Route path="/selldetails/:id_detalle" element={<SellDetails />} />
-              <Route path="/principal" element={<InterfazBase/>}/>
+              <Route path="/" element={<InterfazBase/>}/>
           </Routes>
           </AvailableContextProvider>
     </BrowserRouter>

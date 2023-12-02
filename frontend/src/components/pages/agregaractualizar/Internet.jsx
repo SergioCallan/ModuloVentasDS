@@ -70,7 +70,7 @@ export default function Internet(){
 
     const handleRegresar = () => {
       // Navegar de nuevo a la página principal
-      navigate('/');
+      navigate('/menu');
     };
 
     const handleConfirmacionFinal = async(e) => {
