@@ -214,16 +214,18 @@ export default function BuscarProducto() {
     const response= await axios.get(url)
 
     const campana_id= response.data.campana_id
-    const url1= `https://modulo-marketing.onrender.com/buscarCampanaPorID/${campana_id}`
-    const response1= await axios.get(url1)
+    if(campana_id!==null || campana_id!==""){
+      const url1= `https://modulo-marketing.onrender.com/buscarCampanaPorID/${campana_id}`
+      const response1= await axios.get(url1)
 
-    const promocion_id= response1.data.promocion_id
-    const url2= `https://modulo-marketing.onrender.com/buscarPromocionPorID/${promocion_id}`
-    const response2= await axios.get(url2)
-    setPromocion(response2.data.promocion)
-    localStorage.setItem("promocionid", promocion)
-    if(promocion===0){
-      alert("El cliente no cuenta con un descuento")
+      const promocion_id= response1.data.promocion_id
+      const url2= `https://modulo-marketing.onrender.com/buscarPromocionPorID/${promocion_id}`
+      const response2= await axios.get(url2)
+      setPromocion(response2.data.promocion)
+      localStorage.setItem("promocionid", promocion)
+      if(promocion===0){
+        alert("El cliente no cuenta con un descuento")
+      }
     }
   }
 
