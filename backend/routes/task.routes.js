@@ -51,7 +51,7 @@ router.get('/searchid/:id', searchid)
 
 router.get('/searchplan/:tipo', searchplan)
 
-router.get('searchmegas/:megas', searchmegas)
+router.get('/searchmegas/:megas', searchmegas)
 
 router.get('/searchplanprice', searchplanprice)
 
