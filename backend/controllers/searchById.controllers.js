@@ -18,7 +18,7 @@ const getSellById = async (req, res) => {
 
 const getLastSell = async (req, res) => {
     try {
-      const query = 'SELECT * FROM venta ORDER BY id_venta DESC LIMIT 1';
+      const query = 'SELECT * FROM venta ORDER BY fecha DESC LIMIT 1';
       const result = await pool.query(query);
       if (result.rows.length === 0) {
         res.json(null);
