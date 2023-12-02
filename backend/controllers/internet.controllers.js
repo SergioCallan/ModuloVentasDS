@@ -1,4 +1,5 @@
 const pool = require('../db')
+const logError = require('./errorHandler');
 
 const getAllInternet = async (req, res, next ) => {
     try{
@@ -6,6 +7,7 @@ const getAllInternet = async (req, res, next ) => {
         res.json(allTasks.rows);
     } catch (error){
         next(error);
+        logError(error);
     }
 }
 
@@ -20,6 +22,7 @@ const getInternet = async (req, res, next) => {
     return res.json(result.rows[0]);
     } catch (error) {
         next(error);
+        logError(error);
     }
 }
 
@@ -33,6 +36,7 @@ const createInternet = async (req, res, next) => {
         return res.json(result.rows[0]);
     } catch (error) {
         next(error);
+        logError(error);
     }
 }
 
@@ -46,6 +50,7 @@ const deleteInternet = async (req, res, next) => {
     return res.json(result.rows[0]);
     } catch (error) {
         next(error);
+        logError(error);
     }
 }
 
@@ -58,6 +63,7 @@ const updateInternet = async (req, res, next) => {
         return res.json(result.rows[0]);
     } catch (error) {
         next(error);
+        logError(error);
     }
 }
 

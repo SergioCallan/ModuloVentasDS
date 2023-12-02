@@ -1,4 +1,5 @@
 const pool= require('../db')
+const logError = require('./errorHandler');
 
 const associate= async (req, res)=>{
     try{
@@ -8,7 +9,8 @@ const associate= async (req, res)=>{
         const result= await pool.query(query, values)
         return res.json(result.rows[0])
     }catch(error){
-        console.error("Error al guardar en la linea: ", error)
+        console.error("Error al guardar en la linea: ", error);
+        logError(error);
     }
 }
 
@@ -24,7 +26,8 @@ const searchLinea= async (req, res)=>{
             res.json(result.rows[0])
         }
     } catch(error){
-        console.error("Error al obtener las linea telefónica: ", error)
+        console.error("Error al obtener las linea telefónica: ", error);
+        logError(error);
     }
 }
 
@@ -40,7 +43,8 @@ const getLineas= async (req, res)=>{
             res.json(results.rows)
         }
     }catch(error){
-        console.error("Error al obtener las lineas: ", error)
+        console.error("Error al obtener las lineas: ", error);
+        logError(error);
     }
 }
 
@@ -53,6 +57,7 @@ const pagoLinea = async (req, res) => {
     } catch (error) {
         console.error("Error al registrar una nueva fecha: ", error);
         res.status(500).json({ error: 'Hubo un error al actualizar la fecha de pago' });
+        logError(error);
     }
 };
 
@@ -65,6 +70,7 @@ const atrasoLinea= async (req, res)=>{
     } catch(error){
         console.error("Error al confirmar el atraso: ", error);
         res.status(500).json({ error: 'Hubo un error al actualizar el estado' });
+        logError(error);
     }
 }
 
@@ -77,6 +83,7 @@ const suspenderLinea= async (req, res)=>{
     } catch(error){
         console.error("Error al confirmar la suspensión: ", error);
         res.status(500).json({ error: 'Hubo un error al actualizar el estado' });
+        logError(error);
     }
 }
 //Arreglar esta hvda
@@ -90,6 +97,7 @@ const reactivarLinea= async(req, res)=>{
     } catch(error){
         console.error("Error al reactivar la linea: ", error)
         res.status(500).json({error: 'Hubo un error al actualizar el estado'});
+        logError(error);
     }
 }
 
@@ -102,6 +110,7 @@ const cancelarLinea= async (req, res)=>{
     } catch(error){
         console.error("Error al confirmar la cancelacion: ", error);
         res.status(500).json({ error: 'Hubo un error al actualizar el estado' });
+        logError(error);
     }
 }
 
@@ -114,6 +123,7 @@ const cambioLinea= async (req, res)=>{
     } catch(error){
         console.error("Error al confirmar el cambio de propietario: ", error)
         res.status(500).json({error: 'Hubo un error al actualizar el dni'})
+        logError(error);
     }
 }
 

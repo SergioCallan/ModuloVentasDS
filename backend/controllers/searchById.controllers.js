@@ -1,4 +1,5 @@
 const pool = require('../db');
+const logError = require('./errorHandler');
 
 const getSellById = async (req, res) => {
   try {
@@ -13,6 +14,7 @@ const getSellById = async (req, res) => {
   } catch (error) {
     console.error('Error al buscar venta por ID:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+    logError(error);
   }
 };
 
@@ -28,6 +30,7 @@ const getLastSell = async (req, res) => {
     } catch (error) {
       console.error('Error al buscar la última venta:', error);
       res.status(500).json({ error: 'Error interno del servidor' });
+      logError(error);
     }
   };
 
@@ -44,6 +47,7 @@ const getLastSell = async (req, res) => {
     } catch (error) {
       console.error('Error al buscar detalles por ID:', error);
       res.status(500).json({ error: 'Error interno del servidor' });
+      logError(error);
     }
   };
  

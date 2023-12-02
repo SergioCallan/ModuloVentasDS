@@ -1,4 +1,6 @@
     // backend/controllers/phoneControllers.js
+    const logError = require('./errorHandler');
+
     const {
         GetAllPhonesCommand,
         GetPhoneByIdCommand,
@@ -14,6 +16,7 @@
             res.json(phones);
         } catch (error) {
             next(error);
+            logError(error);
         }
     };
 
@@ -27,6 +30,7 @@
             res.json(phone);
         } catch (error) {
             next(error);
+            logError(error);
         }
     };
 
@@ -37,6 +41,7 @@
             res.json(newPhone);
         } catch (error) {
             next(error);
+            logError(error);
         }
     };
 
@@ -47,6 +52,7 @@
             res.status(204).send(); // No Content
         } catch (error) {
             next(error);
+            logError(error);
         }
     };
 
@@ -57,6 +63,7 @@
             res.json(updatedPhone);
         } catch (error) {
             next(error);
+            logError(error);
         }
     };
 
