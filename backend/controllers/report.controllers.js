@@ -39,7 +39,7 @@ const createGReportMonthly= async(req,res)=>{
 const createEReportDaily = async (req, res) => {
     try {
         const { periodo1, periodo2 } = req.query
-        const queryVentas = "SELECT id_venta, MIN(fecha) as start_date, MAX(fecha) FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
+        const queryVentas = "SELECT id_venta, fecha AS start_date, fecha AS end_date FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
         const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
@@ -55,7 +55,8 @@ const createEReportDaily = async (req, res) => {
 
         const result = detallesFiltrados.map((detalle) => ({
             id_venta: detalle.id_venta,
-            fecha: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).fecha,
+            start_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).start_date,
+            end_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).end_date,
             total: detalle.total,
         }));
 
@@ -76,7 +77,6 @@ const createEReportWeekly = async (req, res) => {
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
             const queryDetalles = `SELECT id_venta, SUM(coste_total) AS total FROM detalleventa WHERE tipo='Celular' AND id_venta= $1 GROUP BY id_venta`;
-            console.log(resultVentas)
             const resultDetalles = await pool.query(queryDetalles, [venta.id_venta]);
             return resultDetalles.rows[0] || { id_venta: venta.id_venta, total: 0 };
         });
@@ -138,7 +138,7 @@ const createEReportMonthly = async (req, res) => {
 const createPReportDaily= async(req, res)=>{
     try {
         const {periodo1, periodo2}= req.query
-        const queryVentas = "SELECT id_venta, MIN(fecha) as start_date, MAX(fecha) FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
+        const queryVentas = "SELECT id_venta, fecha AS start_date, fecha AS end_date FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
         const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
@@ -154,7 +154,8 @@ const createPReportDaily= async(req, res)=>{
 
         const result = detallesFiltrados.map((detalle) => ({
             id_venta: detalle.id_venta,
-            fecha: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).fecha,
+            start_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).start_date,
+            end_date: resultVentas.rows.find((venta) => venta.id_venta === detalle.id_venta).end_date,
             total: detalle.total,
         }));
 
