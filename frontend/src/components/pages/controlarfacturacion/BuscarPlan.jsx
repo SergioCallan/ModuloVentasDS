@@ -78,7 +78,7 @@ export default function BuscarPlan(){
     const BuscarTipo= async()=>{
         const url= `https://modulo-ventas.onrender.com/searchplan/${Tipo}`
         const response= await axios.get(url)
-        if(response===null){
+        if(response.data===null){
             alert("No se encontró el producto")
         }
         else{
@@ -90,7 +90,7 @@ export default function BuscarPlan(){
         
         const url= `https://modulo-ventas.onrender.com/searchmegas/${Megas}`
         const response= await axios.get(url)
-        if(response===null){
+        if(response.data===null){
             alert("No se encontró el producto")
         }
         else{
@@ -105,7 +105,7 @@ export default function BuscarPlan(){
         }
         const url= `https://modulo-ventas.onrender.com/searchplanprice`
         const response= await axios.get(url, {params: Precio})
-        if(response===null){
+        if(response.data===null){
             alert("No se encontró el producto")
         }
         else{

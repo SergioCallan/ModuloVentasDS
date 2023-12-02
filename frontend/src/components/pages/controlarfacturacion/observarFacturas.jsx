@@ -21,6 +21,7 @@ export default function ObservarFacturas() {
         setDNI("");
         setFactura([]);
         setFacturasPendientes([]);
+        navigate('/menuventas')
       } else {
         const todasLasFacturas = response.data;
         setFactura(todasLasFacturas);
@@ -37,7 +38,6 @@ export default function ObservarFacturas() {
   const verInfo = async (id_factura) => {
     localStorage.setItem("idfactura", id_factura);
     navigate("/operaciones")
-    // Utiliza Navigate o la lógica de navegación adecuada aquí
   };
 
   return (

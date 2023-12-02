@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 // EstadoBase.js
 class EstadoBase {
     pagar(numero_linea, id) {
@@ -16,6 +17,7 @@ class EstadoBase {
   
   // EstadoPendiente.js
   class EstadoPendiente extends EstadoBase {
+    
     async pagar(numero_linea, id, facturaState) {
       alert("Realizando pago.");
       try{
@@ -26,6 +28,8 @@ class EstadoBase {
         const url2= `https://modulo-ventas.onrender.com/paybill/${id}`
         const response2= await axios.put(url2)
         alert("Pago realizado")
+        const navigate= useNavigate()
+        navigate('/observarfacturas')
       } catch(error){
         console.log("Error al realizar el pago: ", error)
       }
@@ -39,7 +43,8 @@ class EstadoBase {
       const url1= `https://modulo-ventas.onrender.com/suspendbill/${id}`
       const response1= await axios.put(url1)
       alert("Servicio suspendido")
-      // Lógica específica para el estado Pendiente
+      const navigate= useNavigate()
+      navigate('/observarfacturas')
       facturaState.estado= new EstadoSuspendido();
     }
   
@@ -50,7 +55,8 @@ class EstadoBase {
       const url1= `https://modulo-ventas.onrender.com/paybill/${id}`
       const response1= await axios.put(url1)
       alert("Servicio cancelado y última factura pagada")
-      // Probablemente debas agregar el cambio de ultimo pago en numero_linea
+      const navigate= useNavigate()
+      navigate('/observarfacturas')
       facturaState.estado= new EstadoCancelado();
     }
   }
@@ -79,6 +85,8 @@ class EstadoBase {
         const response1= await axios.post(url1)
         const url2= `https://modulo-ventas.onrender.com/paybill/${id}`
         const response2= await axios.put(url2)
+        const navigate= useNavigate()
+        navigate('/observarfacturas')
         alert("Pago realizado")
       } catch(error){
         console.log("Error al realizar el pago: ", error)
@@ -95,6 +103,8 @@ class EstadoBase {
       const url0= `https://modulo-ventas.onrender.com/cancelarlinea/${numero_linea}`
       const response0= await axios.put(url0)
       alert("Servicio cancelado.")
+      const navigate= useNavigate()
+      navigate('/observarfacturas')
       facturaState.estado= new EstadoCancelado();
     }
   }

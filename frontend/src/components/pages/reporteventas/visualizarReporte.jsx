@@ -169,7 +169,7 @@ export default function VisualizarReporte(){
                     <button className="btn-imprimir" onClick={downloadPdfDocument}>Imprimir reporte</button>
 
                     <div className='caja-btn'>
-            <button className="btn-regresar" onClick={()=>{navigate('/principal')}}>Menu Principal</button>
+            <button className="btn-regresar" onClick={()=>{navigate('/')}}>Menu Principal</button>
                     </div>
                     
                 
