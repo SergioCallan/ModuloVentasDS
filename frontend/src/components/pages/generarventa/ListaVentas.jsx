@@ -81,13 +81,15 @@ export default function ListaVentas() {
     const response1= await axios.post(url1, venta)
     alert("Venta realizada")
     if(localStorage.getItem("tipo")==="Plan" && localStorage.getItem("tipo")!=null){
-      navigate("/asociarplan")
       localStorage.removeItem("promocionid")
+      navigate("/asociarplan")
     }
     else{
       const promo= localStorage.getItem("promocionid")
-      const url2= `https://modulo-marketing.onrender.com/modificarEstadoPromocion/${promo}`
-      const response= await axios.put(url2)
+      if(promo!==null){
+        const url2= `https://modulo-marketing.onrender.com/modificarEstadoPromocion/${promo}`
+        const response= await axios.put(url2)
+      }
       localStorage.clear()
       navigate("/buscarcliente")
     }
