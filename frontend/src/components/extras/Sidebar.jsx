@@ -27,7 +27,7 @@ const Sidebar = ({ open, onClose, lock }) => {
           <ListItemText primary="Imprimir Venta" />
         </ListItemButton>
         <ListItemButton disabled={isLocked} onClick={()=>navigate("/")}>
-          <ListItemText primary="Agregar Planes y Productos" />
+          <ListItemText primary="Administrar Planes y Productos" />
         </ListItemButton>
         <ListItemButton disabled={isLocked} onClick={()=>navigate("/reporte")}>
           <ListItemText primary="Reportes" />

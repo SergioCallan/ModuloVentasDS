@@ -2,14 +2,16 @@ import {React, useState, useEffect} from "react";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
 import { CabeceraModulo } from "../../extras/CabeceraModulo";
-
+import '../../styles/Reportes/reporte.css'
 
 import FiltroState from "./estadoReporteVenta";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 
 
 export default function VisualizarReporte(){
+    const navigate=useNavigate()
     const [datos, setDatos]= useState([])
     const [Filtro, setFiltro]= useState(new FiltroState())
     const [FiltroVenta, setFiltroVenta]= useState("")
@@ -82,13 +84,19 @@ export default function VisualizarReporte(){
 
     return(
         <main>
-            <body>
+            <div>
                 <CabeceraModulo/>
+                < div className="contenedor-gestion-reportes">
+                <div className="contenedor-nombre-menu">
+                <h2>Reportes</h2>
+                </div>
+
                 <div className="Filtros">
+                  <div className="seccion-filtro">
                     <h3>Filtrar: </h3>
                     <Dropdown isOpen={dropdownF} toggle={abrirCerrarDropdownF}>
                         <DropdownToggle caret className="Dropdown">
-                            {FiltroVenta}
+                            {FiltroVenta ? FiltroVenta : "Seleccionar Filtro"}
                         </DropdownToggle>
                         <DropdownMenu>
                             <DropdownItem divider/>
@@ -97,13 +105,18 @@ export default function VisualizarReporte(){
                             <DropdownItem onClick={()=>SelectPlan()}>Venta de planes</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
+                    </div>
+
                     <h3>Fecha del periodo (Formato YYYY-MM-DD): </h3>
-                    <input type="text" className="input" onChange={changingPeriodo1} value={Periodo1}></input>
-                    <input type="text" className="input" onChange={changingPeriodo2} value={Periodo2}></input>
+                    <div className="seccion-inputs">
+                    <input type="text" className="input struct-input" onChange={changingPeriodo1} value={Periodo1}></input>
+                    <input type="text" className="input struct-input" onChange={changingPeriodo2} value={Periodo2}></input>
+                    </div>
+                    <div className="seccion-filtro">
                     <h3>Tipo de intervalo: </h3>
                     <Dropdown isOpen={dropdownI} toggle={abrirCerrarDropdownI}>
                         <DropdownToggle caret className="Dropdown">
-                            {FiltroIntervalo}
+                            {FiltroIntervalo ? FiltroIntervalo : "Seleccionar Filtro"}
                         </DropdownToggle>
                         <DropdownMenu>
                             <DropdownItem divider/>
@@ -112,16 +125,25 @@ export default function VisualizarReporte(){
                             <DropdownItem onClick={()=> SelectMes()}>Ventas mensuales</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
-                    <button onClick={CargarTabla}>Cargar tabla</button>
-                    <button onClick={LimpiarTabla}>Limpiar tabla</button>
+                    </div>
+                    <div className="btns-tabla">
+                    <button className="btn-tabla btn-color2" onClick={CargarTabla}>Cargar tabla</button>
+                    <button className="btn-tabla btn-color1" onClick={LimpiarTabla}>Limpiar tabla</button>
+                    </div>
                 </div>
-                <div className="Tabla">
+               
                     <TablaReporte datos={datos}/>
-                </div>
-                <div className="Opciones">
-                    <button>Imprimir reporte</button>
-                </div>
-            </body>
+               
+                
+                    <button className="btn-imprimir">Imprimir reporte</button>
+
+                    <div className='caja-btn'>
+            <button className="btn-regresar" onClick={()=>{navigate('/principal')}}>Menu Principal</button>
+                    </div>
+                    
+                
+            </div>
+            </div>
         </main>
     )
 }
@@ -130,9 +152,9 @@ function TablaReporte({ datos }) {
   let acumulado=0;
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{maxHeight:'300px', maxWidth: '70vw',marginBottom: '3vh'}}>
       <Table>
-        <TableHead>
+        <TableHead component={Paper} sx={{position:'sticky', top:'0px'}}>
           <TableRow>
             <TableCell>Fecha de inicio</TableCell>
             <TableCell>Fecha de fin</TableCell>
@@ -163,4 +185,4 @@ function TablaReporte({ datos }) {
       </Table>
     </TableContainer>
   );
-};
+}

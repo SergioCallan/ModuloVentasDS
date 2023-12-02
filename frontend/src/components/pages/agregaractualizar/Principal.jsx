@@ -59,6 +59,10 @@ export default function Principal() {
       <div>
       <Button variant="contained" color="primary" onClick={handleLista} style={{marginLeft: '20px'}}>Listado de celulares y planes</Button>
       </div>
+
+      <div className='caja-btn'>
+      <button className="btn-regresar" onClick={()=>{navigate('/principal')}}>Menu Principal</button>
+      </div>
    
     </div>
   );
