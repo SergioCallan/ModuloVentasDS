@@ -42,7 +42,7 @@ const searchmegas= async(req, res)=>{
     try {
         const megas= req.params.megas
         const query = "SELECT * FROM plan WHERE megas = $1";
-        const result= await pool.query(query, [modelo])
+        const result= await pool.query(query, [megas])
         if(result.rows.length===0){
             res.json(null)
         }

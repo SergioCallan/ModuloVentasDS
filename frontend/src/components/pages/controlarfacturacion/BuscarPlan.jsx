@@ -88,6 +88,7 @@ export default function BuscarPlan(){
     }
 
     const BuscarMegas= async()=>{
+        
         const url= `https://modulo-ventas.onrender.com/searchmegas/${Megas}`
         const response= await axios.get(url)
         if(response===null){
