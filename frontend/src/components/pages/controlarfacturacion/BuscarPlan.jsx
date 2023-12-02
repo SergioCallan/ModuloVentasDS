@@ -57,7 +57,7 @@ export default function BuscarPlan(){
                 BuscarMegas()
             }
             else if(Filtro==="Precio"){
-                
+                BuscarPrecio()
             }
         }catch(error){
             console.error("Error al enviar la solicitud: ", error)
@@ -98,6 +98,20 @@ export default function BuscarPlan(){
         }
     }
 
+    const BuscarPrecio= async()=>{
+        const Precio={
+            preciomin: PrecioMin,
+            preciomax: PrecioMax
+        }
+        const url= `https://modulo-ventas.onrender.com/searchplanprice`
+        const response= await axios.get(url, {params: Precio})
+        if(response===null){
+            alert("No se encontró el producto")
+        }
+        else{
+            setDatosP(response.data)
+        }
+    }
 
     const [datosP, setDatosP] = useState([]);
 

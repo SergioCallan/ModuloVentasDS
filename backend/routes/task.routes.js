@@ -1,9 +1,9 @@
 const { Router } = require('express');
 const { getAllPhone, getPhone, createPhone, deletePhone, updatePhone } = require('../controllers/phone.controllers');
 const { getAllInternet, getInternet, createInternet, deleteInternet, updateInternet } = require('../controllers/internet.controllers');
-const {searchproduct, searchbrand, searchmodel, searchid}= require('../controllers/searchphone.controllers')
+const {searchproduct, searchbrand, searchmodel, searchprice, searchid}= require('../controllers/searchphone.controllers')
 const {addDetails, getSellDetails, deleteSell, registerSell, deleteDetail, getSelldni, getSellid, calculateSell}= require('../controllers/sell.controllers')
-const {searchplan, searchmegas, searchplanid}=require('../controllers/searchplan.controllers')
+const {searchplan, searchmegas, searchplanid, searchplanprice}=require('../controllers/searchplan.controllers')
 const {associate, getLineas, pagoLinea, atrasoLinea, cancelarLinea, searchLinea, cambioLinea, suspenderLinea, reactivarLinea}= require('../controllers/factura.controllers')
 const {searchbilldni, searchbillnumber, searchbillid, createbill, searchpaybilldni, searchpaybillnumero, paybill, updateBill, suspendBill}= require('../controllers/bills.controllers')
 const {searchWarranty}= require('../controllers/warranty.controllers')
@@ -45,11 +45,15 @@ router.get('/searchbrand/:marca', searchbrand)
 
 router.get('/searchmodel/:modelo', searchmodel)
 
+router.get('/searchprice', searchprice)
+
 router.get('/searchid/:id', searchid)
 
 router.get('/searchplan/:tipo', searchplan)
 
 router.get('searchmegas/:megas', searchmegas)
+
+router.get('/searchplanprice', searchplanprice)
 
 router.get('/searchplanid/:id', searchplanid)
 

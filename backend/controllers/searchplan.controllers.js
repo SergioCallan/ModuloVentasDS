@@ -55,6 +55,23 @@ const searchmegas= async(req, res)=>{
     }
 }
 
+const searchplanprice= async(req, res)=>{
+    try {
+        const {preciomin, preciomax}= req.query
+        const query = "SELECT * FROM plan WHERE precio BETWEEN $1 AND $2";
+        const result= await pool.query(query, [preciomin, preciomax])
+        if(result.rows.length===0){
+            res.json(null)
+        }
+        else{
+            res.json(result.rows)
+        }
+    } catch (error) {
+    console.error('Error al obtener producto:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+    }
+}
+
 //Buscar producto por id
 const searchplanid= async(req, res)=>{
     try {
@@ -78,5 +95,6 @@ const searchplanid= async(req, res)=>{
 module.exports={
     searchplan,
     searchmegas,
+    searchplanprice,
     searchplanid
 }
