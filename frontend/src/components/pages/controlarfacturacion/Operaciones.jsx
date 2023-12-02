@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import FacturaState from './estados';
+import { CabeceraModulo } from '../../extras/CabeceraModulo';
+import '../../styles/controlarFacturacion/operaciones.css'
 
 const Operaciones = () => {
   const [factura, setFactura] = useState(new FacturaState());
@@ -25,15 +27,22 @@ const Operaciones = () => {
   }, []);
 
   return (
-    <div>
+    <div >
+      <CabeceraModulo></CabeceraModulo>
+      <div className='contenedor-factura'>
+      <div className='factura-seleccionada'>
       <p>Factura</p>
       <p>ID: {factura.id}</p>
       <p>Numero facturado: {factura.numero_linea} </p>
       <p>Precio: {factura.precio}</p>
       <p>Estado: {estado}</p>
-      <button onClick={() => factura.pagar(factura.numero_linea, factura.id, factura)}>Pagar servicio</button>
-      <button onClick={() => factura.suspender(factura.numero_linea, factura.id, factura)}>Suspender servicio</button>
-      <button onClick={() => factura.cancelar(factura.numero_linea, factura.id, factura)}>Cancelar servicio</button>
+      </div>
+      <div className='contenedor-botones'>
+      <button className='btn-struct btn-color1' onClick={() => factura.pagar(factura.numero_linea, factura.id, factura)}>Pagar servicio</button>
+      <button className='btn-struct btn-color2' onClick={() => factura.suspender(factura.numero_linea, factura.id, factura)}>Suspender servicio</button>
+      <button className='btn-struct btn-color3' onClick={() => factura.cancelar(factura.numero_linea, factura.id, factura)}>Cancelar servicio</button>
+      </div>
+    </div>
     </div>
   );
 };

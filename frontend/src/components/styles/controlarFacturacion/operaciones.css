@@ -1,0 +1,53 @@
+.contenedor-factura{
+    width: 80%;
+    height: 60vh;
+    background-color: #9e9e9e;
+    margin: 0 auto;
+    margin-top: 4vh;
+    padding: 10px;
+    border-radius: 30px;
+    border: 2px solid ;
+}
+
+.factura-seleccionada{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+    border: 2px solid;
+}
+
+.contenedor-botones{
+    display: flex;
+    gap: 5vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-struct{
+    width: 20%;
+    height: 8vh;
+    border-radius: 20px;
+}
+
+.btn-color1{
+    background-color: #1e7df0;
+    color: white;
+
+}
+
+.btn-color2{
+    background-color: #63ca00;
+    color: white;
+}
+
+.btn-color3{
+    background-color: #ff1919;
+    color: white;
+}
+

@@ -23,18 +23,18 @@ export default function MenuVentas(){
     }
 
     return(
-        <main>
+        <div>
             <CabeceraModulo></CabeceraModulo>
             <div className="Opciones">
                 <h3>Para vender productos:</h3>
-                <button className="Azul" onClick={irProducto}>Buscar productos</button>
-                <h3>Para registrar un plan:</h3>
-                <button className="Azul" onClick={irPlan}>Buscar planes</button>
-                <h3>Para cobrar una factura: </h3>
+                <button className="Azul" onClick={irProducto}>Seleccionar productos</button>
+                <h3>Para asociarse a un plan:</h3>
+                <button className="Azul" onClick={irPlan}>Seleccionar planes de internet</button>
+                <h3>Estado de la(s) factura(s): </h3>
                 <button className="Azul" onClick={irFacturacion}>Ver facturas</button>
-                <h3>Ver lineas asociadas al cliente: </h3>
-                <button className="Azul">Lineas</button>
+                {/* <h3>Ver lineas asociadas al cliente: </h3>
+                <button className="Azul">Lineas</button> */}
             </div>
-        </main>
+        </div>
     )
 }
