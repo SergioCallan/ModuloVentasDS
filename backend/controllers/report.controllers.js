@@ -39,7 +39,7 @@ const createGReportMonthly= async(req,res)=>{
 const createEReportDaily = async (req, res) => {
     try {
         const { periodo1, periodo2 } = req.query
-        const queryVentas = "SELECT id_venta, fecha AS start_date, fecha AS end_date FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
+        const queryVentas = "SELECT id_venta, MIN(fecha) as start_date, MAX(fecha) FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
         const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
@@ -138,7 +138,7 @@ const createEReportMonthly = async (req, res) => {
 const createPReportDaily= async(req, res)=>{
     try {
         const {periodo1, periodo2}= req.query
-        const queryVentas = "SELECT id_venta, fecha AS start_date, fecha AS end_date FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
+        const queryVentas = "SELECT id_venta, MIN(fecha) as start_date, MAX(fecha) FROM venta WHERE fecha BETWEEN $1 AND $2 GROUP BY id_venta, fecha ORDER BY fecha";
         const resultVentas = await pool.query(queryVentas, [periodo1, periodo2]);
 
         const detallePromises = resultVentas.rows.map(async (venta) => {
