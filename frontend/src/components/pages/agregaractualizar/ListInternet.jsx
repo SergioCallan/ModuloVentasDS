@@ -41,7 +41,7 @@ export default function ListInternet(){
                         marginBottom: ".7rem",
                         backgroundColor: "#006d77"
                     }}
-                    key={task.id_internet}
+                    key={task.id_plan}
                     >
                         <CardContent style={{
                             display: "flex",
@@ -61,11 +61,13 @@ export default function ListInternet(){
                             }}>
                                 <Button
                                     variant="contained"
+                                    type = "button"
                                     color="inherit"
                                     onClick={()=> handleEdit(task.id_plan)}
                                 >Editar</Button>
                                 <Button
                                     variant="contained"
+                                    type = "button"
                                     onClick={()=> handleDelete(task.id_plan)}
                                     style={{marginLeft: ".5rem",
                                     backgroundColor: 'red',
