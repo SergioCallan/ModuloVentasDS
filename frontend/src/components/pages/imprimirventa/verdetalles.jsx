@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { CabeceraModulo } from '../../extras/CabeceraModulo';
 
 const SellDetails = () => {
   const { id_detalle } = useParams();
@@ -64,6 +65,8 @@ const SellDetails = () => {
   }
 
   return (
+    <div>
+      <CabeceraModulo></CabeceraModulo>
     <div id='boletaContainer' style={boletaStyle}>
       <div style={headerStyle}>
         <h1>Boleta de Venta</h1>
@@ -121,6 +124,7 @@ const SellDetails = () => {
             <span>{cliente?.distrito}</span>
           </div>
       {isButtonVisible && <button onClick={downloadPdfDocument}>Descargar Boleta</button>}
+    </div>
     </div>
   );
 };

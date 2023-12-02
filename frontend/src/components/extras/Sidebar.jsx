@@ -23,6 +23,9 @@ const Sidebar = ({ open, onClose, lock }) => {
         <ListItemButton onClick={()=>navigate("/buscarcliente")}>
           <ListItemText primary="Opciones ligadas al cliente" />
         </ListItemButton>
+        <ListItemButton onClick={()=>navigate("/sell/idventa")}>
+          <ListItemText primary="Imprimir Venta" />
+        </ListItemButton>
         <ListItemButton disabled={isLocked} onClick={()=>navigate("/")}>
           <ListItemText primary="Agregar Planes y Productos" />
         </ListItemButton>

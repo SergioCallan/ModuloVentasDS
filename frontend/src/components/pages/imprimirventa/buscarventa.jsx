@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import { CabeceraModulo } from '../../extras/CabeceraModulo';
 
 const SearchById = () => {
   const [id, setId] = useState('');
@@ -56,6 +57,8 @@ const SearchById = () => {
   };
 
   return (
+    <div>
+    <CabeceraModulo/>
     <div style={styles.container}>
       <h2 style={styles.header}>Buscar por ID</h2>
       <div style={styles.searchSection}>
@@ -103,6 +106,7 @@ const SearchById = () => {
       ))}
     </tbody>
   </table>
+    </div>
     </div>
   );
 };
