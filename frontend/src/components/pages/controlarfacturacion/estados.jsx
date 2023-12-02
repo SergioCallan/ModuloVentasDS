@@ -58,18 +58,14 @@ class EstadoBase {
   class EstadoPagado extends EstadoBase {
     pagar(numero_linea, id, facturaState) {
       alert("Factura ya pagada.");
-      // Lógica específica para el estado Pendiente
-      facturaState.estado= new EstadoPendiente();
     }
   
     suspender(numero_linea, id, facturaState) {
       alert("Factura ya pagada, no se puede suspender");
-      // Lógica específica para el estado Pendiente
     }
   
     cancelar(numero_linea, id, facturaState) {
       alert("Factura ya pagada, no puede cancelarse");
-      // Lógica específica para el estado Pendiente
     }
   }
 
@@ -92,7 +88,6 @@ class EstadoBase {
   
     suspender(numero_linea, id, facturaState) {
       alert("Factura ya registrada como atrasada y línea suspendida");
-      // Lógica específica para el estado Pendiente
     }
   
     async cancelar(numero_linea, id, facturaState) {
@@ -101,7 +96,6 @@ class EstadoBase {
       const response0= await axios.put(url0)
       alert("Servicio cancelado.")
       facturaState.estado= new EstadoCancelado();
-      // Lógica específica para el estado Pendiente
     }
   }
   

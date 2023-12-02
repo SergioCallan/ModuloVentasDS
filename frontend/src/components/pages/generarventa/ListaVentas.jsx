@@ -17,6 +17,7 @@ import { TCelda, TCelda2 } from "../../styles/CeldaTablaPersonalizada";
 export default function ListaVentas() {
   const [data, setData]= useState([])
   const navigate= useNavigate()
+  const [MostrarAgregar, setMostrarAgregar] = useState(true);
 
   const getdetails= async()=>{
     const idventa= localStorage.getItem("venta")
@@ -24,10 +25,14 @@ export default function ListaVentas() {
     const response0= await axios.get(url0)
     if(response0.data==null){
       alert("No se encontraron productos en la lista")
-      localStorage.clear()
+      localStorage.removeItem('tipo')
+      localStorage.removeItem('venta')
       navigate("/menuventas")
     }
     setData(response0.data)
+    if(response0.data[0].tipo=="Plan"){
+      setMostrarAgregar(false)
+    }
   }
 
   useEffect(()=>{
@@ -96,7 +101,9 @@ export default function ListaVentas() {
        
         <div className="seccion-btns">
           <button className="Rojo btn-estructura" onClick={CancelarTodo}>Cancelar Venta</button>
-          <button className="Celeste btn-estructura" onClick={AgregarProducto}>Agregar otro producto</button>
+          {MostrarAgregar && (
+            <button className="Celeste btn-estructura" onClick={AgregarProducto}>Agregar otro producto</button>
+                )}
           <button className="Verde btn-estructura" onClick={Registrar}>Confirmar venta</button>
         </div>
         </div>
@@ -115,7 +122,6 @@ function TablaDetalles({datos}){
   const eliminarDetalle=async (id_detalle)=>{
     const url3= `https://modulo-ventas.onrender.com/deletedetail/${id_detalle}`
     const response= await axios.delete(url3)
-    alert("Producto eliminado")
     window.location.reload()
   }
 

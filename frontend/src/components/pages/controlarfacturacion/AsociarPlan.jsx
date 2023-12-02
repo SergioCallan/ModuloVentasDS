@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 export default function AsociarPlan(){
     const [Numero, setNumero]=useState("")
     const [IDPlan, setIDPlan]= useState("")
+    const navigate= useNavigate()
 
     const changingNumero=(event)=>{
         setNumero(event.target.value)
@@ -40,13 +41,9 @@ export default function AsociarPlan(){
 
     const AsociarNumero= async(e)=>{
         e.preventDefault()
-        if(localStorage.getItem("idplan")!=null || localStorage.getItem("idplan")!=""){
-            setIDPlan(localStorage.getItem("idplan"))
-            console.log(IDPlan)
-        }
         const linea={
             numero: Numero,
-            plan: IDPlan,
+            plan: localStorage.getItem("idplan"),
             fecha_compra: new Date(),
             ultimo_pago: new Date(),
             monto_pago: localStorage.getItem("montoplan"),
@@ -57,7 +54,12 @@ export default function AsociarPlan(){
         const response= await axios.post(url, linea)
         CrearFactura(linea)
         alert("Numero asociado exitosamente")
-        console.log(response.data)
+        localStorage.removeItem("venta")
+        localStorage.removeItem("idfactura")
+        localStorage.removeItem("idplan")
+        localStorage.removeItem("tipo")
+        localStorage.removeItem("montoplan")
+        navigate('/menuventas')
     }
 
     return(
@@ -72,10 +74,6 @@ export default function AsociarPlan(){
                 <button onClick={GenerarNumero}>Click aqui</button>
                 <input type="text" className="input" name="numeronuevo" placeholder="Nuevo numero" disabled value={Numero}></input>
                 <button onClick={AsociarNumero}>Asociar Numero</button>
-                <div className="Busqueda Plan">
-                    <h3>Para buscar plan dentro de los pagados por el cliente: </h3>
-                    <button>Buscar plan</button>
-                </div>
             </div>
         </main>
     )

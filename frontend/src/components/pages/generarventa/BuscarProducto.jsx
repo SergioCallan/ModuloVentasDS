@@ -10,6 +10,7 @@ import { CabeceraModulo } from "../../extras/CabeceraModulo.jsx";
 
 export default function BuscarProducto() {
   const navigate= useNavigate()
+  const [promocion, setPromocion] = useState(0);
   const [ID, setID]=useState("")
   // Dropdown Filtro Producto
   const [dropdownF, setDropdownF] = useState(false);
@@ -161,7 +162,6 @@ export default function BuscarProducto() {
     
     const costeTotal= await CalcularCoste(detalleventa.cantidad, Precio, detalleventa.id_garantia)
     detalleventa.coste_total = costeTotal;
-    alert(costeTotal)
     const url5= `https://modulo-ventas.onrender.com/adddetail`
     const response5= await axios.post(url5, detalleventa)
     console.log(response5.data)
@@ -176,6 +176,11 @@ export default function BuscarProducto() {
       const response= await axios.get(url)
       const precioGarantia= parseFloat(response.data.precio)
       precioDetalle+=precioGarantia
+    }
+    if(promocion!=0){
+      const descuento= parseFloat(promocion)
+      
+      precioDetalle= precioDetalle*(100-descuento)/100
     }
     return precioDetalle
   }
@@ -200,6 +205,22 @@ export default function BuscarProducto() {
     const response= await axios.get(url)
     alert("La garantia cubre: "+response.data.porcentaje+"%")
     alert("Coste de la garantia: "+response.data.precio)
+  }
+
+  const BuscarDescuento= async(e)=>{
+    e.preventDefault()
+    const dni= localStorage.getItem("dnicliente")
+    const url= `https://modulo-marketing.onrender.com/buscarClientePorDNI/${dni}`
+    const response= await axios.get(url)
+
+    const campana_id= response.data.campana_id
+    const url1= `https://modulo-marketing.onrender.com/buscarCampanaPorID/${campana_id}`
+    const response1= await axios.get(url1)
+
+    const promocion_id= response1.data.promocion_id
+    const url2= `https://modulo-marketing.onrender.com/buscarPromocionPorID/${promocion_id}`
+    const response2= await axios.get(url2)
+    setPromocion(response2.data.promocion)
   }
 
   //Función para comprobar que haya un cliente
@@ -273,6 +294,11 @@ export default function BuscarProducto() {
         <label htmlFor="Cantidad">Cantidad del producto:</label>
         <input type="number" className="input input-small" name= "Cantidad" onChange={changingCantidad} required value={Cantidad}></input>
         <label htmlFor="Cantidad">unidad(es)</label>
+        </div>
+        <div className="capsula">
+        <label htmlFor="Descuento">Descuento(%) :</label>
+        <input type="text" className="input" name="Garantia" disabled required value={promocion}></input>
+        <button id="BuscarDescuento" className="Celeste btn-buscar-garantia" onClick={BuscarDescuento}>Buscar Descuento</button>
         </div>
         <div className="capsula">
         <label htmlFor="Garantia">ID del Tipo de Garantia(%) :</label>
