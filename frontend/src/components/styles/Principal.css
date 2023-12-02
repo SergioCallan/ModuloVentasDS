@@ -1,0 +1,6 @@
+.contenedor-agregacion{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 4vh;
+}

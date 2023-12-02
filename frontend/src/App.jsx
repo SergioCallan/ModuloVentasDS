@@ -15,11 +15,14 @@ import Listado from "./components/pages/agregaractualizar/listado"
 import SearchById from './components/pages/imprimirventa/buscarventa';
 import SellDetails from './components/pages/imprimirventa/verdetalles';
 import Operaciones from './components/pages/controlarfacturacion/Operaciones'
+import {InterfazBase} from './components/pages/InterfazPrincipal/InterfazBase'
 import VisualizarReporte from "./components/pages/reporteventas/visualizarReporte"
+import { AvailableContextProvider } from "./context/AvailableContext"
 
 function App(){
   return(
     <BrowserRouter>
+    <AvailableContextProvider>
           <Routes>
               <Route path ='/' element={<Principal/>} />
               <Route path='/phone' element={<Phone/>}/>
@@ -41,7 +44,9 @@ function App(){
               <Route path="/operaciones" element={<Operaciones/>}/>
               <Route path="/reporte" element={<VisualizarReporte/>}/>
               <Route path="/selldetails/:id_detalle" element={<SellDetails />} />
+              <Route path="/principal" element={<InterfazBase/>}/>
           </Routes>
+          </AvailableContextProvider>
     </BrowserRouter>
   )
 }

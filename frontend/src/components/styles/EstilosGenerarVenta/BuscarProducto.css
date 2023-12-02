@@ -1,0 +1,151 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #f8f8f8;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.Header{
+    display: grid;
+    grid-template-areas: 
+    "element2 element1 element1 element1 element1 element1 element1 element1 element1 element1 element1 element1 element1";
+    background-color: #1741AD;
+    text-align: center;
+    color: white; 
+    width: 100vw;
+    height: 15vh;
+}
+
+.Contenedor-Nombre-Modulo{
+    grid-area: element1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 6vw;
+}
+
+.Menu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+    width: 98%;
+    padding-bottom: 4vh;
+}
+
+.contenedor-nombre-menu{
+    margin-top: 1vw;
+    color: white;
+    background-color: #1741AD;
+    width: 98%;
+    height: 10%;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.seccion-select-filtro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 3vh;
+    padding-bottom: 2vw;
+}
+
+.subseccion-filtrar-por{
+    margin-top: 3vh;
+    display: flex;
+    gap: 10px;
+}
+
+.contenedor-precios{
+    display: flex;
+    gap: 1.5vw;
+}
+
+.campo{
+    border-color: black;
+}
+
+.campo-nombre{
+    width: 30vw;
+}
+
+.campo-marca{
+    width: 17vw;
+}
+
+.campo-modelo{
+    width: 17vw;
+}
+
+.campo-min{
+    width: 8vw;
+}
+
+.campo-max{
+    width: 8vw;
+}
+
+.contenedor-filtro{
+    display: flex;
+    gap: 1.5vw;
+}
+
+.btn-estructura{
+    width: 30%;
+    height: 6vh;
+}
+
+.btn-filtrar{
+    width: 20vw;
+    height: 6vh;
+    background-color: orange;
+    color: #f8f8f8;
+    border-radius: 15px;
+    border-color: orange;
+}
+
+.btn-seleccionar-producto{
+    /* boton interno de la tabla de filtrado */
+    width: 80%;
+    height: 60%;
+    border-radius: 10px;
+}
+
+.capsula{
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    margin: 0 auto;
+    margin-bottom: 2vh;
+}
+
+.input{
+    width: 20vw;
+}
+
+.input-small{
+    width: 4vw;
+}
+
+.contenedor-btns{
+    display: flex;
+    gap: 10%;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-buscar-garantia{
+    width: 15vw;
+    height: 6vh;
+}

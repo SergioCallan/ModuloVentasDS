@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
+import { CabeceraModulo } from "../../extras/CabeceraModulo";
+import '../../styles/controlarFacturacion/facturacion.css'
 
 export default function ObservarFacturas() {
   const [factura, setFactura] = useState([]);
@@ -39,9 +41,11 @@ export default function ObservarFacturas() {
   };
 
   return (
-    <main>
-      <div className="Buscador">
-        <h3>DNI del cliente: {dni}</h3>
+    <div>
+      <CabeceraModulo></CabeceraModulo>
+      <div className="buscador">
+        <h3>DNI del cliente:</h3>
+        <h3>{dni}</h3>
         <button onClick={ActualizarFactura}>Actualizar lista de facturas</button>
       </div>
       <div className="facturacion">
@@ -54,7 +58,7 @@ export default function ObservarFacturas() {
           verInfo={verInfo}
         />
       </div>
-    </main>
+    </div>
   );
 }
 

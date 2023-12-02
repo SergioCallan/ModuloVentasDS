@@ -2,6 +2,7 @@ import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import '../../styles/EstilosAgregarActualizar/listado.css'
 
 export default function ListInternet(){
 

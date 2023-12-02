@@ -1,0 +1,21 @@
+.buscador{
+    display: flex;
+     align-items: center; 
+    margin: 4vh auto;
+    justify-content: center;
+    gap: 2vw
+}
+
+.facturacion{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.factura-individual{
+    background-color: #D9D9D9;
+    padding: 15px 25px;
+    margin-top: 20px ;
+    margin-bottom: 20px;
+}

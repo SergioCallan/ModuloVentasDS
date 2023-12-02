@@ -1,6 +1,8 @@
 import {React, useState, useEffect} from "react";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 import FiltroState from "./estadoReporteVenta";
 
@@ -74,6 +76,23 @@ export default function VisualizarReporte(){
         
     }
 
+    const downloadPdfDocument = () => {
+      const domElement = document.getElementById('tablaReporte');
+    
+      html2canvas(domElement, { scrollY: -window.scrollY }).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('l', 'mm', [canvas.width, canvas.height]);
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save('reporte_ventas.pdf');
+      });
+    };
+    
+  
+
+
+    
+
+
     const LimpiarTabla= async (e)=>{
       setDatos([])
     }
@@ -114,13 +133,13 @@ export default function VisualizarReporte(){
                     </Dropdown>
                     <button onClick={CargarTabla}>Cargar tabla</button>
                     <button onClick={LimpiarTabla}>Limpiar tabla</button>
+                    <button onClick={downloadPdfDocument}>Imprimir reporte</button>
+
                 </div>
                 <div className="Tabla">
                     <TablaReporte datos={datos}/>
                 </div>
-                <div className="Opciones">
-                    <button>Imprimir reporte</button>
-                </div>
+                
             </body>
         </main>
     )
@@ -130,7 +149,7 @@ function TablaReporte({ datos }) {
   let acumulado=0;
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} id="tablaReporte">
       <Table>
         <TableHead>
           <TableRow>

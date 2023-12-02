@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../extras/Sidebar";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../../styles/MenuVentas.css"
+import {TCelda} from "../../styles/CeldaTablaPersonalizada";
+import '../../styles/EstilosGenerarVenta/BuscarProducto.css'
+import { CabeceraModulo } from "../../extras/CabeceraModulo.jsx";
 
 export default function BuscarProducto() {
   const navigate= useNavigate()
@@ -214,22 +212,19 @@ export default function BuscarProducto() {
 
   return (
     <main>
-      <IconButton onClick={handleSidebarOpen} edge="start" color="inherit" aria-label="menu">
-        <MenuIcon />
-      </IconButton>
-      <Sidebar open={sidebarOpen} onClose={handleSidebarClose} />
-      <div className="Header">
-        <h1>Módulo de Ventas</h1>
-      </div>
+      <CabeceraModulo></CabeceraModulo>
       <div className="Menu">
-        <h2 className="h2">Seleccionar productos</h2>
-        <h3>Tipo de venta: Producto</h3>
-        <br />
+        <div className="contenedor-nombre-menu">
+          <h2>Seleccionar productos</h2>
+        </div>
+        {/* <h4>Tipo de venta: Producto</h4> */}
           <div className="Productos">
-            <h3>Filtrar por: </h3>
+            <div className="seccion-select-filtro">
+              <div className="subseccion-filtrar-por">
+            <h4>Filtrar productos por: </h4>
             <Dropdown isOpen={dropdownF} toggle={abrirCerrarDropdownF}>
               <DropdownToggle caret className="DropdownF">
-                {Filtro}
+                {Filtro ? Filtro : 'Seleccionar filtro'}
               </DropdownToggle>
               <DropdownMenu>
                 <DropdownItem divider />
@@ -239,48 +234,64 @@ export default function BuscarProducto() {
                 <DropdownItem onClick={() => SelectPrecio()}>Precio</DropdownItem>
               </DropdownMenu>
             </Dropdown>
+            </div>
                 {MostrarNombre && (
-                <div>
-                    <input type="text" className="input" name="NombreProducto" placeholder="Nombre del producto" onChange={changingNombre} value={Nombre}></input>
+                <div className="contenedor-filtro">
+                  <label htmlFor="NombreProducto">Nombre del Producto:</label>
+                  <input type="text" className="campo campo-nombre" name="NombreProducto" placeholder="Nombre" onChange={changingNombre} value={Nombre}></input>
                 </div>
                 )}
                 {MostrarMarca && (
-                <div>
-                    <input type="text" className="input" name="Marca" placeholder="Marca del producto" onChange={changingMarca} value={Marca}></input>
+                <div className="contenedor-filtro">
+                    <label htmlFor="Marca">Marca del Producto:</label>
+                    <input type="text" className="campo campo-marca" name="Marca" placeholder="Marca" onChange={changingMarca} value={Marca}></input>
                 </div>
                 )}
                 {MostrarModelo && (
-                <div>
-                    <input type="text" className="input" name="Modelo" placeholder="Modelo del producto" onChange={changingModelo} value={Modelo}></input>
+                <div className="contenedor-filtro">
+                    <label htmlFor="Modelo">Modelo del Producto:</label>
+                    <input type="text" className="campo campo-modelo" name="Modelo" placeholder="Modelo" onChange={changingModelo} value={Modelo}></input>
                 </div>
                 )}
                 {MostrarPrecio && (
-                <div>
-                    <input type="text" className="input" name="PrecioMin" placeholder="Precio minimo del producto" onChange={changingPrecioMin} value={PrecioMin}></input>
-                    <input type="text" className="input" name="PrecioMax" placeholder="Precio maximo del producto" onChange={changingPrecioMax} value={PrecioMax}></input>
+                <div className="contenedor-precios">
+                    <label htmlFor="PrecioMin">Precio minimo:</label> 
+                    <input type="text" className="campo campo-min" name="PrecioMin" onChange={changingPrecioMin} value={PrecioMin}></input>
+                    <label htmlFor="PrecioMax">Precio maximo:</label>
+                    <input type="text" className="campo campo-max" name="PrecioMax" onChange={changingPrecioMax} value={PrecioMax}></input>
                 </div>
                 )}
-                <button id="FilterProduct" className="Celeste" onClick={Filtrar}>
-                Filtrar Producto
-                </button>
+                {Filtro && <button className="btn-filtrar" onClick={Filtrar}>
+                Filtrar Producto(s)
+                </button>}
+                </div>
 
-            <div className="TablaP">
-              <TablaProductos datos={datosP} setID={setID} setPrecio={setPrecio} />
-            </div>
+              <TablaProductos datos={datosP} setID={setID} setPrecio={setPrecio}/>
+
           </div>
-        <input type="number" className="input" name= "Cantidad" placeholder="Cantidad" onChange={changingCantidad} required value={Cantidad}></input>
-        <br></br>
-        <input type="text" className="input" name="Garantia" placeholder="ID de la garantia" onChange={changingGarantia} required value={Garantia}></input>
-        <button id="BuscarGarantia" className="Celeste" onClick={BuscarGarantia}>Buscar Garantia</button>
-        <br></br>
-        <input type="number" className="input" name="TiempoG" placeholder="Tiempo de la garantia(meses)" onChange={changingTiempoG} required value={TiempoG}></input>
-        <br></br>
-        <button id="Regresar" className="Rojo" onClick={Regresar}>
+        <div className="capsula">
+        <label htmlFor="Cantidad">Cantidad del producto:</label>
+        <input type="number" className="input input-small" name= "Cantidad" onChange={changingCantidad} required value={Cantidad}></input>
+        <label htmlFor="Cantidad">unidad(es)</label>
+        </div>
+        <div className="capsula">
+        <label htmlFor="Garantia">ID del Tipo de Garantia(%) :</label>
+        <input type="text" className="input" name="Garantia" onChange={changingGarantia} required value={Garantia}></input>
+        <button id="BuscarGarantia" className="Celeste btn-buscar-garantia" onClick={BuscarGarantia}>Buscar Garantia</button>
+        </div>
+        <div className="capsula">
+        <label htmlFor="TiempoG">Tiempo a cubrir:</label>
+        <input type="number" className="input input-small" name="TiempoG" onChange={changingTiempoG} required value={TiempoG}></input>
+        <label htmlFor="TiempoG">mes(es)</label>
+        </div>
+        <div className="capsula contenedor-btns">
+        <button id="Regresar" className="Rojo btn-estructura" onClick={Regresar}>
           Regresar
         </button>
-        <button id="Continuar" className="Verde" onClick={Agregar}>
+        <button id="Continuar" className="Verde btn-estructura" onClick={Agregar}>
           Añadir Producto
         </button>
+        </div>
       </div>
     </main>
   );
@@ -293,31 +304,31 @@ function TablaProductos({ datos, setID, setPrecio }) {
       setPrecio(precio)
     }
     return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{maxHeight:'300px', maxWidth: '70vw',marginBottom: '3vh'}}>
       <Table>
-        <TableHead>
+        <TableHead component={Paper} sx={{position:'sticky', top:'0px'}}>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Marca</TableCell>
-            <TableCell>Modelo</TableCell>
-            <TableCell>Color</TableCell>
-            <TableCell>Almacenamiento</TableCell>
-            <TableCell>Precio</TableCell>
-            <TableCell>Seleccionar</TableCell>
+            <TCelda>ID</TCelda>
+            <TCelda>Marca</TCelda>
+            <TCelda>Modelo</TCelda>
+            <TCelda>Color</TCelda>
+            <TCelda>Almacenamiento</TCelda>
+            <TCelda>Precio</TCelda>
+            <TCelda>Seleccionar</TCelda>
           </TableRow>
         </TableHead>
         <TableBody>
           {datos.map((productos, index) => (
             <TableRow key={index}>
-              <TableCell>{productos.id_celular}</TableCell>
-              <TableCell>{productos.marca}</TableCell>
-              <TableCell>{productos.modelo}</TableCell>
-              <TableCell>{productos.color}</TableCell>
-              <TableCell>{productos.almacenamiento}</TableCell>
-              <TableCell>{productos.precio}</TableCell>
-              <TableCell>
+              <TCelda>{productos.id_celular}</TCelda>
+              <TCelda>{productos.marca}</TCelda>
+              <TCelda>{productos.modelo}</TCelda>
+              <TCelda>{productos.color}</TCelda>
+              <TCelda>{productos.almacenamiento}</TCelda>
+              <TCelda>{productos.precio}</TCelda>
+              <TCelda>
                 <button className="Azul" onClick={()=>obtenerDatosProducto(productos.marca, productos.modelo, productos.id_celular, productos.precio)}>Seleccionar producto</button>
-              </TableCell>
+              </TCelda>
             </TableRow>
           ))}
         </TableBody>

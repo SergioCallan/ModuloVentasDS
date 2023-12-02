@@ -1,0 +1,48 @@
+.menu-botones{
+    margin: auto;
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 8vh;
+    background-color: #DCDCDC;
+    padding-top: 8vh;
+    padding-bottom: 8vh;
+    width: 40%;
+    border-radius: 50px;
+    border: 5px solid black;
+}
+
+.btn-opcion{
+    width: 80%;
+    min-height: 50px;
+    border-radius: 15px;
+    background-color: blue;
+    font-size: large;
+    font-weight: 600;
+    color: white;
+}
+
+.btn-opcion[disabled]{
+    background-color: gray;
+}
+
+.btn-opcion:not([disabled]){
+    background-color: blue;
+}
+
+.sector-clave{
+    display: flex;
+    margin: 0 auto;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    background-color: #DCDCDC;
+    margin-top: 3vh;
+    padding: 5vh 2vw;
+    width: 45%;
+    border-radius: 20px;
+    border: 5px solid black;
+    flex-wrap: wrap;
+}
