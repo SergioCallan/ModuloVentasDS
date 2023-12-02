@@ -11,17 +11,14 @@ import { CabeceraModulo } from '../../extras/CabeceraModulo.jsx';
 export default function Principal() {
   const locked=false
   const navigate= useNavigate()
-  const tipoProducto = new Cambio()
 
   const handleSelectionChange = (event,value) => {
-    const selectedLabel = value ? value.label : '';
-   tipoProducto.cambiarTipoProducto(value.label)
-
-   if (selectedLabel === 'Celular') {
-    navigate('/phone');
-  } else if (selectedLabel === 'Plan') {
-    navigate('/internet');
-  }
+    if(value.label==="Celular"){
+      navigate("/phone")
+    }
+    else{
+      navigate("/internet")
+    }
  
   }
   const [mostrarLista, setMostrarLista] = useState(false);

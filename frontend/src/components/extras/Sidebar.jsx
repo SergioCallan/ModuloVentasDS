@@ -30,7 +30,7 @@ const Sidebar = ({ open, onClose, lock }) => {
         </ListItemButton>
         <ListItemButton onClick={()=>{
           setLocked(true)
-          navigate("/principal")}}>
+          navigate("/")}}>
           <ListItemText primary="Menu Principal" />
         </ListItemButton>
       </List>

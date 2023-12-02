@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
-
+import { CabeceraModulo } from '../../extras/CabeceraModulo';
+import '../../styles/ImprimirVenta/buscarventa.css'
 const SearchById = () => {
   const [id, setId] = useState('');
   const [details, setDetails] = useState([]);
@@ -56,6 +57,12 @@ const SearchById = () => {
   };
 
   return (
+    <div>
+    <CabeceraModulo/>
+    <div className='contenedor-general-buscador'>
+    <div className="contenedor-nombre-menu">
+                <h2>Reportes</h2>
+                </div>
     <div style={styles.container}>
       <h2 style={styles.header}>Buscar por ID</h2>
       <div style={styles.searchSection}>
@@ -103,6 +110,11 @@ const SearchById = () => {
       ))}
     </tbody>
   </table>
+        <div className='caja-btn'>
+  <button className="btn-regresar" onClick={()=>{navigate('/principal')}}>Menu Principal</button>
+  </div>
+    </div>
+    </div>
     </div>
   );
 };
