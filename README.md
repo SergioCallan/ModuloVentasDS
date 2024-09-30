@@ -16,29 +16,29 @@ Security hotspots: 3
 # Lista de correcciones
 Violación: Refactor this function to reduce its cognitive complexity from 17 to the 15 allowed
 >const Filtrar = async (e) => {  
->- e.preventDefault();  
->- try {  
->  -if (Filtro === "Nombre") {...}  
->  -else if (Filtro === "Marca") {...}  
->  -else if (Filtro === "Modelo") {...}  
->  -else if (Filtro === "Precio") {...}  
->- } catch (error) {  
->- console.error("Error al enviar la solicitud: ", error);  
->- }  
+>  e.preventDefault();  
+>  try {  
+>    if (Filtro === "Nombre") {...}  
+>    else if (Filtro === "Marca") {...}  
+>    else if (Filtro === "Modelo") {...}  
+>    else if (Filtro === "Precio") {...}  
+>  } catch (error) {  
+>    console.error("Error al enviar la solicitud: ", error);  
+>  }  
 >};  
 
 Corrección: Utilizar un switch en vez de utilizar bloques else-if:  
 
 >const Filtrar = async (e) => {  
->- e.preventDefault();  
->- try {  
->  -switch (Filtro){  
->   -case "Nombre":{...}  
->   -case "Marca":{...}
->   -case "Modelo":{...}
->   -case "Precio":{...}  
->  -}  
->- } catch (error) {  
->    -console.error("Error al enviar la solicitud: ", error);  
->- }  
+>  e.preventDefault();  
+>  try {  
+>    switch (Filtro){  
+>      case "Nombre":{...}  
+>      case "Marca":{...}
+>      case "Modelo":{...}
+>      case "Precio":{...}  
+>    }  
+>  } catch (error) {  
+>      console.error("Error al enviar la solicitud: ", error);  
+>  }  
 >};  
