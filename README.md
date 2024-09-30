@@ -16,13 +16,13 @@ Security hotspots: 3
 # Lista de correcciones
 Violación: Refactor this function to reduce its cognitive complexity from 17 to the 15 allowed
 const Filtrar = async (e) => {  
-    e.preventDefault();
-    try {
-      if (Filtro === "Nombre") {
-        const productoEspacios = encodeURIComponent(Nombre);
-        const url1 = `https://modulo-ventas.onrender.com/searchproduct/${productoEspacios}`;
-        const response1 = await axios.get(url1);
-        if (response1.data === null) {
+    e.preventDefault();  
+    try {  
+      if (Filtro === "Nombre") {  
+        const productoEspacios = encodeURIComponent(Nombre);  
+        const url1 = `https://modulo-ventas.onrender.com/searchproduct/${productoEspacios}`;  
+        const response1 = await axios.get(url1);  
+        if (response1.data === null) {  
           alert("No se encontro el producto");
         } else {
             setDatosP(response1.data);
