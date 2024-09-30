@@ -28,6 +28,7 @@ class General extends EstadoBase {
         return response.data
     } catch(error){
         console.error(error)
+        throw new Error("Error al obtener los datos del día");
     }
   }
   async buscarDatosSemana(periodo1, periodo2){
@@ -42,6 +43,7 @@ class General extends EstadoBase {
             return response.data
         } catch(error){
             console.error(error)
+            throw new Error("Error al obtener los datos de la semana");
         }
     }
 
@@ -56,6 +58,7 @@ class General extends EstadoBase {
             return response.data
         } catch(error){
             console.error(error)
+            throw new Error("Error al obtener los datos del mes");
         }
     }
 }
@@ -72,6 +75,7 @@ class Equipo extends EstadoBase {
         return response.data
     } catch(error){
         console.error(error)
+        throw new Error("Error al obtener los datos del día");
     }    
   }
   async buscarDatosSemana(periodo1, periodo2) {
@@ -85,6 +89,7 @@ class Equipo extends EstadoBase {
         return response.data
     } catch(error){
         console.error(error)
+        throw new Error("Error al obtener los datos de la semana");
     }
 }
 
@@ -99,6 +104,7 @@ class Equipo extends EstadoBase {
             return response.data
         } catch(error){
             console.error(error)
+            throw new Error("Error al obtener los datos del mes");
         }
     }
 }
@@ -115,6 +121,7 @@ class Plan extends EstadoBase {
         return response.data
     } catch(error){
         console.error(error)
+        throw new Error("Error al obtener los datos del día");
     }
 }
   async buscarDatosSemana(periodo1, periodo2){
@@ -128,6 +135,7 @@ class Plan extends EstadoBase {
         return response.data
     } catch(error){
         console.error(error)
+        throw new Error("Error al obtener los datos de la semana");
     }
   }
 
@@ -142,6 +150,7 @@ class Plan extends EstadoBase {
         return response.data
     } catch(error){
         console.error(error)
+        throw new Error("Error al obtener los datos del mes");
     }
   }
 }
