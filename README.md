@@ -59,10 +59,10 @@ Corrección: Utilizar un switch en vez de utilizar bloques else-if:
 
 Violación: Remove this Useless assignment to variable "IDPlan"
 
->export default function AsociarPlan(){
->   const [Numero, setNumero]=useState("")
->   const [IDPlan, setIDPlan]= useState("")
->   const navigate= useNavigate()
->   ...
+>export default function AsociarPlan(){  
+>   const [Numero, setNumero]=useState("")  
+>   const [IDPlan, setIDPlan]= useState("")  
+>   const navigate= useNavigate()  
+>   ...  
 
 Corrección: Se removió IDPlan.
