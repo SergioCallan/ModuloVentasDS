@@ -11,7 +11,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function AsociarPlan(){
     const [Numero, setNumero]=useState("")
-    const [IDPlan, setIDPlan]= useState("")
     const navigate= useNavigate()
 
     const changingNumero=(event)=>{
