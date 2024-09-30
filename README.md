@@ -15,7 +15,7 @@ Security hotspots: 3
 
 # Lista de correcciones
 Violación: Refactor this function to reduce its cognitive complexity from 17 to the 15 allowed
-const Filtrar = async (e) => {
+const Filtrar = async (e) => {  
     e.preventDefault();
     try {
       if (Filtro === "Nombre") {
