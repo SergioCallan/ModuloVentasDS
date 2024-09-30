@@ -26,7 +26,7 @@ Violación: Refactor this function to reduce its cognitive complexity from 17 to
 >- console.error("Error al enviar la solicitud: ", error);  
 >- }  
 >};  
-  Corrección: Utilizar un switch en vez de utilizar bloques else-if:  
+Corrección: Utilizar un switch en vez de utilizar bloques else-if:  
 >const Filtrar = async (e) => {  
 >- e.preventDefault();  
 >- try {  
