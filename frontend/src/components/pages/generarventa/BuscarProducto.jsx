@@ -94,43 +94,52 @@ export default function BuscarProducto() {
   const Filtrar = async (e) => {
     e.preventDefault();
     try {
-      if (Filtro === "Nombre") {
-        const productoEspacios = encodeURIComponent(Nombre);
-        const url1 = `https://modulo-ventas.onrender.com/searchproduct/${productoEspacios}`;
-        const response1 = await axios.get(url1);
-        if (response1.data === null) {
-          alert("No se encontro el producto");
-        } else {
-            setDatosP(response1.data);
+      switch (Filtro){
+        case "Nombre":{
+          const productoEspacios = encodeURIComponent(Nombre);
+          const url1 = `https://modulo-ventas.onrender.com/searchproduct/${productoEspacios}`;
+          const response1 = await axios.get(url1);
+          if (response1.data === null) {
+            alert("No se encontro el producto");
+          } else {
+              setDatosP(response1.data);
+          }
+          break;
         }
-      } else if (Filtro === "Marca") {
-        const url2 = `https://modulo-ventas.onrender.com/searchbrand/${Marca}`;
-        const response2 = await axios.get(url2);
-        if (response2.data === null) {
-          alert("No se encontro el producto");
-        } else {
-            setDatosP(response2.data);
+        case "Marca":{
+          const url2 = `https://modulo-ventas.onrender.com/searchbrand/${Marca}`;
+          const response2 = await axios.get(url2);
+          if (response2.data === null) {
+            alert("No se encontro el producto");
+          } else {
+              setDatosP(response2.data);
+          }
+          break;
         }
-      } else if (Filtro === "Modelo") {
-        const modeloespacios = encodeURIComponent(Modelo);
-        const url3 = `https://modulo-ventas.onrender.com/searchmodel/${modeloespacios}`;
-        const response3 = await axios.get(url3);
-        if (response3.data === null) {
-          alert("No se encontro el producto");
-        } else {
-          setDatosP(response3.data);
+        case "Modelo":{
+          const modeloespacios = encodeURIComponent(Modelo);
+          const url3 = `https://modulo-ventas.onrender.com/searchmodel/${modeloespacios}`;
+          const response3 = await axios.get(url3);
+          if (response3.data === null) {
+            alert("No se encontro el producto");
+          } else {
+            setDatosP(response3.data);
+          }
+          break;
         }
-      } else if (Filtro === "Precio") {
-        const intervaloP = {
-          preciomin: PrecioMin,
-          preciomax: PrecioMax,
-        };
-        const url4 = `https://modulo-ventas.onrender.com/searchprice`;
-        const response4 = await axios.get(url4, {params: intervaloP});
-        if (response4.data.id === null) {
-          alert("No se encontro el producto");
-        } else {
-          setDatosP(response4.data);
+        case "Precio":{
+          const intervaloP = {
+            preciomin: PrecioMin,
+            preciomax: PrecioMax,
+          };
+          const url4 = `https://modulo-ventas.onrender.com/searchprice`;
+          const response4 = await axios.get(url4, {params: intervaloP});
+          if (response4.data.id === null) {
+            alert("No se encontro el producto");
+          } else {
+            setDatosP(response4.data);
+          }
+          break;
         }
       }
     } catch (error) {
