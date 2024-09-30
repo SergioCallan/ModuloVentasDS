@@ -13,6 +13,20 @@ Duplications: 1.4% on 27k lines
 
 Security hotspots: 3
 
+# Reporte final de Sonarcloud (SonarLint):
+Security (A): 0 issues
+
+Reliability (C): 40 open issues (5 M, 35 L)
+
+Maintanibility (A): 201 open issues (3 Hard, 54 M, 144L)
+
+Accepted issues: 0
+
+Duplications: 1.4% on 27k lines
+
+Security hotspots: 3
+
+
 # Lista de correcciones
 Violación: Refactor this function to reduce its cognitive complexity from 17 to the 15 allowed
 >const Filtrar = async (e) => {  
